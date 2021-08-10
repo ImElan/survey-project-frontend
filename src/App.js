@@ -1,5 +1,11 @@
+import CreateFormContainer from './containers/CreateFormContainer';
+
 function App() {
-	return <div className='App'>Survey Project</div>;
+	return (
+		<div>
+			<CreateFormContainer />
+		</div>
+	);
 }
 
 export default App;
