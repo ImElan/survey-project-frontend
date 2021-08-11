@@ -1,90 +1,8 @@
 import { useReducer } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import { v4 as uuidv4 } from 'uuid';
 
-const createFormReducer = (state, action) => {
-	switch (action.type) {
-		case 'TITLE_CHANGE':
-			return {
-				...state,
-				title: action.newTitle,
-			};
-
-		case 'DESCRIPTION_CHANGE':
-			return {
-				...state,
-				description: action.newDescription,
-			};
-
-		case 'QUESTION_TEXT_CHANGE':
-			const newQuestionsArray = state.questions.map((question) => {
-				if (question.questionId !== action.questionId) {
-					return question;
-				}
-				return {
-					...question,
-					question: action.newQuestionText,
-				};
-			});
-			return {
-				...state,
-				questions: newQuestionsArray,
-			};
-
-		case 'QUESTION_OPTION_CHANGE':
-			const newArrayOfQuestions = state.questions.map((question) => {
-				if (question.questionId !== action.questionId) {
-					return question;
-				}
-				const newOptionsArray = state.questions.options.map((option) => {
-					if (option.optionId !== action.optionId) {
-						return option;
-					}
-					return {
-						...option,
-						option: action.newOptionText,
-					};
-				});
-				return newOptionsArray;
-			});
-			return {
-				...state,
-				newArrayOfQuestions,
-			};
-
-		case 'QUESTION_REQUIRED_CHANGE':
-			const newQuestions = state.questions.map((question) => {
-				if (question.questionId !== action.questionId) {
-					return question;
-				}
-				return {
-					...question,
-					required: !question.required,
-				};
-			});
-			return {
-				...state,
-				questions: newQuestions,
-			};
-
-		case 'QUESTION_TYPE_CHANGE':
-			const questions = state.question.map((question) => {
-				if (question.questionId !== action.questionId) {
-					return question;
-				}
-				return {
-					...question,
-					questionType: action.newQuestionType,
-				};
-			});
-			return {
-				...state,
-				questions,
-			};
-
-		default:
-			return state;
-	}
-};
+import { createFormReducer } from './reducers/createFormReducer';
 
 function CreateFormContainer(props) {
 	const [formState, dispatch] = useReducer(createFormReducer, {
@@ -92,18 +10,18 @@ function CreateFormContainer(props) {
 		description: 'Form Description',
 		questions: [
 			{
-				questionId: 1,
-				question: 'Question 1',
-				options: ['Option 1', 'Option 2', 'Option 3'],
+				questionId: uuidv4(),
+				question: 'Question',
+				options: ['Option 1'],
 				questionType: 'SINGLE',
-				required: true,
+				required: false,
 			},
 			{
-				questionId: 2,
-				question: 'Question 2',
-				options: ['Option 1', 'Option 2', 'Option 3'],
+				questionId: uuidv4(),
+				question: 'Question',
+				options: ['Option 1'],
 				questionType: 'MULTIPLE',
-				required: true,
+				required: false,
 			},
 		],
 	});
@@ -126,12 +44,24 @@ function CreateFormContainer(props) {
 		dispatch({ type: 'QUESTION_OPTION_CHANGE', questionId, optionId, newOptionText });
 	};
 
+	const handleQuestionOptionAdd = (questionId, newOption) => {
+		dispatch({ type: 'QUESTION_OPTION_ADD', questionId, newOption });
+	};
+
+	const handleQuestionOptionRemove = (questionId, optionId) => {
+		dispatch({ type: 'QUESTION_OPTION_REMOVE', questionId, optionId });
+	};
+
 	const handleRequiredChange = (questionId) => {
 		dispatch({ type: 'QUESTION_REQUIRED_CHANGE', questionId });
 	};
 
 	const handleQuestionTypeChange = (questionId, newQuestionType) => {
 		dispatch({ type: 'QUESTION_TYPE_CHANGE', questionId, newQuestionType });
+	};
+
+	const handleAddQuestion = () => {
+		dispatch({ type: 'QUESTION_ADD', questionType: 'SINGLE' });
 	};
 
 	const handleSaveForm = () => {
@@ -149,10 +79,22 @@ function CreateFormContainer(props) {
 					backgroundColor: 'salmon',
 				}}
 			>
+				{/* FORM HEADER COMPONENT */}
 				Form Header Component
+			</Row>
+			<Row
+				sm='auto'
+				className='justify-content-end'
+				style={{
+					marginTop: '20px',
+				}}
+			>
+				{/* ADD BUTTON COMPONENT GOES HERE */}
+				<button onClick={handleAddQuestion}>Add New Quesiton</button>
 			</Row>
 			{formState.questions.map((question) => (
 				<Row
+					key={question.questionId}
 					style={{
 						marginTop: '20px',
 						height: '150px',
@@ -164,6 +106,7 @@ function CreateFormContainer(props) {
 							backgroundColor: 'pink',
 						}}
 					>
+						{/* BASED ON QUESTION TYPE RENDER APPROPRIATE COMPONENT AND PASS IN THE PROPS */}
 						{question.question}
 					</Col>
 					<Col
@@ -172,18 +115,20 @@ function CreateFormContainer(props) {
 							backgroundColor: 'limegreen',
 						}}
 					>
+						{/* DROP DOWN COMPONENT*/}
 						{question.questionType}
 					</Col>
 				</Row>
 			))}
 			<Row
-				className='justify-content-end align-items-center'
+				className='justify-content-start align-items-center'
 				style={{
 					marginTop: '10px',
 					height: '50px',
 					backgroundColor: 'cornflowerblue',
 				}}
 			>
+				{/* SAVE FORM BUTTON */}
 				Save Form Button
 			</Row>
 		</Container>
