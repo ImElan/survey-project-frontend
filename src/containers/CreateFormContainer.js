@@ -64,6 +64,10 @@ function CreateFormContainer(props) {
 		dispatch({ type: 'QUESTION_ADD', questionType: 'SINGLE' });
 	};
 
+	const handleRemoveQuestion = (questionId) => {
+		dispatch({ type: 'QUESTION_REMOVE', questionId });
+	};
+
 	const handleSaveForm = () => {
 		// send Post request to backend with the input state as body
 		console.log(formState);

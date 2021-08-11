@@ -117,7 +117,7 @@ const createFormReducer = (state, action) => {
 			};
 
 		case 'QUESTION_ADD':
-			let newQuestion = {
+			const newQuestion = {
 				questionId: uuidv4(),
 				question: 'Question',
 				options: ['Option 1'],
@@ -130,6 +130,14 @@ const createFormReducer = (state, action) => {
 				questions: questionsArrayWithAddedQustion,
 			};
 
+		case 'QUESTION_REMOVE':
+			const newQuestionsArrayAfterRemovingQuestion = state.questions.filter(
+				(question) => question.questionId !== action.questionId
+			);
+			return {
+				...state,
+				questions: newQuestionsArrayAfterRemovingQuestion,
+			};
 		default:
 			return state;
 	}
