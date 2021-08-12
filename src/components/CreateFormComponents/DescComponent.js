@@ -11,9 +11,14 @@ function DescComponent(props) {
   
   const [initial,final] = useState('');
   const [initial2,final2] = useState('');
+  
+    // Display the question
+
   const printQuestion = () => {
     return `The Question is ${initial}`
   }
+    // Display the paragraph
+
   const printParagraph= () => {
     return `The Paragraph Content is ${initial2}`
   }
