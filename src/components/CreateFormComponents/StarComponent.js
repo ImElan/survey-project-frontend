@@ -34,6 +34,9 @@ function StarComponent(props) {
   }
   
   const [initial,final] = useState('');
+
+  // Display the question
+  
   const printQuestion = () => {
     return `The Question is ${initial}`
   }
@@ -76,8 +79,13 @@ function StarComponent(props) {
           )
         })}
       </div>
-      <p>Your Rating Is : {hoverValue || currentValue}</p>
+
+      {/* Display the Rating */}
+
+      {/* <p>Your Rating Is : {hoverValue || currentValue}</p> */}
+
       {/* currentValue holds the RATING FINAL VALUE */}
+
     </div>
   )
 };
