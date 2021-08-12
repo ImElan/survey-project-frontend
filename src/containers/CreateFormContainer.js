@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { createFormReducer } from './reducers/createFormReducer';
 
 import StarComponent from '../components/CreateFormComponents/StarComponent';
+import DescriptionComponent from '../components/CreateFormComponents/DescComponent';
 
 function CreateFormContainer(props) {
 	const [formState, dispatch] = useReducer(createFormReducer, {
@@ -22,7 +23,7 @@ function CreateFormContainer(props) {
 				questionId: uuidv4(),
 				question: 'Question',
 				options: ['Option 1'],
-				questionType: 'MULTIPLE',
+				questionType: 'DESCRIPTION',
 				required: false,
 			},
 		],
@@ -76,11 +77,18 @@ function CreateFormContainer(props) {
 	};
 
 	const renderQuestionComponent = (question) => {
-		console.log(question);
 		switch (question.questionType) {
 			case 'STAR':
 				return (
 					<StarComponent
+						question={question.question}
+						questionId={question.questionId}
+						questionTextChangeHandler={handleQuestionTextChange}
+					/>
+				);
+			case 'DESCRIPTION':
+				return (
+					<DescriptionComponent
 						question={question.question}
 						questionId={question.questionId}
 						questionTextChangeHandler={handleQuestionTextChange}
@@ -114,34 +122,35 @@ function CreateFormContainer(props) {
 				{/* ADD BUTTON COMPONENT GOES HERE */}
 				<button onClick={handleAddQuestion}>Add New Quesiton</button>
 			</Row>
-			{formState.questions.map((question) => (
-				<Row
-					key={question.questionId}
-					style={{
-						marginTop: '20px',
-						height: '150px',
-					}}
-				>
-					<Col
-						sm={9}
+			<div style={{ marginTop: '30px' }}>
+				{formState.questions.map((question) => (
+					<Row
+						key={question.questionId}
 						style={{
-							backgroundColor: 'pink',
+							marginTop: '20px',
 						}}
 					>
-						{/* BASED ON QUESTION TYPE RENDER APPROPRIATE COMPONENT AND PASS IN THE PROPS */}
-						{renderQuestionComponent(question)}
-					</Col>
-					<Col
-						sm={3}
-						style={{
-							backgroundColor: 'limegreen',
-						}}
-					>
-						{/* DROP DOWN COMPONENT*/}
-						{question.questionType}
-					</Col>
-				</Row>
-			))}
+						<Col
+							sm={9}
+							style={{
+								backgroundColor: 'pink',
+							}}
+						>
+							{/* BASED ON QUESTION TYPE RENDER APPROPRIATE COMPONENT AND PASS IN THE PROPS */}
+							{renderQuestionComponent(question)}
+						</Col>
+						<Col
+							sm={3}
+							style={{
+								backgroundColor: 'limegreen',
+							}}
+						>
+							{/* DROP DOWN COMPONENT*/}
+							{question.questionType}
+						</Col>
+					</Row>
+				))}
+			</div>
 			<Row
 				className='justify-content-start align-items-center'
 				style={{
@@ -150,7 +159,6 @@ function CreateFormContainer(props) {
 					backgroundColor: 'cornflowerblue',
 				}}
 			>
-				{/* SAVE FORM BUTTON */}
 				Save Form Button
 			</Row>
 		</Container>
