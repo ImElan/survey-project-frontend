@@ -4,6 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { createFormReducer } from './reducers/createFormReducer';
 
+import StarComponent from '../components/CreateFormComponents/StarComponent';
+
 function CreateFormContainer(props) {
 	const [formState, dispatch] = useReducer(createFormReducer, {
 		title: 'Form Title',
@@ -13,7 +15,7 @@ function CreateFormContainer(props) {
 				questionId: uuidv4(),
 				question: 'Question',
 				options: ['Option 1'],
-				questionType: 'SINGLE',
+				questionType: 'STAR',
 				required: false,
 			},
 			{
@@ -73,6 +75,22 @@ function CreateFormContainer(props) {
 		console.log(formState);
 	};
 
+	const renderQuestionComponent = (question) => {
+		console.log(question);
+		switch (question.questionType) {
+			case 'STAR':
+				return (
+					<StarComponent
+						question={question.question}
+						questionId={question.questionId}
+						questionTextChangeHandler={handleQuestionTextChange}
+					/>
+				);
+			default:
+				break;
+		}
+	};
+
 	return (
 		<Container fluid='md'>
 			<Row
@@ -111,7 +129,7 @@ function CreateFormContainer(props) {
 						}}
 					>
 						{/* BASED ON QUESTION TYPE RENDER APPROPRIATE COMPONENT AND PASS IN THE PROPS */}
-						{question.question}
+						{renderQuestionComponent(question)}
 					</Col>
 					<Col
 						sm={3}
