@@ -9,6 +9,7 @@ import DescriptionComponent from '../components/CreateFormComponents/DescCompone
 import Dropdown from '../components/CreateFormComponents/DropdownMenu/DropdownMenu';
 import DeleteButton from '../components/CreateFormComponents/DeleteQuestionButton/DeleteQuestionButton';
 import AddQuestionButton from '../components/CreateFormComponents/AddQuestionComponent';
+import FormHeader from '../components/CreateFormComponents/NameForm';
 
 function CreateFormContainer(props) {
 	const [formState, dispatch] = useReducer(createFormReducer, {
@@ -120,13 +121,16 @@ function CreateFormContainer(props) {
 			<Row
 				style={{
 					marginTop: '20px',
-					height: '100px',
 					padding: '30px 0',
 					backgroundColor: 'salmon',
 				}}
 			>
-				{/* FORM HEADER COMPONENT */}
-				Form Header Component
+				<FormHeader
+					title={formState.title}
+					description={formState.description}
+					titleChangeHandler={handleTitleChange}
+					descriptionChangeHandler={handleDescriptionChange}
+				/>
 			</Row>
 			<Row
 				sm='auto'
