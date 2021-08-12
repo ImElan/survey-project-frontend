@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useReducer, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -8,6 +8,7 @@ import StarComponent from '../components/CreateFormComponents/StarComponent';
 import DescriptionComponent from '../components/CreateFormComponents/DescComponent';
 import Dropdown from '../components/CreateFormComponents/DropdownMenu/DropdownMenu';
 import DeleteButton from '../components/CreateFormComponents/DeleteQuestionButton/DeleteQuestionButton';
+import AddQuestionButton from '../components/CreateFormComponents/AddQuestionComponent';
 
 function CreateFormContainer(props) {
 	const [formState, dispatch] = useReducer(createFormReducer, {
@@ -31,7 +32,16 @@ function CreateFormContainer(props) {
 		],
 	});
 
-	const { title, description, questions } = formState;
+	const [maxQuestionAllowed, setMaxQuestionAllowed] = useState(10);
+	const [tooltipMessage, setTooltipMessage] = useState('Add New Question');
+
+	const handleTooltipMessageChange = (newQuestionsLength) => {
+		if (newQuestionsLength >= maxQuestionAllowed) {
+			setTooltipMessage('Maximum number of questions per form is reached.');
+		} else {
+			setTooltipMessage('Add New Question');
+		}
+	};
 
 	const handleTitleChange = (newTitle) => {
 		dispatch({ type: 'TITLE_CHANGE', newTitle });
@@ -66,11 +76,15 @@ function CreateFormContainer(props) {
 	};
 
 	const handleAddQuestion = () => {
-		dispatch({ type: 'QUESTION_ADD', questionType: 'SINGLE' });
+		dispatch({
+			type: 'QUESTION_ADD',
+			questionType: 'SINGLE',
+			handleTooltipMessageChange,
+		});
 	};
 
 	const handleRemoveQuestion = (questionId) => {
-		dispatch({ type: 'QUESTION_REMOVE', questionId });
+		dispatch({ type: 'QUESTION_REMOVE', questionId, handleTooltipMessageChange });
 	};
 
 	const handleSaveForm = () => {
@@ -122,7 +136,11 @@ function CreateFormContainer(props) {
 				}}
 			>
 				{/* ADD BUTTON COMPONENT GOES HERE */}
-				<button onClick={handleAddQuestion}>Add New Quesiton</button>
+				<AddQuestionButton
+					tooltipMessage={tooltipMessage}
+					disabled={formState.questions.length >= maxQuestionAllowed}
+					addQuestionHandler={handleAddQuestion}
+				/>
 			</Row>
 			<div style={{ marginTop: '30px' }}>
 				{formState.questions.map((question) => (

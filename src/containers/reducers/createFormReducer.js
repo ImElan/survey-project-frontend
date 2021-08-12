@@ -125,6 +125,7 @@ const createFormReducer = (state, action) => {
 				required: false,
 			};
 			const questionsArrayWithAddedQustion = [...state.questions, newQuestion];
+			action.handleTooltipMessageChange(state.questions.length + 1);
 			return {
 				...state,
 				questions: questionsArrayWithAddedQustion,
@@ -134,6 +135,7 @@ const createFormReducer = (state, action) => {
 			const newQuestionsArrayAfterRemovingQuestion = state.questions.filter(
 				(question) => question.questionId !== action.questionId
 			);
+			action.handleTooltipMessageChange(state.questions.length - 1);
 			return {
 				...state,
 				questions: newQuestionsArrayAfterRemovingQuestion,
