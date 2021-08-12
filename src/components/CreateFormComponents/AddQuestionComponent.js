@@ -1,17 +1,26 @@
 import add from '../../assets/plus-solid.svg';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { OverlayTrigger, Tooltip, Button } from 'react-bootstrap';
 
 import './AddQuestionComponent.css';
 
 function AddQuestionComponent(props) {
-	const { addQuestionHandler } = props;
+	const { tooltipMessage, disabled, addQuestionHandler } = props;
 	return (
 		<div className='addQuestionButton'>
 			<OverlayTrigger
 				placement='right'
-				overlay={<Tooltip id={'tooltip-right'}>Add New Question</Tooltip>}
+				overlay={<Tooltip id='tooltip-right'>{tooltipMessage}</Tooltip>}
 			>
-				<img src={add} alt='Add Question' onClick={addQuestionHandler} />
+				<div className='d-inline-block'>
+					<Button
+						variant='light'
+						style={disabled ? { pointerEvents: 'none' } : {}}
+						disabled={disabled}
+						onClick={addQuestionHandler}
+					>
+						<img className='addQuestionButton__image' src={add} alt='Add Question' />
+					</Button>
+				</div>
 			</OverlayTrigger>
 		</div>
 	);
