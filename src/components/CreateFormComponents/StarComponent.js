@@ -29,11 +29,6 @@ function StarComponent(props) {
 
 	const [initial, final] = useState('');
 
-	// Display the question
-
-	const printQuestion = () => {
-		return `The Question is ${initial}`;
-	};
 	const handleChange = (e) => {
 		final(e.target.value);
 		props.questionTextChangeHandler(props.questionId, e.target.value);

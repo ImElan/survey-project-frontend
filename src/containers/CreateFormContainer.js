@@ -10,6 +10,7 @@ import Dropdown from '../components/CreateFormComponents/DropdownMenu/DropdownMe
 import DeleteButton from '../components/CreateFormComponents/DeleteQuestionButton/DeleteQuestionButton';
 import AddQuestionButton from '../components/CreateFormComponents/AddQuestionComponent';
 import FormHeader from '../components/CreateFormComponents/NameForm';
+import SaveFormButton from '../components/CreateFormComponents/SaveFormButton';
 
 function CreateFormContainer(props) {
 	const [formState, dispatch] = useReducer(createFormReducer, {
@@ -184,11 +185,10 @@ function CreateFormContainer(props) {
 				className='justify-content-start align-items-center'
 				style={{
 					marginTop: '10px',
-					height: '50px',
 					backgroundColor: 'cornflowerblue',
 				}}
 			>
-				Save Form Button
+				<SaveFormButton saveFormHandler={handleSaveForm} />
 			</Row>
 		</Container>
 	);
