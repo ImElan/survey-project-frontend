@@ -34,15 +34,6 @@ function CreateFormContainer(props) {
 	});
 
 	const [maxQuestionAllowed, setMaxQuestionAllowed] = useState(10);
-	const [tooltipMessage, setTooltipMessage] = useState('Add New Question');
-
-	const handleTooltipMessageChange = (newQuestionsLength) => {
-		if (newQuestionsLength >= maxQuestionAllowed) {
-			setTooltipMessage('Maximum number of questions per form is reached.');
-		} else {
-			setTooltipMessage('Add New Question');
-		}
-	};
 
 	const handleTitleChange = (newTitle) => {
 		dispatch({ type: 'TITLE_CHANGE', newTitle });
@@ -80,12 +71,11 @@ function CreateFormContainer(props) {
 		dispatch({
 			type: 'QUESTION_ADD',
 			questionType: 'SINGLE',
-			handleTooltipMessageChange,
 		});
 	};
 
 	const handleRemoveQuestion = (questionId) => {
-		dispatch({ type: 'QUESTION_REMOVE', questionId, handleTooltipMessageChange });
+		dispatch({ type: 'QUESTION_REMOVE', questionId });
 	};
 
 	const handleSaveForm = () => {
@@ -115,6 +105,13 @@ function CreateFormContainer(props) {
 				break;
 		}
 	};
+
+	let tooltipMessage;
+	if (formState.questions.length >= maxQuestionAllowed) {
+		tooltipMessage = 'Maximum number of questions per form is reached.';
+	} else {
+		tooltipMessage = 'Add New Question';
+	}
 
 	return (
 		<Container fluid='md'>
