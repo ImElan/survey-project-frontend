@@ -6,6 +6,7 @@ import { createFormReducer } from './reducers/createFormReducer';
 
 import StarComponent from '../components/CreateFormComponents/StarComponent';
 import DescriptionComponent from '../components/CreateFormComponents/DescComponent';
+import Dropdown from '../components/CreateFormComponents/DropdownMenu/DropdownMenu';
 
 function CreateFormContainer(props) {
 	const [formState, dispatch] = useReducer(createFormReducer, {
@@ -23,7 +24,7 @@ function CreateFormContainer(props) {
 				questionId: uuidv4(),
 				question: 'Question',
 				options: ['Option 1'],
-				questionType: 'DESCRIPTION',
+				questionType: 'DESCRIPTIVE',
 				required: false,
 			},
 		],
@@ -86,7 +87,7 @@ function CreateFormContainer(props) {
 						questionTextChangeHandler={handleQuestionTextChange}
 					/>
 				);
-			case 'DESCRIPTION':
+			case 'DESCRIPTIVE':
 				return (
 					<DescriptionComponent
 						question={question.question}
@@ -145,8 +146,11 @@ function CreateFormContainer(props) {
 								backgroundColor: 'limegreen',
 							}}
 						>
-							{/* DROP DOWN COMPONENT*/}
-							{question.questionType}
+							<Dropdown
+								questionId={question.questionId}
+								questionType={question.questionType}
+								questionTypeChangeHandler={handleQuestionTypeChange}
+							/>
 						</Col>
 					</Row>
 				))}
