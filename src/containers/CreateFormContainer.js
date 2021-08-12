@@ -7,6 +7,7 @@ import { createFormReducer } from './reducers/createFormReducer';
 import StarComponent from '../components/CreateFormComponents/StarComponent';
 import DescriptionComponent from '../components/CreateFormComponents/DescComponent';
 import Dropdown from '../components/CreateFormComponents/DropdownMenu/DropdownMenu';
+import DeleteButton from '../components/CreateFormComponents/DeleteQuestionButton/DeleteQuestionButton';
 
 function CreateFormContainer(props) {
 	const [formState, dispatch] = useReducer(createFormReducer, {
@@ -150,6 +151,11 @@ function CreateFormContainer(props) {
 								questionId={question.questionId}
 								questionType={question.questionType}
 								questionTypeChangeHandler={handleQuestionTypeChange}
+							/>
+
+							<DeleteButton
+								questionId={question.questionId}
+								deleteQuestionHandler={handleRemoveQuestion}
 							/>
 						</Col>
 					</Row>
