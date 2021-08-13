@@ -2,18 +2,21 @@ import { v4 as uuidv4 } from 'uuid';
 
 const createFormReducer = (state, action) => {
 	switch (action.type) {
+		// keeping all the fields from previous state and changing the title with new one.
 		case 'TITLE_CHANGE':
 			return {
 				...state,
 				title: action.newTitle,
 			};
 
+		// keeping all the fields from previous state and changing the title with new one.
 		case 'DESCRIPTION_CHANGE':
 			return {
 				...state,
 				description: action.newDescription,
 			};
 
+		// finding the question using question id and changing its text.
 		case 'QUESTION_TEXT_CHANGE':
 			const newQuestionsArray = state.questions.map((question) => {
 				if (question.questionId !== action.questionId) {
@@ -29,6 +32,7 @@ const createFormReducer = (state, action) => {
 				questions: newQuestionsArray,
 			};
 
+		// finding the question using question id and then finding the correct option from the question using option id changing its text.
 		case 'QUESTION_OPTION_CHANGE':
 			const newArrayOfQuestions = state.questions.map((question) => {
 				if (question.questionId !== action.questionId) {
@@ -50,6 +54,7 @@ const createFormReducer = (state, action) => {
 				questions: newArrayOfQuestions,
 			};
 
+		// finding the quesiton using quesiton id and adding a new option to it.
 		case 'QUESTION_OPTION_ADD':
 			const newQuestionsArrayAfterAddingOption = state.questions.map((question) => {
 				if (question.questionId !== action.questionId) {
@@ -66,6 +71,7 @@ const createFormReducer = (state, action) => {
 				questions: newQuestionsArrayAfterAddingOption,
 			};
 
+		// finding the question using question id and finding the option using option id and removing it.
 		case 'QUESTION_OPTION_REMOVE':
 			const newQuestionsArrayAfterRemovingOption = state.questions.map((question) => {
 				if (question.questionId !== action.questionId) {
@@ -86,6 +92,7 @@ const createFormReducer = (state, action) => {
 				questions: newQuestionsArrayAfterRemovingOption,
 			};
 
+		// finding the question using question id and changing its required field
 		case 'QUESTION_REQUIRED_CHANGE':
 			const newQuestions = state.questions.map((question) => {
 				if (question.questionId !== action.questionId) {
@@ -101,6 +108,7 @@ const createFormReducer = (state, action) => {
 				questions: newQuestions,
 			};
 
+		// finding the question using question id and changing its type
 		case 'QUESTION_TYPE_CHANGE':
 			const questions = state.questions.map((question) => {
 				if (question.questionId !== action.questionId) {
@@ -116,6 +124,7 @@ const createFormReducer = (state, action) => {
 				questions,
 			};
 
+		// adding a new question to the state's questions array.
 		case 'QUESTION_ADD':
 			const newQuestion = {
 				questionId: uuidv4(),
@@ -130,6 +139,7 @@ const createFormReducer = (state, action) => {
 				questions: questionsArrayWithAddedQustion,
 			};
 
+		// removing a question from state question's array using question id
 		case 'QUESTION_REMOVE':
 			const newQuestionsArrayAfterRemovingQuestion = state.questions.filter(
 				(question) => question.questionId !== action.questionId

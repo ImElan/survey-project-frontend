@@ -13,6 +13,7 @@ import FormHeader from '../components/CreateFormComponents/NameForm';
 import SaveFormButton from '../components/CreateFormComponents/SaveFormButton';
 
 function CreateFormContainer(props) {
+	// Form State
 	const [formState, dispatch] = useReducer(createFormReducer, {
 		title: 'Form Title',
 		description: 'Form Description',
@@ -34,56 +35,69 @@ function CreateFormContainer(props) {
 		],
 	});
 
+	// State holding maximum question allowed (will get from backend later)
 	const [maxQuestionAllowed, setMaxQuestionAllowed] = useState(10);
 
+	// Method to handle title change in form header
 	const handleTitleChange = (newTitle) => {
 		dispatch({ type: 'TITLE_CHANGE', newTitle });
 	};
 
+	// Method to handle description change in form header.
 	const handleDescriptionChange = (newDescription) => {
 		dispatch({ type: 'DESCRIPTION_CHANGE', newDescription });
 	};
 
+	// Method to handle question text change in all question components
 	const handleQuestionTextChange = (questionId, newQuestionText) => {
 		dispatch({ type: 'QUESTION_TEXT_CHANGE', questionId, newQuestionText });
 	};
 
+	// Method to handle question option change in single and multiple choice quesitons.
 	const handleQuestionOptionChange = (questionId, optionId, newOptionText) => {
 		dispatch({ type: 'QUESTION_OPTION_CHANGE', questionId, optionId, newOptionText });
 	};
 
+	// Method to handle adding a option to single and multiple choice question.
 	const handleQuestionOptionAdd = (questionId, newOption) => {
 		dispatch({ type: 'QUESTION_OPTION_ADD', questionId, newOption });
 	};
 
+	// Method to handle removing a option from single and multiple choice question.
 	const handleQuestionOptionRemove = (questionId, optionId) => {
 		dispatch({ type: 'QUESTION_OPTION_REMOVE', questionId, optionId });
 	};
 
+	// Method to handle changing a required field of a question.
 	const handleRequiredChange = (questionId) => {
 		dispatch({ type: 'QUESTION_REQUIRED_CHANGE', questionId });
 	};
 
+	// Method to handle changing question type using a dropdown.
 	const handleQuestionTypeChange = (questionId, newQuestionType) => {
 		dispatch({ type: 'QUESTION_TYPE_CHANGE', questionId, newQuestionType });
 	};
 
-	const handleAddQuestion = () => {
+	// Method to handle adding a new quesiton.
+	const handleAddQuestion = (questionType) => {
 		dispatch({
 			type: 'QUESTION_ADD',
-			questionType: 'SINGLE',
+			questionType,
 		});
 	};
 
+	// Method to handle removing a new question.
 	const handleRemoveQuestion = (questionId) => {
 		dispatch({ type: 'QUESTION_REMOVE', questionId });
 	};
 
+	// Method to save the form by sending a post request to backend
 	const handleSaveForm = () => {
 		// send Post request to backend with the input state as body
 		console.log(formState);
 	};
 
+	// Method to render different question component in the UI based on question type.
 	const renderQuestionComponent = (question) => {
 		switch (question.questionType) {
 			case 'STAR':
@@ -107,6 +121,7 @@ function CreateFormContainer(props) {
 		}
 	};
 
+	// setting tooltip message based on maxQuestionAllowed and number of questions added.
 	let tooltipMessage;
 	if (formState.questions.length >= maxQuestionAllowed) {
 		tooltipMessage = 'Maximum number of questions per form is reached.';
