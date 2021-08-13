@@ -17,7 +17,7 @@ function DropdownMenu(props) {
     const onSelect = (e)=>{
         // console.log(e);
         // setProps({questionType: e});
-         props.questionTypeChangeHandler(props.questionId, e);
+        props.questionTypeChangeHandler(props.questionId, e);
     }
     return (
         <div >

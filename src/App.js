@@ -1,4 +1,4 @@
-import DeleteQuestionButton from "./components/CreateFormComponents/DeleteQuestionButton/DeleteQuestionButton"
+import React from "react";
 
 function App() {
 	return <div className='App'>Survey Project</div>;
