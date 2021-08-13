@@ -1,5 +1,5 @@
 ##PopUpModal component that is reusable##
 
-Tachyons library used for styling..so initially it needs to be installed and imported.
-npm i tachyons
-import 'tachyons';
+Tachyons library used for styling..so initially it needs to be installed and imported...
+In cmd, npm i tachyons...
+and then in js file, import 'tachyons';
