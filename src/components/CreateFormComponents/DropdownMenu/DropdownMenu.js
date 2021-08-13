@@ -1,6 +1,7 @@
 // import { DropdownButton} from 'react-bootstrap';
 import React,{useState} from 'react'
 import { Dropdown, DropdownButton,  } from 'react-bootstrap';
+import PopUp from "../PopUpModal";
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import { Dropdown } from 'bootstrap';
 
@@ -13,11 +14,25 @@ function DropdownMenu(props) {
         "DESCRIPTIVE": "Descriptive",
         "STAR": "Star Based"
     }
-    
+
+    const [state, setState] = useState({popUp: false, questionType: props.questionType});
+
+    const popUpClose = ()=>setState({...state, popUp: false});
+    let popUpTitle = "Confirm Message";
+    let initialBody = "Do you want to change the question type from ";
+    const [popUpBody, setPopUpBody] = useState("");
+
+    const confirmHandler = ()=>{
+        setState({...state, popUp:false});
+        props.questionTypeChangeHandler(props.questionId, state.questionType);
+        // setProps({questionType: state.questionType});
+    }
+
     const onSelect = (e)=>{
-        // console.log(e);
-        // setProps({questionType: e});
-        props.questionTypeChangeHandler(props.questionId, e);
+        if(e !== props.questionType){
+            setPopUpBody(initialBody + options[props.questionType] + " to " + options[e]+"?");
+            setState({popUp: true, questionType: e});
+        }
     }
     return (
         <div >
@@ -28,6 +43,9 @@ function DropdownMenu(props) {
                 ))
             }
             </DropdownButton>
+            <PopUp show={state.popUp} popUpClose={popUpClose} popUpTitle={popUpTitle}
+                    confirmHandler={confirmHandler} popUpBody={popUpBody}
+            />
         </div>
     )
 }
