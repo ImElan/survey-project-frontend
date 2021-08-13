@@ -1,1 +1,1 @@
-PopUpModal component
+PopUpModal component that is reusable 
