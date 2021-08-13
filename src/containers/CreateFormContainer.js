@@ -157,6 +157,7 @@ function CreateFormContainer(props) {
 					tooltipMessage={tooltipMessage}
 					disabled={formState.questions.length >= maxQuestionAllowed}
 					addQuestionHandler={handleAddQuestion}
+					questionTypes={['STAR', 'DESCRIPTIVE', 'SINGLE', 'MULTIPLE']}
 				/>
 			</Row>
 			<div style={{ marginTop: '30px' }}>
