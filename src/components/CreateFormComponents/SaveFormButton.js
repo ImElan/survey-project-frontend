@@ -24,7 +24,7 @@ function SaveFormButton(props) {
                         className = "bg-light-blue b--blue black f5 fw7 bw1 grow pointer"
                         onClick = {popUpOpen}> Save Form
                 </Button>
-                <PopUpModal show ={show} popUpClose ={popUpClose} popUpTitle={popUpTitle} popUpBody={popUpBody} confirmHandler={saveFormHandler}/>
+                <PopUpModal show = {show} popUpClose = {popUpClose} popUpTitle = {popUpTitle} popUpBody = {popUpBody} confirmHandler = {saveFormHandler}/>
             </div>                 
         );
 }
