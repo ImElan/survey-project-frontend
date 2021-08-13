@@ -126,7 +126,7 @@ function CreateFormContainer(props) {
 	if (formState.questions.length >= maxQuestionAllowed) {
 		tooltipMessage = 'Maximum number of questions per form is reached.';
 	} else {
-		tooltipMessage = 'Add New Question';
+		tooltipMessage = 'Click the button to choose question type.';
 	}
 
 	return (
