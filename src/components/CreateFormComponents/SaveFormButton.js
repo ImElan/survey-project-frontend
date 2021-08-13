@@ -1,34 +1,31 @@
 import React, {useState} from 'react';
-import {Button, Modal} from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
+import PopUpModal from './PopUpModal';
 
 
 function SaveFormButton(props) {
         
-        const {saveFormHandler} = props;
+        const {formTitle, saveFormHandler} = props;
 
         const [show, popup] = useState(false);
-        const showModal = () => popup(true);
-        const hideModal = () => popup(false);
-    
-        return (
+        const [popUpTitle] = useState("");
+        const [popUpBody] = useState(`Are you sure you want to save "${formTitle}" form?`);
 
-            <div>
-                <Button variant = "outline-dark" 
-                    className = "f4 fw5 bw1 grow pointer"
-                    onClick={showModal}> Save and Create
+        const popUpOpen = () => {
+            popup(true);
+        }
+        const popUpClose = () => {
+            popup(false);
+        }
+    
+      return (     
+            <div className= "text-center">
+                <Button variant = "primary"
+                        className = "bg-light-blue b--blue black f5 fw7 bw1 grow pointer"
+                        onClick = {popUpOpen}> Save Form
                 </Button>
-                
-                <Modal show={show} onHide={hideModal} 
-                    backdrop="static" keyboard={false}>
-                    <Modal.Body className="f3 h3">
-                        Confirm Form Creation
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={hideModal}>Cancel</Button>
-                        <Button variant="primary" onClick={saveFormHandler}>Confirm</Button>
-                    </Modal.Footer> 
-                </Modal>
-            </div>
+                <PopUpModal show ={show} popUpClose ={popUpClose} popUpTitle={popUpTitle} popUpBody={popUpBody} confirmHandler={saveFormHandler}/>
+            </div>                 
         );
 }
 export default SaveFormButton;
