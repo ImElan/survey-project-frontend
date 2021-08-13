@@ -1,27 +1,45 @@
-import add from '../../assets/plus-solid.svg';
-import { OverlayTrigger, Tooltip, Button } from 'react-bootstrap';
-
-import './AddQuestionComponent.css';
+import { OverlayTrigger, Tooltip, Dropdown } from 'react-bootstrap';
 
 function AddQuestionComponent(props) {
-	const { tooltipMessage, disabled, addQuestionHandler } = props;
+	const { tooltipMessage, disabled, questionTypes, addQuestionHandler } = props;
+
+	const questionTypeToDisplayText = {
+		STAR: 'Star Question',
+		SINGLE: 'Single Choice Question',
+		DESCRIPTIVE: 'Descriptive Question',
+		MULTIPLE: 'Multiple Choice Question',
+	};
+
 	return (
 		<div className='addQuestionButton'>
-			<OverlayTrigger
-				placement='right'
-				overlay={<Tooltip id='tooltip-right'>{tooltipMessage}</Tooltip>}
-			>
-				<div className='d-inline-block'>
-					<Button
-						variant='light'
-						style={disabled ? { pointerEvents: 'none' } : {}}
-						disabled={disabled}
-						onClick={addQuestionHandler}
-					>
-						<img className='addQuestionButton__image' src={add} alt='Add Question' />
-					</Button>
-				</div>
-			</OverlayTrigger>
+			<Dropdown>
+				<OverlayTrigger
+					placement='right'
+					overlay={<Tooltip id='tooltip-right'>{tooltipMessage}</Tooltip>}
+				>
+					<div className='d-inline-block'>
+						<Dropdown.Toggle
+							size='lg'
+							disabled={disabled}
+							variant={`${!disabled ? 'primary' : 'secondary'}`}
+						>
+							Add New Question
+						</Dropdown.Toggle>
+					</div>
+				</OverlayTrigger>
+				<Dropdown.Menu>
+					{questionTypes.map((questionType) => {
+						return (
+							<Dropdown.Item
+								key={questionType}
+								onClick={() => addQuestionHandler(questionType)}
+							>
+								{questionTypeToDisplayText[questionType]}
+							</Dropdown.Item>
+						);
+					})}
+				</Dropdown.Menu>
+			</Dropdown>
 		</div>
 	);
 }
