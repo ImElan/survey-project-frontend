@@ -1,4 +1,4 @@
-import { useReducer, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -24,19 +24,35 @@ function CreateFormContainer(props) {
 				options: ['Option 1'],
 				questionType: 'STAR',
 				required: false,
-			},
-			{
-				questionId: uuidv4(),
-				question: 'Question',
-				options: ['Option 1'],
-				questionType: 'DESCRIPTIVE',
-				required: false,
+				isValid: true,
 			},
 		],
 	});
 
 	// State holding maximum question allowed (will get from backend later)
+	const [minQuestionAllowed, setMinQuestionAllowed] = useState(1);
 	const [maxQuestionAllowed, setMaxQuestionAllowed] = useState(10);
+
+	useEffect(() => {
+		// get min questions and max question from backend;
+		setMinQuestionAllowed(2);
+		setMaxQuestionAllowed(10);
+	}, []);
+
+	useEffect(() => {
+		const initialQuestions = [];
+		for (let i = 0; i < minQuestionAllowed; i++) {
+			initialQuestions.push({
+				questionId: uuidv4(),
+				question: 'Question',
+				options: ['Option 1'],
+				questionType: 'DESCRIPTIVE',
+				required: false,
+				isValid: true,
+			});
+		}
+		dispatch({ type: 'SET_INITIAL_QUESTIONS', initialQuestions });
+	}, [minQuestionAllowed]);
 
 	// Method to handle title change in form header
 	const handleTitleChange = (newTitle) => {
@@ -191,6 +207,8 @@ function CreateFormContainer(props) {
 
 							<DeleteButton
 								questionId={question.questionId}
+								disabled={formState.questions.length <= minQuestionAllowed}
+								minQuestions={minQuestionAllowed}
 								deleteQuestionHandler={handleRemoveQuestion}
 							/>
 						</Col>

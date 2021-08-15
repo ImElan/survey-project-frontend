@@ -10,7 +10,9 @@ function DeleteQuestionButton(props) {
 	let popUpBody = 'Do you want to delete the question?';
 
 	const handleClick = () => {
-		setPopUp(true);
+		if (!props.disabled) {
+			setPopUp(true);
+		}
 	};
 
 	const confirmHandler = () => {
@@ -22,7 +24,7 @@ function DeleteQuestionButton(props) {
 			<BsFillTrashFill
 				onClick={handleClick}
 				size='1.5rem'
-				style={{ cursor: 'pointer' }}
+				style={{ cursor: !props.disabled ? 'pointer' : 'not-allowed' }}
 			/>
 			<span
 				style={{
@@ -31,7 +33,11 @@ function DeleteQuestionButton(props) {
 					fontFamily: 'Monospace',
 				}}
 			>
-				Delete
+				{props.disabled ? (
+					<span>Cannot delete minimum {props.minQuestions} questions needed</span>
+				) : (
+					<span>Delete</span>
+				)}
 			</span>
 			<PopUp
 				show={popUp}

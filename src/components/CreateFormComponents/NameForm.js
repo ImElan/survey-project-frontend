@@ -22,7 +22,7 @@ function NameForm(props) {
 					onChange={handleChange1}
 				/>
 			</InputGroup>
-			<InputGroup classname='mb-3'>
+			<InputGroup className='mb-3'>
 				<FormControl
 					as='textarea'
 					aria-label='With textarea'

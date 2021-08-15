@@ -148,6 +148,12 @@ const createFormReducer = (state, action) => {
 				...state,
 				questions: newQuestionsArrayAfterRemovingQuestion,
 			};
+
+		case 'SET_INITIAL_QUESTIONS':
+			return {
+				...state,
+				questions: action.initialQuestions,
+			};
 		default:
 			return state;
 	}
