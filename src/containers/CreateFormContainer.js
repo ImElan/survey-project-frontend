@@ -170,26 +170,31 @@ function CreateFormContainer(props) {
 	}
 
 	return (
-		<Container fluid='md'>
-			<Row
+		<Container fluid >
+		    
+			<Row className="justify-content-md-center"
 				style={{
-					marginTop: '20px',
-					padding: '30px 0',
-					backgroundColor: 'salmon',
+					backgroundColor: '#4B0082',
+					paddingTop: '16px',
+					paddingBottom: '35px'
 				}}
 			>
+				<Col sm={6}>
 				<FormHeader
 					title={formState.title}
 					description={formState.description}
 					titleChangeHandler={handleTitleChange}
 					descriptionChangeHandler={handleDescriptionChange}
 				/>
+				</Col>
+				
 			</Row>
+
 			<Row
 				sm='auto'
 				className='justify-content-end'
 				style={{
-					marginTop: '20px',
+					padding: '12px'
 				}}
 			>
 				{/* ADD BUTTON COMPONENT GOES HERE */}
@@ -200,18 +205,32 @@ function CreateFormContainer(props) {
 					questionTypes={['STAR', 'DESCRIPTIVE', 'SINGLE', 'MULTIPLE']}
 				/>
 			</Row>
-			<div style={{ marginTop: '30px' }}>
+
+			<Row className="justify-content-md-center"
+			     style={{
+			     	backgroundColor: '#e6e6e6'									
+				}}
+			>
+			<div style={{ 
+				    backgroundColor: '#e6e6e6',
+				    width:'85%',
+					border: 'solid lightgray 3px',
+					borderRadius: '8px'
+				 }}>
 				{formState.questions.map((question) => (
-					<Row
+					<Row className="justify-content-md-center"
 						key={question.questionId}
 						style={{
-							marginTop: '20px',
+							paddingTop: '20px',
+							paddingBottom: '15px',		
 						}}
 					>
 						<Col
-							sm={9}
+							sm={7}
 							style={{
-								backgroundColor: 'pink',
+								marginRight: '5px',
+								borderRadius: '8px',
+								backgroundColor:'#87A6D0'
 							}}
 						>
 							{/* BASED ON QUESTION TYPE RENDER APPROPRIATE COMPONENT AND PASS IN THE PROPS */}
@@ -224,9 +243,13 @@ function CreateFormContainer(props) {
 							/>
 						</Col>
 						<Col
-							sm={3}
+							sm={4}
 							style={{
-								backgroundColor: 'limegreen',
+								borderRadius: '8px',
+								backgroundColor: '#333333',
+								color: 'white',
+								padding: '10px',
+								height:'210px'
 							}}
 						>
 							<Dropdown
@@ -245,15 +268,17 @@ function CreateFormContainer(props) {
 					</Row>
 				))}
 			</div>
+			</Row>
 			<Row
-				className='justify-content-start align-items-center'
+				className='text-center'
 				style={{
-					marginTop: '10px',
-					backgroundColor: 'cornflowerblue',
+					paddingTop: '20px',
+					paddingBottom: '30px'					
 				}}
 			>
 				<SaveFormButton saveFormHandler={handleSaveForm} />
 			</Row>
+			
 		</Container>
 	);
 }
