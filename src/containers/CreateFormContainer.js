@@ -13,6 +13,7 @@ import FormHeader from '../components/CreateFormComponents/NameForm';
 import SaveFormButton from '../components/CreateFormComponents/SaveFormButton';
 import CheckboxComponent from '../components/CreateFormComponents/CheckboxComponent';
 import RadioButtonComponent from '../components/CreateFormComponents/RadioComponent';
+import RequiredButton from '../components/CreateFormComponents/RequiredCom/Switch';
 
 function CreateFormContainer(props) {
 	// Form State
@@ -215,6 +216,12 @@ function CreateFormContainer(props) {
 						>
 							{/* BASED ON QUESTION TYPE RENDER APPROPRIATE COMPONENT AND PASS IN THE PROPS */}
 							{renderQuestionComponent(question)}
+							<RequiredButton
+								rounded={true}
+								questionId={question.questionId}
+								required={question.required}
+								requiredChangeHandler={handleRequiredChange}
+							/>
 						</Col>
 						<Col
 							sm={3}
