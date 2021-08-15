@@ -16,10 +16,10 @@ function NameForm (props){
       <div>
       <br/>
     <InputGroup className="mb-3">
-    <FormControl aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Enter form name" value={props.title} onChange={handleChange1}/>
+    <FormControl aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Enter form name" maxLength="50" value={props.title} onChange={handleChange1}/>
     </InputGroup>
     <InputGroup classname="mb-3">
-    <FormControl as="textarea" aria-label="With textarea" placeholder="Enter form description" value={props.description} onChange={handleChange2} />
+    <FormControl as="textarea" aria-label="With textarea" placeholder="Enter form description" maxLength="100" value={props.description} onChange={handleChange2} />
   </InputGroup>
       </div>
     );
