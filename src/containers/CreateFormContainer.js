@@ -19,28 +19,21 @@ function CreateFormContainer(props) {
 	const [formState, dispatch] = useReducer(createFormReducer, {
 		title: 'Form Title',
 		description: 'Form Description',
-		questions: [
-			{
-				questionId: uuidv4(),
-				question: 'Question',
-				options: [{ optionId: uuidv4(), option: 'Option 1' }],
-				questionType: 'STAR',
-				required: false,
-				isValid: false,
-			},
-		],
+		questions: [],
 	});
 
 	// State holding maximum question allowed (will get from backend later)
 	const [minQuestionAllowed, setMinQuestionAllowed] = useState(1);
 	const [maxQuestionAllowed, setMaxQuestionAllowed] = useState(10);
 
+	// API REQUEST TO GET CONFIG VALUES
 	useEffect(() => {
 		// get min questions and max question from backend;
 		setMinQuestionAllowed(2);
 		setMaxQuestionAllowed(10);
 	}, []);
 
+	// RENDER THE INITIAL NUMBER OF QUESTIONS ON THE SCREEN BASED ON MIN QUESTIONS ALLOWED VALUE
 	useEffect(() => {
 		const initialQuestions = [];
 		for (let i = 0; i < minQuestionAllowed; i++) {
@@ -48,10 +41,9 @@ function CreateFormContainer(props) {
 				questionId: uuidv4(),
 				question: 'Question',
 				options: [
-					{
-						optionId: uuidv4(),
-						option: 'Option 1',
-					},
+					{ optionId: uuidv4(), option: 'Option 1' },
+					{ optionId: uuidv4(), option: 'Option 2' },
+					{ optionId: uuidv4(), option: 'Option 3' },
 				],
 				questionType: 'DESCRIPTIVE',
 				required: false,
