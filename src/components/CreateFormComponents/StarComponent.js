@@ -49,7 +49,7 @@ function StarComponent(props) {
 	const typeStarChange = (e) => {
 		setRadioValue(e.currentTarget.value);
 		const isValid = e.target.value === '' ? false : true;
-		//props.starTypechangeHandler(props.questionId, e.currentTarget.value,isValid);
+		props.starTypechangeHandler(props.questionId, e.currentTarget.value,isValid);
 	};
 
 	const [value, setValue] = useState('');
@@ -57,7 +57,7 @@ function StarComponent(props) {
 	const numStarsChange = (e) => {
 		setValue(e)
 		const isValid = e.target.value === '' ? false : true;
-		//props.starTypechangeHandler(props.questionId,e,isValid);
+		props.starTypechangeHandler(props.questionId,e,isValid);
 
 	}
 
