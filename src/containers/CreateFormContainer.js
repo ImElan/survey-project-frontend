@@ -206,11 +206,7 @@ function CreateFormContainer(props) {
 				/>
 			</Row>
 
-			<Row className="justify-content-md-center"
-			     style={{
-			     	backgroundColor: '#e6e6e6'									
-				}}
-			>
+			<Row className = "justify-content-md-center" >
 			<div style={{ 
 				    backgroundColor: '#e6e6e6',
 				    width:'85%',
