@@ -12,6 +12,7 @@ import AddQuestionButton from '../components/CreateFormComponents/AddQuestionCom
 import FormHeader from '../components/CreateFormComponents/NameForm';
 import SaveFormButton from '../components/CreateFormComponents/SaveFormButton';
 import CheckboxComponent from '../components/CreateFormComponents/CheckboxComponent';
+import RadioButtonComponent from '../components/CreateFormComponents/RadioComponent';
 
 function CreateFormContainer(props) {
 	// Form State
@@ -141,6 +142,18 @@ function CreateFormContainer(props) {
 			case 'MULTIPLE':
 				return (
 					<CheckboxComponent
+						question={question.question}
+						questionId={question.questionId}
+						options={question.options}
+						questionTextChangeHandler={handleQuestionTextChange}
+						questionOptionChangeHandler={handleQuestionOptionChange}
+						questionOptionAddHandler={handleQuestionOptionAdd}
+						questionOptionRemoveHandler={handleQuestionOptionRemove}
+					/>
+				);
+			case 'SINGLE':
+				return (
+					<RadioButtonComponent
 						question={question.question}
 						questionId={question.questionId}
 						options={question.options}
