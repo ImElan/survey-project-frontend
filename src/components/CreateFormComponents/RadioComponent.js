@@ -99,7 +99,7 @@ function RadioComponent(props) {
 								/>
 							)}
 
-							{options.length > 3 ? (
+							{options.length > 2 ? (
 								<button onClick={() => handleRemove(i)}>
 									<BsX />
 								</button>
