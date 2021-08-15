@@ -11,6 +11,7 @@ import DeleteButton from '../components/CreateFormComponents/DeleteQuestionButto
 import AddQuestionButton from '../components/CreateFormComponents/AddQuestionComponent';
 import FormHeader from '../components/CreateFormComponents/NameForm';
 import SaveFormButton from '../components/CreateFormComponents/SaveFormButton';
+import CheckboxComponent from '../components/CreateFormComponents/CheckboxComponent';
 
 function CreateFormContainer(props) {
 	// Form State
@@ -21,10 +22,10 @@ function CreateFormContainer(props) {
 			{
 				questionId: uuidv4(),
 				question: 'Question',
-				options: ['Option 1'],
+				options: [{ optionId: uuidv4(), option: 'Option 1' }],
 				questionType: 'STAR',
 				required: false,
-				isValid: true,
+				isValid: false,
 			},
 		],
 	});
@@ -45,10 +46,15 @@ function CreateFormContainer(props) {
 			initialQuestions.push({
 				questionId: uuidv4(),
 				question: 'Question',
-				options: ['Option 1'],
+				options: [
+					{
+						optionId: uuidv4(),
+						option: 'Option 1',
+					},
+				],
 				questionType: 'DESCRIPTIVE',
 				required: false,
-				isValid: true,
+				isValid: false,
 			});
 		}
 		dispatch({ type: 'SET_INITIAL_QUESTIONS', initialQuestions });
@@ -65,8 +71,8 @@ function CreateFormContainer(props) {
 	};
 
 	// Method to handle question text change in all question components
-	const handleQuestionTextChange = (questionId, newQuestionText) => {
-		dispatch({ type: 'QUESTION_TEXT_CHANGE', questionId, newQuestionText });
+	const handleQuestionTextChange = (questionId, newQuestionText, isValid) => {
+		dispatch({ type: 'QUESTION_TEXT_CHANGE', questionId, newQuestionText, isValid });
 	};
 
 	// Method to handle question option change in single and multiple choice quesitons.
@@ -130,6 +136,18 @@ function CreateFormContainer(props) {
 						question={question.question}
 						questionId={question.questionId}
 						questionTextChangeHandler={handleQuestionTextChange}
+					/>
+				);
+			case 'MULTIPLE':
+				return (
+					<CheckboxComponent
+						question={question.question}
+						questionId={question.questionId}
+						options={question.options}
+						questionTextChangeHandler={handleQuestionTextChange}
+						questionOptionChangeHandler={handleQuestionOptionChange}
+						questionOptionAddHandler={handleQuestionOptionAdd}
+						questionOptionRemoveHandler={handleQuestionOptionRemove}
 					/>
 				);
 			default:

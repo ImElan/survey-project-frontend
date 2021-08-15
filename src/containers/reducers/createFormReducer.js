@@ -25,6 +25,7 @@ const createFormReducer = (state, action) => {
 				return {
 					...question,
 					question: action.newQuestionText,
+					isValid: action.isValid,
 				};
 			});
 			return {
@@ -47,7 +48,10 @@ const createFormReducer = (state, action) => {
 						option: action.newOptionText,
 					};
 				});
-				return newOptionsArray;
+				return {
+					...question,
+					options: newOptionsArray,
+				};
 			});
 			return {
 				...state,
@@ -60,7 +64,10 @@ const createFormReducer = (state, action) => {
 				if (question.questionId !== action.questionId) {
 					return question;
 				}
-				const newOptionsArray = [...question.options, action.newOption];
+				const newOptionsArray = [
+					...question.options,
+					{ optionId: uuidv4(), option: action.newOption },
+				];
 				return {
 					...question,
 					options: newOptionsArray,
@@ -128,10 +135,15 @@ const createFormReducer = (state, action) => {
 		case 'QUESTION_ADD':
 			const newQuestion = {
 				questionId: uuidv4(),
-				question: 'Question',
-				options: ['Option 1'],
+				question: '',
+				options: [
+					{ optionId: uuidv4(), option: 'Option 1' },
+					{ optionId: uuidv4(), option: 'Option 2' },
+					{ optionId: uuidv4(), option: 'Option 3' },
+				],
 				questionType: action.questionType,
 				required: false,
+				isValid: false,
 			};
 			const questionsArrayWithAddedQustion = [...state.questions, newQuestion];
 			return {
