@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputGroup, FormControl } from 'react-bootstrap';
+import { Form, FormControl } from 'react-bootstrap';
 
 function NameForm(props) {
 	const handleChange1 = (event) => {
@@ -12,25 +12,28 @@ function NameForm(props) {
 
 	return (
 		<div>
-			<br />
-			<InputGroup className='mb-3'>
-				<FormControl
-					aria-label='Default'
-					aria-describedby='inputGroup-sizing-default'
-					placeholder='Enter form name'
-					value={props.title}
-					onChange={handleChange1}
-				/>
-			</InputGroup>
-			<InputGroup className='mb-3'>
-				<FormControl
-					as='textarea'
-					aria-label='With textarea'
-					placeholder='Enter form description'
-					value={props.description}
-					onChange={handleChange2}
-				/>
-			</InputGroup>
+			<FormControl
+				maxLength={40}
+				aria-label='Default'
+				aria-describedby='inputGroup-sizing-default'
+				placeholder='Enter form name'
+				value={props.title}
+				onChange={handleChange1}
+			/>
+			<Form.Text id='passwordHelpBlock' muted>
+				Form Title cannot exceed 40 characters.
+			</Form.Text>
+			<FormControl
+				maxLength={100}
+				as='textarea'
+				aria-label='With textarea'
+				placeholder='Enter form description'
+				value={props.description}
+				onChange={handleChange2}
+			/>
+			<Form.Text id='passwordHelpBlock' muted style={{ display: 'block' }}>
+				Form Description cannot exceed 100 characters.
+			</Form.Text>
 		</div>
 	);
 }

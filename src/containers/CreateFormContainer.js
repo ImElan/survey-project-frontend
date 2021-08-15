@@ -18,8 +18,8 @@ import RequiredButton from '../components/CreateFormComponents/RequiredCom/Switc
 function CreateFormContainer(props) {
 	// Form State
 	const [formState, dispatch] = useReducer(createFormReducer, {
-		title: 'Form Title',
-		description: 'Form Description',
+		title: '',
+		description: '',
 		questions: [],
 	});
 
