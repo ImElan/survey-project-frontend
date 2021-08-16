@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BsX } from 'react-icons/bs';
+import { BsFillTrashFill } from 'react-icons/bs';
 
 function CheckboxComponent(props) {
 	const [isEdit, setIsEdit] = useState([false, false, false]);
@@ -74,9 +74,9 @@ function CheckboxComponent(props) {
 					className='form-control'
 					value={props.question}
 					type='text'
-					placeholder='Question'
+					placeholder='Question - Maximum 250 Characters'
 					size='50'
-					maxLength='100'
+					maxLength='250'
 					onChange={handleChange}
 				/>
 				<br />
@@ -85,24 +85,28 @@ function CheckboxComponent(props) {
 			<div>
 				{options.map((choice, i) => {
 					return (
-						<div key={i}>
-							<input type='checkbox' value={choice.value} />
-							{isEdit[i] === false ? (
-								<label onClick={() => addOption(i)}>{choice.option}</label>
-							) : (
-								<input
-									type='text'
-									value={options[i].option}
-									maxLength='100'
-									onBlur={() => updateOption(i)}
-									onChange={(e) => updateValue(e, i)}
-								/>
-							)}
-
+						<div key={i} className='row'>
+							<div className='col-md-8'>
+								<input type='checkbox' value={choice.value} />
+								{isEdit[i] === false ? (
+									<label onClick={() => addOption(i)}>{choice.option}</label>
+								) : (
+									<input
+										type='text'
+										value={options[i].option}
+										maxLength='250'
+										autoFocus='autofocus'
+										onBlur={() => updateOption(i)}
+										onChange={(e) => updateValue(e, i)}
+									/>
+								)}
+							</div>
 							{options.length > 3 ? (
-								<button onClick={() => handleRemove(i)}>
-									<BsX />
-								</button>
+								<div className='col-md-4'>
+									<button className='float-end' onClick={() => handleRemove(i)}>
+										<BsFillTrashFill />
+									</button>
+								</div>
 							) : (
 								<p></p>
 							)}
@@ -116,6 +120,7 @@ function CheckboxComponent(props) {
 					Add Option
 				</button>
 			</div>
+			<br></br>
 		</div>
 	);
 }
