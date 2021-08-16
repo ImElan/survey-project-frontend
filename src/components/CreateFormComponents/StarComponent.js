@@ -81,7 +81,6 @@ function StarComponent(props) {
 						<Form.Label></Form.Label>
 						<Form.Control
 							style={{ height: 35 }}
-							size='lg'
 							type='text'
 							onChange={questionChange}
 							title={props.question}

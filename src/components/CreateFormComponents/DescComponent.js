@@ -28,7 +28,6 @@ function DescComponent(props) {
 
 						<Form.Control
 							style={{ height: 35 }}
-							size='lg'
 							type='text'
 							onChange={handleChange}
 							title={props.question}

@@ -103,9 +103,10 @@ function CheckboxComponent(props) {
 							</div>
 							{options.length > 3 ? (
 								<div className='col-md-4'>
-									<button className='float-end' onClick={() => handleRemove(i)}>
-										<BsFillTrashFill />
-									</button>
+									<BsFillTrashFill
+										className='float-end'
+										onClick={() => handleRemove(i)}
+									/>
 								</div>
 							) : (
 								<p></p>
