@@ -71,8 +71,8 @@ function CreateFormContainer(props) {
 				questionType: 'SINGLE',
 				required: false,
 				isValid: false,
-				numStars: '3',
-				isHalfStarAllowed: false,
+				numStars: null,
+				isHalfStarAllowed: null,
 			});
 		}
 		dispatch({ type: 'SET_INITIAL_QUESTIONS', initialQuestions });
@@ -150,6 +150,8 @@ function CreateFormContainer(props) {
 				questionType: question.questionType,
 				question: question.question,
 				options: optionsArr,
+				noOfStars: question.numStars,
+				isHalfStarAllowed: question.isHalfStarAllowed,
 			};
 		});
 

@@ -14,7 +14,7 @@ function NameForm(props) {
 	const handleChange1 = (event) => {
 		var x = event.target.value;
 		if (x.length > (event.maxLength || 0) + 79) showtext1();
-		else props.titleChangeHandler(event.target.vaue);
+		else props.titleChangeHandler(event.target.value);
 	};
 
 	const handleChange2 = (event) => {
