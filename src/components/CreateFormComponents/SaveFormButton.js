@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Button, Alert} from 'react-bootstrap';
-import PopUpModal from './PopUpModal';
+import PopUpModal from '../PopUpModal';
 
 
 function SaveFormButton(props) {
