@@ -67,7 +67,6 @@ function CreateFormContainer(props) {
 				options: [
 					{ optionId: uuidv4(), option: 'Option 1' },
 					{ optionId: uuidv4(), option: 'Option 2' },
-					{ optionId: uuidv4(), option: 'Option 3' },
 				],
 				questionType: 'SINGLE',
 				required: false,

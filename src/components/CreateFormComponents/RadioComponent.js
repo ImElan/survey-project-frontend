@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { BsFillTrashFill } from 'react-icons/bs';
 
 function RadioComponent(props) {
-	const [isEdit, setIsEdit] = useState([false, false, false]);
+	const [isEdit, setIsEdit] = useState([false, false]);
 
 	const { options } = props;
 
@@ -85,26 +85,31 @@ function RadioComponent(props) {
 			<div>
 				{options.map((choice, i) => {
 					return (
-						<div key={i} className="row">
-							<div className="col-md-8">
+						<div key={i} className='row'>
+							<div className='col-md-8'>
 								<input type='radio' value={choice.value} />
 								{isEdit[i] === false ? (
-									<label onClick={() => addOption(i)}>{choice.option}</label>
+									<label style={{ marginLeft: '7px' }} onClick={() => addOption(i)}>
+										{choice.option}
+									</label>
 								) : (
 									<input
 										type='text'
 										value={options[i].option}
 										maxLength='250'
-										autoFocus="autofocus"
+										autoFocus='autofocus'
 										onBlur={() => updateOption(i)}
 										onChange={(e) => updateValue(e, i)}
 									/>
 								)}
 							</div>
 							{options.length > 2 ? (
-								<div className="col-md-4"><button className="float-end" onClick={() => handleRemove(i)}>
-									<BsFillTrashFill />
-								</button></div>
+								<div className='col-md-4'>
+									<BsFillTrashFill
+										className='float-end'
+										onClick={() => handleRemove(i)}
+									/>
+								</div>
 							) : (
 								<p></p>
 							)}
