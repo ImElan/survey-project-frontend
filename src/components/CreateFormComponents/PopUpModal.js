@@ -10,8 +10,12 @@ function PopUpModal(props) {
 
 	return (
 		<Modal show={show} onHide={hidePopUp} centered>
-			<Modal.Header closeButton>
+			<Modal.Header>
 				<Modal.Title style={{ height: '1.5rem' }}>{popUpTitle}</Modal.Title>
+                                <Button variant = "outline-danger"
+                                        size = "sm"
+                                        onClick={hidePopUp}>×
+                                </Button>
 			</Modal.Header>
 
 			<Modal.Body>{popUpBody}</Modal.Body>
