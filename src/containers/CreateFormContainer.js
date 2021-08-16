@@ -51,7 +51,7 @@ function CreateFormContainer(props) {
 		for (let i = 0; i < minQuestionAllowed; i++) {
 			initialQuestions.push({
 				questionId: uuidv4(),
-				question: 'Question',
+				question: '',
 				options: [
 					{ optionId: uuidv4(), option: 'Option 1' },
 					{ optionId: uuidv4(), option: 'Option 2' },
@@ -209,7 +209,7 @@ function CreateFormContainer(props) {
 			<Row
 				className='justify-content-md-center'
 				style={{
-					backgroundColor: '#4B0082',
+					backgroundColor: '#4B0082', //4B0082
 					paddingTop: '16px',
 					paddingBottom: '35px',
 				}}
@@ -224,46 +224,56 @@ function CreateFormContainer(props) {
 				</Col>
 			</Row>
 
-			<Row
-				sm='auto'
-				className='justify-content-end'
-				style={{
-					padding: '12px',
-				}}
-			>
-				{/* ADD BUTTON COMPONENT GOES HERE */}
-				<AddQuestionButton
-					tooltipMessage={tooltipMessage}
-					disabled={formState.questions.length >= maxQuestionAllowed}
-					addQuestionHandler={handleAddQuestion}
-					questionTypes={['STAR', 'DESCRIPTIVE', 'SINGLE', 'MULTIPLE']}
-				/>
-			</Row>
-
 			<Row className='justify-content-md-center'>
 				<div
 					style={{
-						backgroundColor: '#e6e6e6',
-						width: '85%',
-						border: 'solid lightgray 3px',
+						backgroundColor: '#D8D8D8',
+						width: '75%',
+						border: 'solid lightgray 2px',
+						borderTop: '0px',
 						borderRadius: '8px',
 					}}
 				>
+					<Row
+						sm='auto'
+						className='justify-content-end'
+						style={{
+							padding: '12px',
+						}}
+					>
+						{/* ADD BUTTON COMPONENT GOES HERE */}
+						<AddQuestionButton
+							tooltipMessage={tooltipMessage}
+							disabled={formState.questions.length >= maxQuestionAllowed}
+							addQuestionHandler={handleAddQuestion}
+							questionTypes={['STAR', 'DESCRIPTIVE', 'SINGLE', 'MULTIPLE']}
+						/>
+					</Row>
+
+					{/*<Row className = "justify-content-md-center" >
+			<div style={{ 
+				    backgroundColor: '#e6e6e6',
+				    width:'85%',
+					border: 'solid lightgray 3px',
+					borderRadius: '8px'
+				 }}>*/}
 					{formState.questions.map((question) => (
 						<Row
 							className='justify-content-md-center'
 							key={question.questionId}
 							style={{
 								paddingTop: '20px',
-								paddingBottom: '15px',
+								paddingBottom: '10px',
 							}}
 						>
 							<Col
-								sm={7}
+								sm={6}
 								style={{
-									marginRight: '5px',
-									borderRadius: '8px',
-									backgroundColor: '#87A6D0',
+									//marginRight: '5px',
+									borderRadius: '8px 0 0 8px',
+									backgroundColor: '#F0F0F0', //7866B2
+									border: 'solid black 1px',
+									//#e6e6e6
 								}}
 							>
 								{/* BASED ON QUESTION TYPE RENDER APPROPRIATE COMPONENT AND PASS IN THE PROPS */}
@@ -276,13 +286,15 @@ function CreateFormContainer(props) {
 								/>
 							</Col>
 							<Col
-								sm={4}
+								sm={3}
 								style={{
-									borderRadius: '8px',
-									backgroundColor: '#333333',
-									color: 'white',
+									borderRadius: '0 8px 8px 0',
+									backgroundColor: '#E8E8E8', //#333333 #87A6D0
+									color: 'black',
 									padding: '10px',
-									height: '210px',
+									border: 'solid black 1px',
+									borderLeft: '0px',
+									//height:'210px'
 								}}
 							>
 								<Dropdown
@@ -300,16 +312,20 @@ function CreateFormContainer(props) {
 							</Col>
 						</Row>
 					))}
+					<Row
+						className='text-center'
+						style={{
+							paddingTop: '20px',
+							paddingBottom: '30px',
+						}}
+					>
+						<SaveFormButton
+							formTitle={formState.title}
+							questionList={formState.questions}
+							saveFormHandler={handleSaveForm}
+						/>
+					</Row>
 				</div>
-			</Row>
-			<Row
-				className='text-center'
-				style={{
-					paddingTop: '20px',
-					paddingBottom: '30px',
-				}}
-			>
-				<SaveFormButton saveFormHandler={handleSaveForm} />
 			</Row>
 		</Container>
 	);

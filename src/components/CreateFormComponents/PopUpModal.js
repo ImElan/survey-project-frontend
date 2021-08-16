@@ -24,7 +24,6 @@ function PopUpModal(props) {
 						hidePopUp();
 					}}
 				>
-					{' '}
 					Yes, sure!
 				</Button>
 				<Button variant='secondary' onClick={hidePopUp}>

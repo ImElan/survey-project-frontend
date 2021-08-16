@@ -1,36 +1,68 @@
 import React, { useState } from 'react';
+import { Button, Alert } from 'react-bootstrap';
+import PopUpModal from './PopUpModal';
 import 'tachyons';
-import { Button, Modal } from 'react-bootstrap';
 
 function SaveFormButton(props) {
-	const { saveFormHandler } = props;
+	const { formTitle, questionList, saveFormHandler } = props;
 
 	const [show, popup] = useState(false);
-	const showModal = () => popup(true);
-	const hideModal = () => popup(false);
+	const [err, setAlert] = useState(false);
+	const [popUpTitle] = useState('Confirm Submission');
+	const [popUpBody] = useState(`Are you sure you want to save "${formTitle}" form?`);
+
+	const popUpOpen = () => {
+		popup(true);
+	};
+	const popUpClose = () => {
+		popup(false);
+	};
+
+	const showError = () => {
+		setAlert(true);
+	};
+
+	const errorCheck = () => {
+		let flag = true;
+		questionList.forEach(function (question) {
+			if (question.isValid === false) {
+				flag = false;
+			}
+		});
+
+		if (flag) {
+			//no error
+			popUpOpen();
+		} else {
+			//error found
+			showError();
+		}
+	};
 
 	return (
-		<div>
+		<div className='text-center'>
 			<Button
-				variant='outline-dark'
-				className='f4 fw5 bw1 grow pointer'
-				onClick={showModal}
+				variant='dark'
+				className='bg-purple f3 fw5 bw1 grow pointer'
+				onClick={errorCheck}
 			>
-				{' '}
-				Save and Create
+				Save Form
 			</Button>
 
-			<Modal show={show} onHide={hideModal} backdrop='static' keyboard={false}>
-				<Modal.Body className='f3 h3'>Confirm Form Creation</Modal.Body>
-				<Modal.Footer>
-					<Button variant='secondary' onClick={hideModal}>
-						Cancel
-					</Button>
-					<Button variant='primary' onClick={saveFormHandler}>
-						Confirm
-					</Button>
-				</Modal.Footer>
-			</Modal>
+			<Alert show={err} variant='danger'>
+				<h5>Could not save! Some empty fields found in your form.</h5>
+				<Button onClick={() => setAlert(false)} variant='outline-danger'>
+					Close!
+				</Button>
+			</Alert>
+
+			<PopUpModal
+				show={show}
+				popUpClose={popUpClose}
+				popUpTitle={popUpTitle}
+				popUpBody={popUpBody}
+				confirmHandler={saveFormHandler}
+			/>
 		</div>
 	);
 }
