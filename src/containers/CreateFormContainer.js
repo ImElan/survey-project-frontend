@@ -236,7 +236,7 @@ function CreateFormContainer(props) {
 				className='justify-content-md-center'
 				style={{
 					backgroundColor: '#4B0082', //4B0082
-					paddingTop: '16px',
+					paddingTop: '0px',
 					paddingBottom: '35px',
 				}}
 			>
@@ -295,59 +295,64 @@ function CreateFormContainer(props) {
 						)
 						.map((question) => (
 							<Row
-								className='justify-content-md-center'
-								key={question.questionId}
+							className='justify-content-md-center'
+							key={question.questionId}
+							style={{
+								paddingTop: '0px',
+								paddingBottom: '10px',
+								marginTop: '20px'
+							
+							}}
+						>
+							<Col
+								sm={9}
 								style={{
-									paddingTop: '20px',
-									paddingBottom: '10px',
+									//marginRight: '5px',
+									padding: '10px 25px',
+									borderRadius: '8px',
+									backgroundColor: '#F0F0F0', //7866B2
+									border: 'solid black 1px',
+									//#e6e6e6
 								}}
 							>
-								<Col
-									sm={6}
-									style={{
-										//marginRight: '5px',
-										borderRadius: '8px 0 0 8px',
-										backgroundColor: '#F0F0F0', //7866B2
-										border: 'solid black 1px',
-										//#e6e6e6
-									}}
-								>
-									{/* BASED ON QUESTION TYPE RENDER APPROPRIATE COMPONENT AND PASS IN THE PROPS */}
-									{renderQuestionComponent(question)}
-									<RequiredButton
-										rounded={true}
-										questionId={question.questionId}
-										required={question.required}
-										requiredChangeHandler={handleRequiredChange}
-									/>
-								</Col>
-								<Col
-									sm={3}
-									style={{
-										borderRadius: '0 8px 8px 0',
-										backgroundColor: '#E8E8E8', //#333333 #87A6D0
-										color: 'black',
-										padding: '10px',
-										border: 'solid black 1px',
-										borderLeft: '0px',
-										//height:'210px'
-									}}
-								>
-									<Dropdown
-										questionId={question.questionId}
-										questionType={question.questionType}
-										questionTypeChangeHandler={handleQuestionTypeChange}
-									/>
 
-									<DeleteButton
-										questionId={question.questionId}
-										disabled={formState.questions.length <= minQuestionAllowed}
-										minQuestions={minQuestionAllowed}
-										deleteQuestionHandler={handleRemoveQuestion}
-									/>
+							   <Row
+									sm='auto'
+									className='justify-content-end'
+									style={{
+										marginBottom: '0px'
+										//padding: '12px',
+									}}
+								>
+								<Col>
+								<Dropdown
+									questionId={question.questionId}
+									questionType={question.questionType}
+									questionTypeChangeHandler={handleQuestionTypeChange}
+								/>
+                                </Col>
+                                <Col style={{marginTop:'10px'}}>
+								<DeleteButton
+									questionId={question.questionId}
+									disabled={formState.questions.length <= minQuestionAllowed}
+									minQuestions={minQuestionAllowed}
+									deleteQuestionHandler={handleRemoveQuestion}
+								/>
 								</Col>
-							</Row>
-						))}
+								</Row>
+
+								{/* BASED ON QUESTION TYPE RENDER APPROPRIATE COMPONENT AND PASS IN THE PROPS */}
+								{renderQuestionComponent(question)}
+								<RequiredButton
+									rounded={true}
+									questionId={question.questionId}
+									required={question.required}
+									requiredChangeHandler={handleRequiredChange}
+								/>
+
+							</Col>
+						</Row>
+					))}
 					<Row
 						className='text-center'
 						style={{
