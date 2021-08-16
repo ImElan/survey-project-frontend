@@ -19,28 +19,25 @@ function DeleteQuestionButton(props) {
 	const confirmHandler = () => {
 		props.deleteQuestionHandler(props.questionId);
 	};
+
+	let toolTipMessage;
+	if (props.disabled) {
+		toolTipMessage = `Can not have less than ${props.minQuestions} questions`;
+	} else {
+		toolTipMessage = 'Delete the question';
+	}
+
 	return (
 		<div>
 			<OverlayTrigger
 				placement='bottom'
 				delay={{ show: 250, hide: 100 }}
-				overlay={(properties) => (
-					<Tooltip id='button-tooltip'>
-						{props.disabled ? (
-							<span> Can not have less than {props.minQuestions} questions</span>
-						) : (
-							<span> Delete the question</span>
-						)}
-					</Tooltip>
-				)}
+				overlay={<Tooltip id='button-tooltip'>{toolTipMessage}</Tooltip>}
 			>
-				<BsFillTrashFill onClick={handleClick} size='1.5rem' />
+				<div className='d-inline-block'>
+					<BsFillTrashFill onClick={handleClick} size='1.5rem' />
+				</div>
 			</OverlayTrigger>
-			<span
-				style={{ marginTop: '0.25rem', marginLeft: '0.65rem', fontFamily: 'Monospace' }}
-			>
-				Delete
-			</span>
 			<PopUp
 				show={popUp}
 				popUpClose={popUpClose}
