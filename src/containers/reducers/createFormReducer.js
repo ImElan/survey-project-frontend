@@ -126,13 +126,28 @@ const createFormReducer = (state, action) => {
 					questionType: action.newQuestionType,
 				};
 
-				if (action.newQuestionType === 'DESCRIPTIVE' || action.questionType === 'STAR') {
-					newQuestion.options = [];
+				if (
+					action.newQuestionType === 'DESCRIPTIVE' ||
+					action.newQuestionType === 'STAR'
+				) {
+					newQuestion.options = null;
 				}
 
-				if (action.questionType === 'STAR') {
-					newQuestion.numStars = 3;
+				if (action.newQuestionType === 'STAR') {
+					newQuestion.numStars = '3';
 					newQuestion.isHalfStarAllowed = false;
+				}
+
+				if (
+					action.newQuestionType === 'SINGLE' ||
+					action.newQuestionType === 'MULTIPLE'
+				) {
+					newQuestion.options = [
+						{ optionId: uuidv4(), option: 'Option 1' },
+						{ optionId: uuidv4(), option: 'Option 2' },
+					];
+					newQuestion.numStars = null;
+					newQuestion.isHalfStarAllowed = null;
 				}
 
 				return newQuestion;
@@ -154,10 +169,12 @@ const createFormReducer = (state, action) => {
 				questionType: action.questionType,
 				required: false,
 				isValid: false,
+				numStars: null,
+				isHalfStarAllowed: null,
 			};
 
-			if (action.newQuestionType === 'DESCRIPTIVE' || action.questionType === 'STAR') {
-				newQuestion.options = [];
+			if (action.questionType === 'DESCRIPTIVE' || action.questionType === 'STAR') {
+				newQuestion.options = null;
 			}
 
 			if (action.questionType === 'STAR') {
