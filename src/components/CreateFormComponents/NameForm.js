@@ -13,71 +13,52 @@ function NameForm(props) {
 	};
 	const handleChange1 = (event) => {
 		var x = event.target.value;
-		if (x.length > (event.maxLength || 0) + 5) showtext1();
+		if (x.length > (event.maxLength || 0) + 79) showtext1();
 		else props.titleChangeHandler(event.target.vaue);
 	};
 
 	const handleChange2 = (event) => {
 		var x = event.target.value;
-		if (x.length > (event.maxLength || 0) + 5) showtext2();
+		if (x.length > (event.maxLength || 0) + 249) showtext2();
 		else props.descriptionChangeHandler(event.target.value);
 	};
 
 	return (
 		<div>
 			<br />
-			<InputGroup className='mb-3'>
-				<Form.Label
-					style={{
-						border: '1px solid #FF00FF',
-						width: '150px',
-						background: '#FFE8EF',
-						padding: '3px',
-						display: 'flex',
-					}}
-				>
-					Form Name
-				</Form.Label>
-				<FormControl
-					style={{ display: 'flex' }}
-					aria-label='Default'
-					aria-describedby='inputGroup-sizing-default'
-					placeholder='Enter form name'
-					maxLength='80'
-					value={props.description}
-					onChange={handleChange1}
-				/>
-				{show1 && (
-					<Form.Text id='passwordHelpBlock' muted>
-						Form title cannot exceed 5 characters
+			<Form.Label style={{ color: 'white' }}>Form Name</Form.Label>
+			<FormControl
+				aria-label='Default'
+				aria-describedby='inputGroup-sizing-default'
+				placeholder='Enter form name'
+				maxLength='80'
+				value={props.title}
+				onChange={handleChange1}
+			/>
+			{show1 && (
+				<div>
+					<Form.Text style={{ color: 'white' }} id='passwordHelpBlock' muted>
+						Form title cannot exceed 80 characters
 					</Form.Text>
-				)}
-			</InputGroup>
-			<InputGroup classname='mb-3'>
-				<Form.Label
-					style={{
-						border: '1px solid #FF00FF',
-						width: '150px',
-						background: '#FFE8EF',
-						padding: '3px',
-					}}
-				>
-					Form Description
-				</Form.Label>
-				<FormControl
-					as='textarea'
-					aria-label='With textarea'
-					placeholder='Enter form description'
-					maxLength='250'
-					value={props.description}
-					onChange={handleChange2}
-				/>
-				{show2 && (
-					<Form.Text id='passwordHelpBlock' muted>
-						Form description cannot exceed 5 characters
-					</Form.Text>
-				)}
-			</InputGroup>
+					<br />
+				</div>
+			)}
+			<Form.Label style={{ marginTop: '10px', color: 'white' }}>
+				Form Description
+			</Form.Label>
+			<FormControl
+				as='textarea'
+				aria-label='With textarea'
+				placeholder='Enter form description'
+				maxLength='250'
+				value={props.description}
+				onChange={handleChange2}
+			/>
+			{show2 && (
+				<Form.Text style={{ color: 'white' }} id='passwordHelpBlock' muted>
+					Form description cannot exceed 250 characters
+				</Form.Text>
+			)}
 		</div>
 	);
 }
