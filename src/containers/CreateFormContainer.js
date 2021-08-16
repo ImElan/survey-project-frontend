@@ -14,6 +14,7 @@ import SaveFormButton from '../components/CreateFormComponents/SaveFormButton';
 import CheckboxComponent from '../components/CreateFormComponents/CheckboxComponent';
 import RadioButtonComponent from '../components/CreateFormComponents/RadioComponent';
 import RequiredButton from '../components/CreateFormComponents/RequiredCom/Switch';
+import axios from 'axios';
 
 function CreateFormContainer(props) {
 	// Form State
@@ -30,8 +31,18 @@ function CreateFormContainer(props) {
 	// API REQUEST TO GET CONFIG VALUES
 	useEffect(() => {
 		// get min questions and max question from backend;
-		setMinQuestionAllowed(2);
-		setMaxQuestionAllowed(10);
+		const fetchData = async () => {
+			try {
+				const response = await axios.get('http://localhost:8080/api/config');
+				const config = response.data[0];
+				setMinQuestionAllowed(config.minNUmberOfQuestionsAllowed);
+				setMaxQuestionAllowed(config.maxNumberOfQuestionsAllowed);
+			} catch (error) {
+				console.log(error);
+			}
+		};
+
+		fetchData();
 	}, []);
 
 	// RENDER THE INITIAL NUMBER OF QUESTIONS ON THE SCREEN BASED ON MIN QUESTIONS ALLOWED VALUE
@@ -46,7 +57,7 @@ function CreateFormContainer(props) {
 					{ optionId: uuidv4(), option: 'Option 2' },
 					{ optionId: uuidv4(), option: 'Option 3' },
 				],
-				questionType: 'DESCRIPTIVE',
+				questionType: 'SINGLE',
 				required: false,
 				isValid: false,
 			});
@@ -108,9 +119,33 @@ function CreateFormContainer(props) {
 	};
 
 	// Method to save the form by sending a post request to backend
-	const handleSaveForm = () => {
+	const handleSaveForm = async () => {
 		// send Post request to backend with the input state as body
-		console.log(formState);
+		const questionsToSendToBackend = formState.questions.map((question) => {
+			const optionsArr = question.options.map((option) => option.option);
+
+			return {
+				questionType: question.questionType,
+				question: question.question,
+				options: optionsArr,
+			};
+		});
+
+		const requestBody = {
+			formTitle: formState.title,
+			formDescription: formState.description,
+			surveyQuestions: questionsToSendToBackend,
+		};
+
+		console.log(requestBody);
+
+		try {
+			const response = await axios.post('http://localhost:8080/api/addform', requestBody);
+			console.log(response.data);
+		} catch (error) {
+			console.log(error);
+			console.log(error.response);
+		}
 	};
 
 	// Method to render different question component in the UI based on question type.
@@ -170,31 +205,30 @@ function CreateFormContainer(props) {
 	}
 
 	return (
-		<Container fluid >
-		    
-			<Row className="justify-content-md-center"
+		<Container fluid>
+			<Row
+				className='justify-content-md-center'
 				style={{
 					backgroundColor: '#4B0082',
 					paddingTop: '16px',
-					paddingBottom: '35px'
+					paddingBottom: '35px',
 				}}
 			>
 				<Col sm={6}>
-				<FormHeader
-					title={formState.title}
-					description={formState.description}
-					titleChangeHandler={handleTitleChange}
-					descriptionChangeHandler={handleDescriptionChange}
-				/>
+					<FormHeader
+						title={formState.title}
+						description={formState.description}
+						titleChangeHandler={handleTitleChange}
+						descriptionChangeHandler={handleDescriptionChange}
+					/>
 				</Col>
-				
 			</Row>
 
 			<Row
 				sm='auto'
 				className='justify-content-end'
 				style={{
-					padding: '12px'
+					padding: '12px',
 				}}
 			>
 				{/* ADD BUTTON COMPONENT GOES HERE */}
@@ -206,75 +240,77 @@ function CreateFormContainer(props) {
 				/>
 			</Row>
 
-			<Row className = "justify-content-md-center" >
-			<div style={{ 
-				    backgroundColor: '#e6e6e6',
-				    width:'85%',
-					border: 'solid lightgray 3px',
-					borderRadius: '8px'
-				 }}>
-				{formState.questions.map((question) => (
-					<Row className="justify-content-md-center"
-						key={question.questionId}
-						style={{
-							paddingTop: '20px',
-							paddingBottom: '15px',		
-						}}
-					>
-						<Col
-							sm={7}
+			<Row className='justify-content-md-center'>
+				<div
+					style={{
+						backgroundColor: '#e6e6e6',
+						width: '85%',
+						border: 'solid lightgray 3px',
+						borderRadius: '8px',
+					}}
+				>
+					{formState.questions.map((question) => (
+						<Row
+							className='justify-content-md-center'
+							key={question.questionId}
 							style={{
-								marginRight: '5px',
-								borderRadius: '8px',
-								backgroundColor:'#87A6D0'
+								paddingTop: '20px',
+								paddingBottom: '15px',
 							}}
 						>
-							{/* BASED ON QUESTION TYPE RENDER APPROPRIATE COMPONENT AND PASS IN THE PROPS */}
-							{renderQuestionComponent(question)}
-							<RequiredButton
-								rounded={true}
-								questionId={question.questionId}
-								required={question.required}
-								requiredChangeHandler={handleRequiredChange}
-							/>
-						</Col>
-						<Col
-							sm={4}
-							style={{
-								borderRadius: '8px',
-								backgroundColor: '#333333',
-								color: 'white',
-								padding: '10px',
-								height:'210px'
-							}}
-						>
-							<Dropdown
-								questionId={question.questionId}
-								questionType={question.questionType}
-								questionTypeChangeHandler={handleQuestionTypeChange}
-							/>
+							<Col
+								sm={7}
+								style={{
+									marginRight: '5px',
+									borderRadius: '8px',
+									backgroundColor: '#87A6D0',
+								}}
+							>
+								{/* BASED ON QUESTION TYPE RENDER APPROPRIATE COMPONENT AND PASS IN THE PROPS */}
+								{renderQuestionComponent(question)}
+								<RequiredButton
+									rounded={true}
+									questionId={question.questionId}
+									required={question.required}
+									requiredChangeHandler={handleRequiredChange}
+								/>
+							</Col>
+							<Col
+								sm={4}
+								style={{
+									borderRadius: '8px',
+									backgroundColor: '#333333',
+									color: 'white',
+									padding: '10px',
+									height: '210px',
+								}}
+							>
+								<Dropdown
+									questionId={question.questionId}
+									questionType={question.questionType}
+									questionTypeChangeHandler={handleQuestionTypeChange}
+								/>
 
-							<DeleteButton
-								questionId={question.questionId}
-								disabled={formState.questions.length <= minQuestionAllowed}
-								minQuestions={minQuestionAllowed}
-								deleteQuestionHandler={handleRemoveQuestion}
-							/>
-						</Col>
-					</Row>
-				))}
-			</div>
+								<DeleteButton
+									questionId={question.questionId}
+									disabled={formState.questions.length <= minQuestionAllowed}
+									minQuestions={minQuestionAllowed}
+									deleteQuestionHandler={handleRemoveQuestion}
+								/>
+							</Col>
+						</Row>
+					))}
+				</div>
 			</Row>
 			<Row
 				className='text-center'
 				style={{
 					paddingTop: '20px',
-					paddingBottom: '30px'					
+					paddingBottom: '30px',
 				}}
 			>
 				<SaveFormButton saveFormHandler={handleSaveForm} />
 			</Row>
-			
 		</Container>
 	);
 }

@@ -14,7 +14,7 @@ function AddQuestionComponent(props) {
 		<div className='addQuestionButton'>
 			<Dropdown>
 				<OverlayTrigger
-					placement='right'
+					placement='top'
 					overlay={<Tooltip id='tooltip-right'>{tooltipMessage}</Tooltip>}
 				>
 					<div className='d-inline-block'>

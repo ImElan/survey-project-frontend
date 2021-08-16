@@ -121,10 +121,16 @@ const createFormReducer = (state, action) => {
 				if (question.questionId !== action.questionId) {
 					return question;
 				}
-				return {
+				const newQuestion = {
 					...question,
 					questionType: action.newQuestionType,
 				};
+
+				if (action.newQuestionType === 'DESCRIPTIVE' || action.questionType === 'STAR') {
+					newQuestion.options = [];
+				}
+
+				return newQuestion;
 			});
 			return {
 				...state,
