@@ -60,6 +60,8 @@ function CreateFormContainer(props) {
 				questionType: 'SINGLE',
 				required: false,
 				isValid: false,
+				numStars: '3',
+				isHalfStarAllowed: false,
 			});
 		}
 		dispatch({ type: 'SET_INITIAL_QUESTIONS', initialQuestions });
@@ -78,6 +80,15 @@ function CreateFormContainer(props) {
 	// Method to handle question text change in all question components
 	const handleQuestionTextChange = (questionId, newQuestionText, isValid) => {
 		dispatch({ type: 'QUESTION_TEXT_CHANGE', questionId, newQuestionText, isValid });
+	};
+
+	const handleStarNumberChange = (questionId, value) => {
+		console.log(questionId, value);
+		dispatch({ type: 'STAR_NUMBER_CHANGE', questionId, value });
+	};
+
+	const handleStarTypeChange = (questionId) => {
+		dispatch({ type: 'STAR_TYPE_CHANGE', questionId });
 	};
 
 	// Method to handle question option change in single and multiple choice quesitons.
@@ -157,6 +168,10 @@ function CreateFormContainer(props) {
 						question={question.question}
 						questionId={question.questionId}
 						questionTextChangeHandler={handleQuestionTextChange}
+						numStars={question.numStars}
+						isHalfStarAllowed={question.isHalfStarAllowed}
+						starTypeChangeHandler={handleStarTypeChange}
+						starNumChangeHandler={handleStarNumberChange}
 					/>
 				);
 			case 'DESCRIPTIVE':

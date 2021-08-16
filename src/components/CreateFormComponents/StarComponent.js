@@ -19,12 +19,6 @@ import {
 function StarComponent(props) {
 	// const [currentValue, setCurrentValue] = useState(0);
 	// const [hoverValue, setHoverValue] = useState(undefined);
-	const [radioValue, setRadioValue] = useState('fullStarPointType');
-
-	const radios = [
-		{ name: 'Full Star Points', value: 'fullStarPointType' },
-		{ name: 'Half Star Points', value: 'halfStarPointType' },
-	];
 
 	// const stars = Array(5).fill(0);
 
@@ -53,17 +47,14 @@ function StarComponent(props) {
 	};
 
 	const typeStarChange = (e) => {
-		setRadioValue(e.currentTarget.value);
-		const isValid = e.target.value === '' ? false : true;
-		props.starTypechangeHandler(props.questionId, e.currentTarget.value, isValid);
+		props.starTypeChangeHandler(props.questionId);
 	};
 
-	const [value, setValue] = useState('');
+	const [value, setValue] = useState('3');
 
 	const numStarsChange = (e) => {
 		setValue(e);
-		const isValid = e.target.value === '' ? false : true;
-		props.starTypechangeHandler(props.questionId, e, isValid);
+		props.starNumChangeHandler(props.questionId, e);
 	};
 
 	const options = {
@@ -105,6 +96,7 @@ function StarComponent(props) {
 							title={options[value]}
 							id='dropdown-menu-align-right'
 							onSelect={numStarsChange}
+							value={props.numStars}
 						>
 							{Object.keys(options).map((key, id) => (
 								<Dropdown.Item key={id} eventKey={key}>
@@ -117,20 +109,24 @@ function StarComponent(props) {
 						{/* <div>{printQuestion(value)}</div> */}
 
 						<ButtonGroup>
-							{radios.map((radio, idx) => (
-								<ToggleButton
-									key={idx}
-									id={`radio-${idx}`}
-									type='radio'
-									variant={idx % 2 ? 'outline-success' : 'outline-danger'}
-									name='radio'
-									value={radio.value}
-									checked={radioValue === radio.value}
-									onChange={typeStarChange}
-								>
-									{radio.name}
-								</ToggleButton>
-							))}
+							<ToggleButton
+								type='radio'
+								variant={'outline-success'}
+								name='radio'
+								checked={!props.isHalfStarAllowed}
+								onClick={typeStarChange}
+							>
+								Full Star
+							</ToggleButton>
+							<ToggleButton
+								type='radio'
+								variant={'outline-danger'}
+								name='radio'
+								checked={props.isHalfStarAllowed}
+								onClick={typeStarChange}
+							>
+								Half Star
+							</ToggleButton>
 						</ButtonGroup>
 
 						{/* <div>{printQuestion(initial)}</div> */}

@@ -41,6 +41,12 @@ function SaveFormButton(props) {
 
 	return (
 		<div className='text-center'>
+			<Alert show={err} variant='danger'>
+				<h5>Could not save! Some empty fields found in your form.</h5>
+				<Button onClick={() => setAlert(false)} variant='outline-danger'>
+					Close!
+				</Button>
+			</Alert>
 			<Button
 				variant='dark'
 				className='bg-purple f3 fw5 bw1 grow pointer'
@@ -48,13 +54,6 @@ function SaveFormButton(props) {
 			>
 				Save Form
 			</Button>
-
-			<Alert show={err} variant='danger'>
-				<h5>Could not save! Some empty fields found in your form.</h5>
-				<Button onClick={() => setAlert(false)} variant='outline-danger'>
-					Close!
-				</Button>
-			</Alert>
 
 			<PopUpModal
 				show={show}

@@ -130,6 +130,11 @@ const createFormReducer = (state, action) => {
 					newQuestion.options = [];
 				}
 
+				if (action.questionType === 'STAR') {
+					newQuestion.numStars = 3;
+					newQuestion.isHalfStarAllowed = false;
+				}
+
 				return newQuestion;
 			});
 			return {
@@ -152,9 +157,12 @@ const createFormReducer = (state, action) => {
 				isValid: false,
 			};
 
-			if (action.questionType === 'STAR') {
+			if (action.newQuestionType === 'DESCRIPTIVE' || action.questionType === 'STAR') {
 				newQuestion.options = [];
-				newQuestion.numStars = 5;
+			}
+
+			if (action.questionType === 'STAR') {
+				newQuestion.numStars = '3';
 				newQuestion.isHalfStarAllowed = false;
 			}
 
@@ -178,6 +186,37 @@ const createFormReducer = (state, action) => {
 			return {
 				...state,
 				questions: action.initialQuestions,
+			};
+
+		case 'STAR_NUMBER_CHANGE':
+			const newQuestionsAfterStarNumberChange = state.questions.map((question) => {
+				if (question.questionId !== action.questionId) {
+					return question;
+				}
+				return {
+					...question,
+					numStars: action.value,
+				};
+			});
+
+			return {
+				...state,
+				questions: newQuestionsAfterStarNumberChange,
+			};
+
+		case 'STAR_TYPE_CHANGE':
+			const newQuestionsAfterStarTypeChange = state.questions.map((question) => {
+				if (question.questionId !== action.questionId) {
+					return question;
+				}
+				return {
+					...question,
+					isHalfStarAllowed: !question.isHalfStarAllowed,
+				};
+			});
+			return {
+				...state,
+				questions: newQuestionsAfterStarTypeChange,
 			};
 		default:
 			return state;
