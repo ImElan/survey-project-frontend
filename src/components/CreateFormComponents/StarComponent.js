@@ -2,7 +2,13 @@ import { useState } from 'react';
 import React from 'react';
 import { FaStar } from 'react-icons/fa';
 // import { makeStyles } from '@material-ui/core/styles';
-import { Form, ToggleButton, ButtonGroup, Dropdown, DropdownButton } from 'react-bootstrap';
+import {
+	Form,
+	ToggleButton,
+	ButtonGroup,
+	Dropdown,
+	DropdownButton,
+} from 'react-bootstrap';
 // import { TextField } from "@material-ui/core";
 
 // const colors = {
@@ -15,10 +21,10 @@ function StarComponent(props) {
 	// const [hoverValue, setHoverValue] = useState(undefined);
 	const [radioValue, setRadioValue] = useState('fullStarPointType');
 
-
 	const radios = [
 		{ name: 'Full Star Points', value: 'fullStarPointType' },
-		{ name: 'Half Star Points', value: 'halfStarPointType' }];
+		{ name: 'Half Star Points', value: 'halfStarPointType' },
+	];
 
 	// const stars = Array(5).fill(0);
 
@@ -43,23 +49,22 @@ function StarComponent(props) {
 	const questionChange = (e) => {
 		final(e.target.value);
 		const isValid = e.target.value === '' ? false : true;
-		props.questionTextChangeHandler(props.questionId, e.target.value,isValid);
+		props.questionTextChangeHandler(props.questionId, e.target.value, isValid);
 	};
 
 	const typeStarChange = (e) => {
 		setRadioValue(e.currentTarget.value);
 		const isValid = e.target.value === '' ? false : true;
-		props.starTypechangeHandler(props.questionId, e.currentTarget.value,isValid);
+		props.starTypechangeHandler(props.questionId, e.currentTarget.value, isValid);
 	};
 
 	const [value, setValue] = useState('');
 
 	const numStarsChange = (e) => {
-		setValue(e)
+		setValue(e);
 		const isValid = e.target.value === '' ? false : true;
-		props.starTypechangeHandler(props.questionId,e,isValid);
-
-	}
+		props.starTypechangeHandler(props.questionId, e, isValid);
+	};
 
 	const options = {
 		3: '3',
@@ -69,16 +74,15 @@ function StarComponent(props) {
 		7: '7',
 		8: '8',
 		9: '9',
-		10: '10'
+		10: '10',
 	};
 
 	// const printQuestion = () => {
 	// 	return `The Content is ${value}`
 	// }
 
-
 	return (
-		<div >
+		<div>
 			<form>
 				{/* <TextField id="outlined-basic" label="Question" multiline={false}  onChange={handleChange} InputProps={{style:{width:'43ch'}}} /><br></br><br></br> */}
 				<Form>
@@ -88,25 +92,18 @@ function StarComponent(props) {
 							style={{ height: 35 }}
 							size='lg'
 							type='text'
-<<<<<<< HEAD
-							onChange={handleChange}
-							title={props.question}
-							placeholder='Question'
-							value={initial}
-						/>
-=======
 							onChange={questionChange}
 							title={props.question}
 							value={initial}
 							placeholder='Question - Maximum 250 Characters'
-							maxlength="250"
+							maxlength='250'
 						/>
 						<br></br>
-						<div >Number of stars required : </div>
+						<div>Number of stars required : </div>
 						<DropdownButton
 							alignRight
 							title={options[value]}
-							id="dropdown-menu-align-right"
+							id='dropdown-menu-align-right'
 							onSelect={numStarsChange}
 						>
 							{Object.keys(options).map((key, id) => (
@@ -124,9 +121,9 @@ function StarComponent(props) {
 								<ToggleButton
 									key={idx}
 									id={`radio-${idx}`}
-									type="radio"
+									type='radio'
 									variant={idx % 2 ? 'outline-success' : 'outline-danger'}
-									name="radio"
+									name='radio'
 									value={radio.value}
 									checked={radioValue === radio.value}
 									onChange={typeStarChange}
@@ -136,18 +133,13 @@ function StarComponent(props) {
 							))}
 						</ButtonGroup>
 
->>>>>>> feature/starcomponent
 						{/* <div>{printQuestion(initial)}</div> */}
 						<br />
 						<br />
 					</Form.Group>
 				</Form>
 			</form>
-<<<<<<< HEAD
-			<div style={styles.stars}>
-=======
 			{/* <div style={styles.stars}>
->>>>>>> feature/starcomponent
 				{stars.map((_, index) => {
 					return (
 						<FaStar
@@ -164,11 +156,7 @@ function StarComponent(props) {
 						/>
 					);
 				})}
-<<<<<<< HEAD
-			</div>
-=======
 			</div> */}
->>>>>>> feature/starcomponent
 
 			{/* Display the Rating */}
 
