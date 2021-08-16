@@ -27,8 +27,7 @@ function PopUpModal(props) {
 						confirmHandler();
 						hidePopUp();
 					}}
-				>
-					Yes, sure!
+				> Confirm
 				</Button>
 				<Button variant='secondary' onClick={hidePopUp}>
 					Cancel
