@@ -30,7 +30,7 @@ function PopUpModal(props) {
                     <Button variant = "primary" onClick = {()=>{
                                                                 confirmHandler();
                                                                 hidePopUp();
-                                                                }}> Yes, sure!
+                                                                }}> Confirm
                     </Button>
                     <Button variant = "secondary" onClick = {hidePopUp}>Cancel</Button>
                 </Modal.Footer>
