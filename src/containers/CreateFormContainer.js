@@ -14,6 +14,9 @@ import SaveFormButton from '../components/CreateFormComponents/SaveFormButton';
 import CheckboxComponent from '../components/CreateFormComponents/CheckboxComponent';
 import RadioButtonComponent from '../components/CreateFormComponents/RadioComponent';
 import RequiredButton from '../components/CreateFormComponents/RequiredCom/Switch';
+import PopDown from '../components/CreateFormComponents/PopDown';
+import Paging from '../components/CreateFormComponents/Paging';
+
 import axios from 'axios';
 
 function CreateFormContainer(props) {
@@ -27,6 +30,15 @@ function CreateFormContainer(props) {
 	// State holding maximum question allowed (will get from backend later)
 	const [minQuestionAllowed, setMinQuestionAllowed] = useState(1);
 	const [maxQuestionAllowed, setMaxQuestionAllowed] = useState(10);
+
+	const [currentPage, setCurrentPage] = useState(1);
+	const [questionsPerPage, setquestionsPerPage] = useState(5);
+	const pagechangerequesthandler = (number) => {
+		setCurrentPage(number);
+	};
+	const questionsPerPageHandler = (option) => {
+		setquestionsPerPage(option);
+	};
 
 	// API REQUEST TO GET CONFIG VALUES
 	useEffect(() => {
@@ -256,6 +268,10 @@ function CreateFormContainer(props) {
 							padding: '12px',
 						}}
 					>
+						<PopDown
+							totalQuestions={formState.questions.length}
+							questionsPerPageHandler={questionsPerPageHandler}
+						/>
 						{/* ADD BUTTON COMPONENT GOES HERE */}
 						<AddQuestionButton
 							tooltipMessage={tooltipMessage}
@@ -272,61 +288,67 @@ function CreateFormContainer(props) {
 					border: 'solid lightgray 3px',
 					borderRadius: '8px'
 				 }}>*/}
-					{formState.questions.map((question) => (
-						<Row
-							className='justify-content-md-center'
-							key={question.questionId}
-							style={{
-								paddingTop: '20px',
-								paddingBottom: '10px',
-							}}
-						>
-							<Col
-								sm={6}
+					{/* page 1 */}
+					{formState.questions
+						.slice(
+							(currentPage - 1) * questionsPerPage,
+							(currentPage - 1) * questionsPerPage + questionsPerPage
+						)
+						.map((question) => (
+							<Row
+								className='justify-content-md-center'
+								key={question.questionId}
 								style={{
-									//marginRight: '5px',
-									borderRadius: '8px 0 0 8px',
-									backgroundColor: '#F0F0F0', //7866B2
-									border: 'solid black 1px',
-									//#e6e6e6
+									paddingTop: '20px',
+									paddingBottom: '10px',
 								}}
 							>
-								{/* BASED ON QUESTION TYPE RENDER APPROPRIATE COMPONENT AND PASS IN THE PROPS */}
-								{renderQuestionComponent(question)}
-								<RequiredButton
-									rounded={true}
-									questionId={question.questionId}
-									required={question.required}
-									requiredChangeHandler={handleRequiredChange}
-								/>
-							</Col>
-							<Col
-								sm={3}
-								style={{
-									borderRadius: '0 8px 8px 0',
-									backgroundColor: '#E8E8E8', //#333333 #87A6D0
-									color: 'black',
-									padding: '10px',
-									border: 'solid black 1px',
-									borderLeft: '0px',
-									//height:'210px'
-								}}
-							>
-								<Dropdown
-									questionId={question.questionId}
-									questionType={question.questionType}
-									questionTypeChangeHandler={handleQuestionTypeChange}
-								/>
+								<Col
+									sm={6}
+									style={{
+										//marginRight: '5px',
+										borderRadius: '8px 0 0 8px',
+										backgroundColor: '#F0F0F0', //7866B2
+										border: 'solid black 1px',
+										//#e6e6e6
+									}}
+								>
+									{/* BASED ON QUESTION TYPE RENDER APPROPRIATE COMPONENT AND PASS IN THE PROPS */}
+									{renderQuestionComponent(question)}
+									<RequiredButton
+										rounded={true}
+										questionId={question.questionId}
+										required={question.required}
+										requiredChangeHandler={handleRequiredChange}
+									/>
+								</Col>
+								<Col
+									sm={3}
+									style={{
+										borderRadius: '0 8px 8px 0',
+										backgroundColor: '#E8E8E8', //#333333 #87A6D0
+										color: 'black',
+										padding: '10px',
+										border: 'solid black 1px',
+										borderLeft: '0px',
+										//height:'210px'
+									}}
+								>
+									<Dropdown
+										questionId={question.questionId}
+										questionType={question.questionType}
+										questionTypeChangeHandler={handleQuestionTypeChange}
+									/>
 
-								<DeleteButton
-									questionId={question.questionId}
-									disabled={formState.questions.length <= minQuestionAllowed}
-									minQuestions={minQuestionAllowed}
-									deleteQuestionHandler={handleRemoveQuestion}
-								/>
-							</Col>
-						</Row>
-					))}
+									<DeleteButton
+										questionId={question.questionId}
+										disabled={formState.questions.length <= minQuestionAllowed}
+										minQuestions={minQuestionAllowed}
+										deleteQuestionHandler={handleRemoveQuestion}
+									/>
+								</Col>
+							</Row>
+						))}
 					<Row
 						className='text-center'
 						style={{
@@ -342,6 +364,12 @@ function CreateFormContainer(props) {
 					</Row>
 				</div>
 			</Row>
+			<Paging
+				totalQuestions={formState.questions.length}
+				questionsPerPage={questionsPerPage}
+				pageChangeRequestHandler={pagechangerequesthandler}
+				currentPage={currentPage}
+			/>
 		</Container>
 	);
 }
