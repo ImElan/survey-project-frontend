@@ -130,7 +130,7 @@ const createFormReducer = (state, action) => {
 					action.newQuestionType === 'DESCRIPTIVE' ||
 					action.newQuestionType === 'STAR'
 				) {
-					newQuestion.options = null;
+					newQuestion.options = [];
 				}
 
 				if (action.newQuestionType === 'STAR') {
@@ -174,7 +174,7 @@ const createFormReducer = (state, action) => {
 			};
 
 			if (action.questionType === 'DESCRIPTIVE' || action.questionType === 'STAR') {
-				newQuestion.options = null;
+				newQuestion.options = [];
 			}
 
 			if (action.questionType === 'STAR') {

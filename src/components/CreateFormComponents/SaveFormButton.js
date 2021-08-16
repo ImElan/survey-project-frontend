@@ -9,7 +9,6 @@ function SaveFormButton(props) {
 	const [show, popup] = useState(false);
 	const [err, setAlert] = useState(false);
 	const [popUpTitle] = useState('Confirm Submission');
-	const [popUpBody] = useState(`Are you sure you want to save "${formTitle}" form?`);
 
 	const popUpOpen = () => {
 		popup(true);
@@ -39,6 +38,7 @@ function SaveFormButton(props) {
 		}
 	};
 
+	let popUpBody = `Are you sure you want to save "${formTitle}" form?`;
 	return (
 		<div className='text-center'>
 			<Alert show={err} variant='danger'>
