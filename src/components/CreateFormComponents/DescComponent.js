@@ -42,7 +42,7 @@ function DescComponent(props) {
 							as='textarea'
 							rows={7}
 							readOnly={true}
-							placeholder='Paragraph - Maximum 250 Characters'
+							placeholder='Paragraph - Maximum 500 Characters'
 							onChange={handleChange2}
 							value={initial2}
 							maxlength='500'
