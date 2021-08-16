@@ -20,7 +20,7 @@ const Paging = ({ totalQuestions, questionsPerPage, pageChangeRequestHandler, cu
     return (
         <div>
 
-            <Pagination>
+            <Pagination style={{ "justify-content": "center" }}>
                 <Pagination.First onClick={() => pageChangeRequestHandler(1)} disabled={currentPage == 1} />
                 <Pagination.Prev onClick={() => pageChangeRequestHandler(currentPage - 1)} disabled={currentPage == 1} />
                 <Pagination.Ellipsis onClick={() => { showPrevSetOfPages() }} disabled={first == 1} />
