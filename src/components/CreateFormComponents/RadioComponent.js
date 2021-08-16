@@ -92,6 +92,7 @@ function RadioComponent(props) {
 							) : (
 								<input
 									type='text'
+									autoFocus="autofocus"
 									value={options[i].option}
 									maxLength='100'
 									onBlur={() => updateOption(i)}
