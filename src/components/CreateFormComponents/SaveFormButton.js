@@ -9,7 +9,7 @@ function SaveFormButton(props) {
 
         const [show, popup] = useState(false);
         const [err, setAlert] = useState(false);
-        const [popUpTitle] = useState("");
+        const [popUpTitle] = useState("Confirm Submission");
         const [popUpBody] = useState(`Are you sure you want to save "${formTitle}" form?`);
 
         const popUpOpen = () => {
@@ -46,16 +46,16 @@ function SaveFormButton(props) {
 
       return (     
             <div className= "text-center">
-                <Button variant = 'dark'
-                        className = "bg-purple f4 fw5 bw1 grow pointer"
-                        onClick = {errorCheck}> Save Form
-                </Button>
-
                 <Alert show={err} variant="danger">
                     <h5>Could not save! Some empty fields found in your form.</h5>
                     <Button onClick={() => setAlert(false)} variant="outline-danger">Close!
                     </Button>
                 </Alert>
+
+                <Button variant = 'dark'
+                        className = "bg-purple f4 fw5 bw1 grow pointer"
+                        onClick = {errorCheck}> Save Form
+                </Button>
 
                 <PopUpModal show ={show} popUpClose ={popUpClose} popUpTitle={popUpTitle} popUpBody={popUpBody} confirmHandler={saveFormHandler}/>
             </div>                 
