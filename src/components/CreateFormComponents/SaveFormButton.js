@@ -47,7 +47,7 @@ function SaveFormButton(props) {
       return (     
             <div className= "text-center">
                 <Button variant = 'dark'
-                        className = "bg-purple f4 fw5 bw1 grow pointer"
+                        className = "bg-purple f3 fw5 bw1 grow pointer"
                         onClick = {errorCheck}> Save Form
                 </Button>
 
@@ -62,3 +62,4 @@ function SaveFormButton(props) {
         );
 }
 export default SaveFormButton;
+
