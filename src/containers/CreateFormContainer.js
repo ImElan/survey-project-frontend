@@ -33,7 +33,6 @@ function CreateFormContainer(props) {
 
 	const [currentPage, setCurrentPage] = useState(1);
 	const [questionsPerPage, setquestionsPerPage] = useState(5);
-	const [pageAfterAddingQuestion, setPageAfterAddingQuestion] = useState(0);
 
 	const pagechangerequesthandler = (number) => {
 		setCurrentPage(number);
