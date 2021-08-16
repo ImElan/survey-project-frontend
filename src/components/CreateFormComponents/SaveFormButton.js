@@ -1,37 +1,64 @@
-import React, { useState } from 'react';
-import 'tachyons';
-import { Button, Modal } from 'react-bootstrap';
+import React, {useState} from 'react';
+import {Button, Alert} from 'react-bootstrap';
+import PopUpModal from './PopUpModal';
+
 
 function SaveFormButton(props) {
-	const { saveFormHandler } = props;
+        
+        const {formTitle, questionList, saveFormHandler} = props;
 
-	const [show, popup] = useState(false);
-	const showModal = () => popup(true);
-	const hideModal = () => popup(false);
+        const [show, popup] = useState(false);
+        const [err, setAlert] = useState(false);
+        const [popUpTitle] = useState("");
+        const [popUpBody] = useState(`Are you sure you want to save "${formTitle}" form?`);
 
-	return (
-		<div>
-			<Button
-				variant='outline-dark'
-				className='f4 fw5 bw1 grow pointer'
-				onClick={showModal}
-			>
-				{' '}
-				Save and Create
-			</Button>
+        const popUpOpen = () => {
+            popup(true);
+        }
+        const popUpClose = () => {
+            popup(false);
+        }
 
-			<Modal show={show} onHide={hideModal} backdrop='static' keyboard={false}>
-				<Modal.Body className='f3 h3'>Confirm Form Creation</Modal.Body>
-				<Modal.Footer>
-					<Button variant='secondary' onClick={hideModal}>
-						Cancel
-					</Button>
-					<Button variant='primary' onClick={saveFormHandler}>
-						Confirm
-					</Button>
-				</Modal.Footer>
-			</Modal>
-		</div>
-	);
+        const showError = () => {
+            setAlert(true);            
+        }
+
+        const errorCheck = () => {
+            
+            let flag = true;   
+            questionList.forEach(function(question){
+                if(question.isValid == false){
+                    flag = false;
+                }
+            });
+
+            if(flag){
+                //no error
+                popUpOpen();
+            }
+
+            else{
+                //error found
+                showError();
+            }
+        }
+
+
+      return (     
+            <div className= "text-center">
+                <Button variant = 'dark'
+                        className = "bg-purple f4 fw5 bw1 grow pointer"
+                        onClick = {errorCheck}> Save Form
+                </Button>
+
+                <Alert show={err} variant="danger">
+                    <h5>Could not save! Some empty fields found in your form.</h5>
+                    <Button onClick={() => setAlert(false)} variant="outline-danger">Close!
+                    </Button>
+                </Alert>
+
+                <PopUpModal show ={show} popUpClose ={popUpClose} popUpTitle={popUpTitle} popUpBody={popUpBody} confirmHandler={saveFormHandler}/>
+            </div>                 
+        );
 }
 export default SaveFormButton;
