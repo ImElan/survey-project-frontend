@@ -151,6 +151,13 @@ const createFormReducer = (state, action) => {
 				required: false,
 				isValid: false,
 			};
+
+			if (action.questionType === 'STAR') {
+				newQuestion.options = [];
+				newQuestion.numStars = 5;
+				newQuestion.isHalfStarAllowed = false;
+			}
+
 			const questionsArrayWithAddedQustion = [...state.questions, newQuestion];
 			return {
 				...state,
