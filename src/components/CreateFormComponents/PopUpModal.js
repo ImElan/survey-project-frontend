@@ -12,10 +12,9 @@ function PopUpModal(props) {
 		<Modal show={show} onHide={hidePopUp} centered>
 			<Modal.Header>
 				<Modal.Title style={{ height: '1.5rem' }}>{popUpTitle}</Modal.Title>
-                                <Button variant = "outline-danger"
-                                        size = "sm"
-                                        onClick={hidePopUp}>×
-                                </Button>
+				<Button variant='outline-danger' size='sm' onClick={hidePopUp}>
+					×
+				</Button>
 			</Modal.Header>
 
 			<Modal.Body>{popUpBody}</Modal.Body>
@@ -27,7 +26,9 @@ function PopUpModal(props) {
 						confirmHandler();
 						hidePopUp();
 					}}
-				> Confirm
+				>
+					{' '}
+					Confirm
 				</Button>
 				<Button variant='secondary' onClick={hidePopUp}>
 					Cancel

@@ -33,12 +33,18 @@ function CreateFormContainer(props) {
 
 	const [currentPage, setCurrentPage] = useState(1);
 	const [questionsPerPage, setquestionsPerPage] = useState(5);
+	const [pageAfterAddingQuestion, setPageAfterAddingQuestion] = useState(0);
+
 	const pagechangerequesthandler = (number) => {
 		setCurrentPage(number);
 	};
 	const questionsPerPageHandler = (option) => {
 		setquestionsPerPage(option);
 	};
+
+	useEffect(() => {
+		setCurrentPage(Math.ceil(formState.questions.length / questionsPerPage));
+	}, [formState.questions.length, questionsPerPage]);
 
 	// API REQUEST TO GET CONFIG VALUES
 	useEffect(() => {
@@ -232,6 +238,12 @@ function CreateFormContainer(props) {
 		tooltipMessage = 'Click the button to choose question type.';
 	}
 
+	let paginationStartIndex;
+	paginationStartIndex = (currentPage - 1) * questionsPerPage;
+	if (paginationStartIndex > formState.questions.length) {
+		paginationStartIndex = 0;
+	}
+
 	return (
 		<Container fluid>
 			<Row
@@ -292,69 +304,66 @@ function CreateFormContainer(props) {
 					{/* page 1 */}
 					{formState.questions
 						.slice(
-							(currentPage - 1) * questionsPerPage,
+							paginationStartIndex,
 							(currentPage - 1) * questionsPerPage + questionsPerPage
 						)
 						.map((question) => (
 							<Row
-							className='justify-content-md-center'
-							key={question.questionId}
-							style={{
-								paddingTop: '0px',
-								paddingBottom: '10px',
-								marginTop: '20px'
-							
-							}}
-						>
-							<Col
-								sm={9}
+								className='justify-content-md-center'
+								key={question.questionId}
 								style={{
-									//marginRight: '5px',
-									padding: '10px 25px',
-									borderRadius: '8px',
-									backgroundColor: '#F0F0F0', //7866B2
-									border: 'solid black 1px',
-									//#e6e6e6
+									paddingTop: '0px',
+									paddingBottom: '10px',
+									marginTop: '20px',
 								}}
 							>
-
-							   <Row
-									sm='auto'
-									className='justify-content-end'
+								<Col
+									sm={9}
 									style={{
-										marginBottom: '0px'
-										//padding: '12px',
+										//marginRight: '5px',
+										padding: '10px 25px',
+										borderRadius: '8px',
+										backgroundColor: '#F0F0F0', //7866B2
+										border: 'solid black 1px',
+										//#e6e6e6
 									}}
 								>
-								<Col>
-								<Dropdown
-									questionId={question.questionId}
-									questionType={question.questionType}
-									questionTypeChangeHandler={handleQuestionTypeChange}
-								/>
-                                </Col>
-                                <Col style={{marginTop:'10px'}}>
-								<DeleteButton
-									questionId={question.questionId}
-									disabled={formState.questions.length <= minQuestionAllowed}
-									minQuestions={minQuestionAllowed}
-									deleteQuestionHandler={handleRemoveQuestion}
-								/>
+									<Row
+										sm='auto'
+										className='justify-content-end'
+										style={{
+											marginBottom: '0px',
+											//padding: '12px',
+										}}
+									>
+										<Col>
+											<Dropdown
+												questionId={question.questionId}
+												questionType={question.questionType}
+												questionTypeChangeHandler={handleQuestionTypeChange}
+											/>
+										</Col>
+										<Col style={{ marginTop: '10px' }}>
+											<DeleteButton
+												questionId={question.questionId}
+												disabled={formState.questions.length <= minQuestionAllowed}
+												minQuestions={minQuestionAllowed}
+												deleteQuestionHandler={handleRemoveQuestion}
+											/>
+										</Col>
+									</Row>
+
+									{/* BASED ON QUESTION TYPE RENDER APPROPRIATE COMPONENT AND PASS IN THE PROPS */}
+									{renderQuestionComponent(question)}
+									<RequiredButton
+										rounded={true}
+										questionId={question.questionId}
+										required={question.required}
+										requiredChangeHandler={handleRequiredChange}
+									/>
 								</Col>
-								</Row>
-
-								{/* BASED ON QUESTION TYPE RENDER APPROPRIATE COMPONENT AND PASS IN THE PROPS */}
-								{renderQuestionComponent(question)}
-								<RequiredButton
-									rounded={true}
-									questionId={question.questionId}
-									required={question.required}
-									requiredChangeHandler={handleRequiredChange}
-								/>
-
-							</Col>
-						</Row>
-					))}
+							</Row>
+						))}
 					<Row
 						className='text-center'
 						style={{
