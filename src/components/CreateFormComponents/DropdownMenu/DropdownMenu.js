@@ -37,7 +37,7 @@ function DropdownMenu(props) {
 			<DropdownButton
 				size='lg'
 				onSelect={onSelect}
-				variant='light'
+				variant='outline-primary'
 				title={options[props.questionType]}
 			>
 				{Object.keys(options).map((key, id) => (
