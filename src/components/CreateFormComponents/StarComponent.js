@@ -38,12 +38,21 @@ function StarComponent(props) {
 	// 	props.onChange(e.target.value);
 	// };
 
+	const [show1, formtitl] = useState(false);
+
+	const showtext2 = () => {
+		formtitl(true);
+	};
 	const [initial, final] = useState('');
 
 	const questionChange = (e) => {
-		final(e.target.value);
-		const isValid = e.target.value === '' ? false : true;
-		props.questionTextChangeHandler(props.questionId, e.target.value, isValid);
+		var x = e.target.value;
+		if (x.length > (e.maxLength || 0) + 249) showtext2();
+		else {
+			final(e.target.value);
+			const isValid = e.target.value === '' ? false : true;
+			props.questionTextChangeHandler(props.questionId, e.target.value, isValid);
+		}
 	};
 
 	const typeStarChange = (e) => {
@@ -81,15 +90,23 @@ function StarComponent(props) {
 						<Form.Label></Form.Label>
 						<Form.Control
 							style={{ height: 35 }}
-							type='text'
+							as='textarea'
 							onChange={questionChange}
 							title={props.question}
 							value={initial}
 							placeholder='Question - Maximum 250 Characters'
 							maxlength='250'
 						/>
+						{show1 && (
+							<Form.Text style={{ color: 'white' }} id='passwordHelpBlock' muted>
+								<br></br>
+								Question cannot exceed 250 characters
+							</Form.Text>
+						)}
+						<br></br>
 						<br></br>
 						<div>Number of stars required : </div>
+						<br></br>
 						<DropdownButton
 							alignRight
 							title={options[value]}
@@ -104,13 +121,14 @@ function StarComponent(props) {
 							))}
 						</DropdownButton>
 						<br></br>
+						<br></br>
 
 						{/* <div>{printQuestion(value)}</div> */}
 
 						<ButtonGroup>
 							<ToggleButton
 								type='radio'
-								variant={'outline-success'}
+								variant={'outline-primary'}
 								name='radio'
 								checked={!props.isHalfStarAllowed}
 								onClick={typeStarChange}
@@ -119,7 +137,7 @@ function StarComponent(props) {
 							</ToggleButton>
 							<ToggleButton
 								type='radio'
-								variant={'outline-danger'}
+								variant={'outline-primary'}
 								name='radio'
 								checked={props.isHalfStarAllowed}
 								onClick={typeStarChange}
