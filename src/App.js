@@ -1,7 +1,7 @@
 import React from "react";
-import Delete from "./components/CreateFormComponents/DeleteQuestionButton/DeleteQuestionButton"
+import Switch from "./components/CreateFormComponents/EditableSwitch/EditableSwitch"
 function App() {
-	return <div className='App'><Delete/></div>;
+	return <div className='App'><Switch/></div>;
 }
 
 export default App;
