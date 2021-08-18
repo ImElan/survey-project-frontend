@@ -23,6 +23,11 @@ function SaveFormButton(props) {
 		setAlert(true);
 	};
 
+	const hideError = () => {
+		setAlertBody('');
+		setAlert(false);
+	};
+
 	const errorCheck = () => {
 		let flag1 = true;
 		let questionArr = [];
@@ -36,7 +41,7 @@ function SaveFormButton(props) {
 		});
         
 		const questionSet = new Set(questionArr);
-                     const duplicateArr = questionArr.filter(item => {
+        const duplicateArr = questionArr.filter(item => {
 			if(questionSet.has(item))
 			    questionSet.delete(item);
 			else
@@ -45,14 +50,14 @@ function SaveFormButton(props) {
 
 		
 
-	    if (!flag1) {
+		if (!flag1) {
 			showError('Could not save form! Empty fields found.');
 		}	
 	    else if(duplicateArr.length){
 			showError('Could not save form! Duplicate questions found.');
 		}
-	    else{
-			//no error
+		else{
+			hideError();
 			popUpOpen();
 		}
 	}
