@@ -119,10 +119,7 @@ const createFormReducer = (state, action) => {
 		case 'QUESTION_TYPE_CHANGE':
 			const questions = state.questions.map((question) => {
 				if (question.questionId !== action.questionId) {
-					return {
-						...question,
-						isValid: false,
-					};
+					return question;
 				}
 				const newQuestion = {
 					...question,
@@ -153,10 +150,7 @@ const createFormReducer = (state, action) => {
 					newQuestion.isHalfStarAllowed = null;
 				}
 
-				return {
-					...newQuestion,
-					isValid: false,
-				};
+				return newQuestion;
 			});
 			return {
 				...state,

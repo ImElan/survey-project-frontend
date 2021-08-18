@@ -43,7 +43,7 @@ function StarComponent(props) {
 	const showtext2 = () => {
 		formtitl(true);
 	};
-	const [initial, final] = useState('');
+	const [initial, final] = useState(props.question);
 
 	const questionChange = (e) => {
 		var x = e.target.value;

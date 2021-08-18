@@ -10,7 +10,7 @@ function DescComponent(props) {
 		formtit(true);
 	};
 
-	const [initial, final] = useState('');
+	const [initial, final] = useState(props.question);
 	const [initial2, final2] = useState('');
 
 	const handleChange = (e) => {
