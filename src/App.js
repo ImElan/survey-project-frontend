@@ -1,7 +1,11 @@
-import React from "react";
-import Switch from "./components/CreateFormComponents/EditableSwitch/EditableSwitch"
+import CreateFormContainer from './containers/CreateFormContainer';
+
 function App() {
-	return <div className='App'><Switch/></div>;
+	return (
+		<div>
+			<CreateFormContainer />
+		</div>
+	);
 }
 
 export default App;

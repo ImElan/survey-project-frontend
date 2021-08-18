@@ -1,19 +1,18 @@
 import React,{useState} from 'react'
 import Switch from '@material-ui/core/Switch';
-function EditableSwitch() {
-    const [checked, setChecked] = useState(false);
+function EditableSwitch(props) {
     const handleChange = ()=>{
-        setChecked(!checked);
+        props.handleIsEditable();
     }
     return (
-        <div>
+        <div style={{marginTop: "2rem"}}>
             <Switch
-            checked={checked}
+            checked={props.isEditable}
             onChange={handleChange}
             name="checkedB"
             color="primary"
           />   
-          <span>{checked? "":"Not "} Editable</span>
+          <span>{props.isEditable? "":"Not "} Editable</span>
         </div>
     )
 }
