@@ -1,9 +1,15 @@
-import CreateFormContainer from './containers/CreateFormContainer';
+// import CreateFormContainer from './containers/CreateFormContainer';
+import ResponseFormContainer from './containers/ResponseFormContain';
 
 function App() {
 	return (
 		<div>
-			<CreateFormContainer />
+			{/* <div>
+				<CreateFormContainer />
+			</div> */}
+			<div>
+				<ResponseFormContainer/>
+			</div>
 		</div>
 	);
 }
