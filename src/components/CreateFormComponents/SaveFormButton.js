@@ -9,7 +9,7 @@ function SaveFormButton(props) {
 	const [err, setAlert] = useState(false);
 	const [alertBody, setAlertBody] = useState('');
 	const [popUpTitle] = useState('Confirm Submission');
-	const [popUpBody] = useState(`Are you sure you want to save "${formTitle}" form?`);
+	// const [popUpBody] = useState(`Are you sure you want to save "${formTitle}" form?`);
 
 	const popUpOpen = () => {
 		popup(true);
@@ -37,31 +37,25 @@ function SaveFormButton(props) {
 				flag1 = false;
 			}
 			questionArr.push(question.question);
-		    
-		});
-        
-		const questionSet = new Set(questionArr);
-        const duplicateArr = questionArr.filter(item => {
-			if(questionSet.has(item))
-			    questionSet.delete(item);
-			else
-			    return item;
 		});
 
-		
+		const questionSet = new Set(questionArr);
+		const duplicateArr = questionArr.filter((item) => {
+			if (questionSet.has(item)) questionSet.delete(item);
+			else return item;
+		});
 
 		if (!flag1) {
 			showError('Could not save form! Empty fields found.');
-		}	
-	    else if(duplicateArr.length){
+		} else if (duplicateArr.length) {
 			showError('Could not save form! Duplicate questions found.');
-		}
-		else{
+		} else {
 			hideError();
 			popUpOpen();
 		}
-	}
+	};
 
+	let popUpBody = `Are you sure you want to save "${formTitle}" form?`;
 	return (
 		<div className='text-center'>
 			<Alert show={err} variant='danger'>
