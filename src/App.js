@@ -1,9 +1,10 @@
 import CreateFormContainer from './containers/CreateFormContainer';
+import LoginPage from './components/TakeSurveyComponents/GoogleLogin/LoginPage';
 
 function App() {
 	return (
 		<div>
-			<CreateFormContainer />
+			<LoginPage/>
 		</div>
 	);
 }
