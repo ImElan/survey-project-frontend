@@ -141,9 +141,9 @@ function CreateFormContainer(props) {
 		});
 	};
 
-	const handleIsEditable = () =>{
-		dispatch({type:'EDITABLE_CHANGE'});
-	}
+	const handleIsEditable = () => {
+		dispatch({ type: 'EDITABLE_CHANGE' });
+	};
 
 	// Method to handle removing a new question.
 	const handleRemoveQuestion = (questionId) => {
@@ -238,9 +238,9 @@ function CreateFormContainer(props) {
 	// setting tooltip message based on maxQuestionAllowed and number of questions added.
 	let tooltipMessage;
 	if (formState.questions.length >= maxQuestionAllowed) {
-		tooltipMessage = 'Maximum number of questions per form is reached.';
+		tooltipMessage = 'Maximum number of questions per form is reached';
 	} else {
-		tooltipMessage = 'Click the button to choose question type.';
+		tooltipMessage = 'Click the button to choose question type';
 	}
 
 	let paginationStartIndex;
@@ -254,9 +254,8 @@ function CreateFormContainer(props) {
 			<Row
 				className='justify-content-md-center'
 				style={{
-					backgroundColor: '#4B0082', //4B0082
-					paddingTop: '0px',
-					paddingBottom: '35px',
+					backgroundColor: '#33006F', //#33006F#4B0082
+					paddingBottom: '25px',
 				}}
 			>
 				<Col sm={6}>
@@ -275,17 +274,15 @@ function CreateFormContainer(props) {
 				<div
 					style={{
 						backgroundColor: '#D8D8D8',
-						width: '75%',
-						border: 'solid lightgray 2px',
-						borderTop: '0px',
-						borderRadius: '8px',
+						width: '100%',
+						border: 'solid #D8D8D8 1px',
 					}}
 				>
 					<Row
 						sm='auto'
 						className='justify-content-end'
 						style={{
-							padding: '12px',
+							margin: '20px',
 						}}
 					>
 						<PopDown
@@ -301,13 +298,6 @@ function CreateFormContainer(props) {
 						/>
 					</Row>
 
-					{/*<Row className = "justify-content-md-center" >
-			<div style={{ 
-				    backgroundColor: '#e6e6e6',
-				    width:'85%',
-					border: 'solid lightgray 3px',
-					borderRadius: '8px'
-				 }}>*/}
 					{/* page 1 */}
 					{formState.questions
 						.slice(
@@ -321,17 +311,16 @@ function CreateFormContainer(props) {
 								style={{
 									paddingTop: '0px',
 									paddingBottom: '10px',
-									marginTop: '20px',
+									marginBottom: '5px',
 								}}
 							>
 								<Col
-									sm={9}
+									sm={7}
 									style={{
-										//marginRight: '5px',
 										padding: '10px 25px',
 										borderRadius: '8px',
 										backgroundColor: '#F0F0F0', //7866B2
-										border: 'solid black 1px',
+										boxShadow: '3px 3px 10px darkgray',
 										//#e6e6e6
 									}}
 								>
@@ -340,7 +329,6 @@ function CreateFormContainer(props) {
 										className='justify-content-end'
 										style={{
 											marginBottom: '0px',
-											//padding: '12px',
 										}}
 									>
 										<Col>

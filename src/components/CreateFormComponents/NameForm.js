@@ -39,7 +39,7 @@ function NameForm(props) {
 	return (
 		<div>
 			<br />
-			<Form.Label style={{ color: 'white' }}>Form Name</Form.Label>
+			<Form.Label style={{ marginTop: '15px', color: 'white' }}>Form Name</Form.Label>
 			<FormControl
 				aria-label='Default'
 				aria-describedby='inputGroup-sizing-default'
@@ -50,7 +50,7 @@ function NameForm(props) {
 			/>
 			{show1 && (
 				<div>
-					<Form.Text style={{ color: 'red' }} id='passwordHelpBlock' muted>
+					<Form.Text style={{ marginTop: '15px', color: 'red' }} id='passwordHelpBlock' muted>
 						Form title cannot exceed 80 characters
 					</Form.Text>
 					<br />
