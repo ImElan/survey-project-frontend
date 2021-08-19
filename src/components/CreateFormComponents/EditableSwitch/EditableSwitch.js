@@ -10,7 +10,8 @@ function EditableSwitch(props) {
             checked={props.isEditable}
             onChange={handleChange}
             name="checkedB"
-            color="primary"
+            color="secondary"
+            style={{color: "white"}}
           />   
           <span style={{color: "white"}}>{props.isEditable? "":"Not "} Editable</span>
         </div>
@@ -18,4 +19,3 @@ function EditableSwitch(props) {
 }
 
 export default EditableSwitch
-
