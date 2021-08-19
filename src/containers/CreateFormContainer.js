@@ -233,9 +233,9 @@ function CreateFormContainer(props) {
 	// setting tooltip message based on maxQuestionAllowed and number of questions added.
 	let tooltipMessage;
 	if (formState.questions.length >= maxQuestionAllowed) {
-		tooltipMessage = 'Maximum number of questions per form is reached.';
+		tooltipMessage = 'Maximum number of questions per form is reached';
 	} else {
-		tooltipMessage = 'Click the button to choose question type.';
+		tooltipMessage = 'Click the button to choose question type';
 	}
 
 	let paginationStartIndex;
@@ -246,39 +246,36 @@ function CreateFormContainer(props) {
 
 	return (
 		<Container fluid>
-			<Row
-				className='justify-content-md-center'
-				style={{
-					backgroundColor: '#4B0082', //4B0082
-					paddingTop: '0px',
-					paddingBottom: '35px',
-				}}
-			>
-				<Col sm={6}>
-					<FormHeader
-						title={formState.title}
-						description={formState.description}
-						titleChangeHandler={handleTitleChange}
-						descriptionChangeHandler={handleDescriptionChange}
-					/>
-				</Col>
-			</Row>
-
-			<Row className='justify-content-md-center'>
+		<Row
+			className='justify-content-md-center'
+			style={{
+				backgroundColor: '#33006F', //#33006F#4B0082
+				paddingBottom: '25px',
+			}}
+		> 
+			<Col sm={5}>
+				<FormHeader
+					title={formState.title}
+					description={formState.description}
+					titleChangeHandler={handleTitleChange}
+					descriptionChangeHandler={handleDescriptionChange}
+				/>
+			</Col>		
+		</Row>
+		
+		<Row className='justify-content-md-center'>
 				<div
 					style={{
 						backgroundColor: '#D8D8D8',
-						width: '75%',
-						border: 'solid lightgray 2px',
-						borderTop: '0px',
-						borderRadius: '8px',
+						width: '100%',
+						border: 'solid #D8D8D8 1px'
 					}}
 				>
 					<Row
 						sm='auto'
-						className='justify-content-end'
+						className= 'justify-content-end'
 						style={{
-							padding: '12px',
+							margin: '20px'
 						}}
 					>
 						<PopDown
@@ -294,13 +291,6 @@ function CreateFormContainer(props) {
 						/>
 					</Row>
 
-					{/*<Row className = "justify-content-md-center" >
-			<div style={{ 
-				    backgroundColor: '#e6e6e6',
-				    width:'85%',
-					border: 'solid lightgray 3px',
-					borderRadius: '8px'
-				 }}>*/}
 					{/* page 1 */}
 					{formState.questions
 						.slice(
@@ -309,49 +299,49 @@ function CreateFormContainer(props) {
 						)
 						.map((question) => (
 							<Row
-								className='justify-content-md-center'
-								key={question.questionId}
+							className='justify-content-md-center'
+							key={question.questionId}
+							style={{
+								paddingTop: '0px',
+								paddingBottom: '10px',
+								marginBottom: '5px'
+							
+							}}
+						>
+							<Col
+								sm={7}
 								style={{
-									paddingTop: '0px',
-									paddingBottom: '10px',
-									marginTop: '20px',
+									padding: '10px 25px',
+									borderRadius: '8px',
+									backgroundColor: '#F0F0F0', //7866B2
+									boxShadow: '3px 3px 10px darkgray'
+									//#e6e6e6
 								}}
 							>
-								<Col
-									sm={9}
+
+							   <Row
+									sm='auto'
+									className='justify-content-end'
 									style={{
-										//marginRight: '5px',
-										padding: '10px 25px',
-										borderRadius: '8px',
-										backgroundColor: '#F0F0F0', //7866B2
-										border: 'solid black 1px',
-										//#e6e6e6
+										marginBottom: '0px'
 									}}
 								>
-									<Row
-										sm='auto'
-										className='justify-content-end'
-										style={{
-											marginBottom: '0px',
-											//padding: '12px',
-										}}
-									>
-										<Col>
-											<Dropdown
-												questionId={question.questionId}
-												questionType={question.questionType}
-												questionTypeChangeHandler={handleQuestionTypeChange}
-											/>
-										</Col>
-										<Col style={{ marginTop: '10px' }}>
-											<DeleteButton
-												questionId={question.questionId}
-												disabled={formState.questions.length <= minQuestionAllowed}
-												minQuestions={minQuestionAllowed}
-												deleteQuestionHandler={handleRemoveQuestion}
-											/>
-										</Col>
-									</Row>
+									<Col>
+										<Dropdown
+											questionId={question.questionId}
+											questionType={question.questionType}
+											questionTypeChangeHandler={handleQuestionTypeChange}
+										/>
+									</Col>
+									<Col style={{marginTop:'10px'}}>
+										<DeleteButton
+											questionId={question.questionId}
+											disabled={formState.questions.length <= minQuestionAllowed}
+											minQuestions={minQuestionAllowed}
+											deleteQuestionHandler={handleRemoveQuestion}
+										/>
+									</Col>
+								</Row>
 
 									{/* BASED ON QUESTION TYPE RENDER APPROPRIATE COMPONENT AND PASS IN THE PROPS */}
 									{renderQuestionComponent(question)}
