@@ -20,6 +20,22 @@ const responseFormReducer = (state, action) => {
 				answerss: newAnswersArray,
 			};
 
+		case 'OPTION_SINGLE_SELECT':
+			const newAnswerssArray = state.answerss.map((answers) =>{
+				if(answers.questions.questionId !== action.questionId){
+					return answers;
+				}
+				return {
+					...answers,
+					answer: action.optionId,
+				};
+			});
+
+			return {
+				...state,
+				answerss: newAnswerssArray,
+			}
+
 		// case 'SET_INITIAL_ANSWERS':
 		// 	return {
 		// 		...state,

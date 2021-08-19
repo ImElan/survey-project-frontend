@@ -5,6 +5,7 @@ import isDeepEqual from 'fast-deep-equal/react'
 // import { useCallback } from 'react';
 import {questionss} from './questionss';
 import DescComponentt from '../components/ResponseSurveyComponents/DescComponentt';
+import RadioComponentt from '../components/ResponseSurveyComponents/RadioComponentt';
 
 
 
@@ -56,10 +57,15 @@ function ResponseFormContainer(props){
 	// handleInitialanswers()
 
 
-		// Method to handle question text change in all question components
+		const handleoptionchange = (questionId, optionId) => {
+			dispatch({ type: 'OPTION_SINGLE_SELECT', questionId, optionId});
+			console.log(responseState.answerss);
+		}
+
+		// Method to handle question text change in answer of descriptive component
 		const handleAnswerParaChange = (questionId, newParaText, isvalid) => {
 			dispatch({ type: 'ANSWER_TEXT_CHANGE', questionId, newParaText, isvalid });
-			// console.log(responseState.answerss);
+			console.log(responseState.answerss);
 		};
 
     // Method to render different question component in the UI based on question type.
@@ -68,11 +74,11 @@ function ResponseFormContainer(props){
 			// case 'STAR':
 			// 	return (
 			// 		<StarComponent
-			// 			question={question.question}
-			// 			questionId={question.questionId}
-			// 			questionStarSelectHandler={handleQuestionStarChange}
-			// 			numStars={question.numStars}
-			// 			isHalfStarAllowed={question.isHalfStarAllowed}
+			// 			question={answer.questions.question}
+			// 			questionId={answer.question.questionId}
+			// 			numStars={answer.questions.numStars}
+			// 			isHalfStarAllowed={answer.questions.isHalfStarAllowed}
+			// 			answerStarSelectHandler={handleAnswerStarChange}
 			// 		/>
 			// 	);
 			case 'DESCRIPTIVE':
@@ -95,18 +101,15 @@ function ResponseFormContainer(props){
 			// 			questionOptionRemoveHandler={handleQuestionOptionRemove}
 			// 		/>
 			// 	);
-			// case 'SINGLE':
-			// 	return (
-			// 		<RadioButtonComponent
-			// 			question={question.question}
-			// 			questionId={question.questionId}
-			// 			options={question.options}
-			// 			questionTextChangeHandler={handleQuestionTextChange}
-			// 			questionOptionChangeHandler={handleQuestionOptionChange}
-			// 			questionOptionAddHandler={handleQuestionOptionAdd}
-			// 			questionOptionRemoveHandler={handleQuestionOptionRemove}
-			// 		/>
-			// 	);
+			case 'SINGLE':
+				return (
+					<RadioComponentt
+						question={answer.questions.question}
+						questionId={answer.questions.questionId}
+						options={answer.questions.options}
+						answerOptionChange = {handleoptionchange}
+					/>
+				);
 			default:
 				break;
 		}

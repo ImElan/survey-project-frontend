@@ -3,8 +3,15 @@ import React from 'react';
 // import { makeStyles } from '@material-ui/core/styles';
 import { Form } from 'react-bootstrap';
 // import { TextField } from "@material-ui/core";
+// import { Control, Form, Errors, actions } from 'react-redux-form';
 
 function DescComponentt(props) {
+
+	const required = (val) => val && val.length;
+	// it receivers len and val as parameter
+	const maxLength = (len) => (val) => !(val) || (val.length <= len)
+	const minLength = (len) => (val) => (val) && (val.length >=len);
+
 	const [initial2, final2] = useState('');
 
 	const handleChange2 = (e) => {
@@ -31,6 +38,9 @@ function DescComponentt(props) {
 							placeholder='Paragraph - Maximum 500 Characters'
 							onChange={handleChange2}
 							value={initial2}
+							// validators = {{
+							// 	required, minLength: minLength(3), maxLength: maxLength(15)
+							// }}
 						/>
 
 						<br />

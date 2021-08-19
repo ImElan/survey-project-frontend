@@ -35,8 +35,10 @@ export const  questionss = [
             options: [
                 { optionId: 1, option: 'Option 1' },
                 { optionId: 2, option: 'Option 2' },
+                { optionId: 3, option: 'Option 3' },
+                { optionId: 4, option: 'Option 4' },
             ],
-            questionType: 'STAR',
+            questionType: 'SINGLE',
             required: false,
             isValid: false
         },
