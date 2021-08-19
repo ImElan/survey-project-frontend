@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React from 'react'
 import Switch from '@material-ui/core/Switch';
 function EditableSwitch(props) {
     const handleChange = ()=>{
@@ -12,7 +12,7 @@ function EditableSwitch(props) {
             name="checkedB"
             color="primary"
           />   
-          <span>{props.isEditable? "":"Not "} Editable</span>
+          <span style={{color: "white"}}>{props.isEditable? "":"Not "} Editable</span>
         </div>
     )
 }
