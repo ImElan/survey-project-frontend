@@ -6,6 +6,7 @@ import isDeepEqual from 'fast-deep-equal/react'
 import {questionss} from './questionss';
 import DescComponentt from '../components/ResponseSurveyComponents/DescComponentt';
 import RadioComponentt from '../components/ResponseSurveyComponents/RadioComponentt';
+import CheckBoxComponentt from '../components/ResponseSurveyComponents/CheckBoxComponentt';
 
 
 
@@ -68,6 +69,16 @@ function ResponseFormContainer(props){
 			console.log(responseState.answerss);
 		};
 
+		const handleaddremoveoption = (questionId, optionId) => {
+			dispatch({type: 'OPTION_ADD_REMOVE',questionId, optionId});
+			console.log(responseState.answerss);
+		}
+
+		// const handleremoveoption = (questionId, optionId) => {
+		// 	dispatch({type: 'OPTION_REMOVE',questionId, optionId});
+		// 	console.log(responseState.answerss);
+		// }
+
     // Method to render different question component in the UI based on question type.
 	const renderQuestionComponent = (answer) => {
 		switch (answer.questions.questionType) {
@@ -89,18 +100,16 @@ function ResponseFormContainer(props){
 						answerParagraphHandler={handleAnswerParaChange}
 					/>
 				);
-			// case 'MULTIPLE':
-			// 	return (
-			// 		<CheckboxComponent
-			// 			question={question.question}
-			// 			questionId={question.questionId}
-			// 			options={question.options}
-			// 			questionTextChangeHandler={handleQuestionTextChange}
-			// 			questionOptionChangeHandler={handleQuestionOptionChange}
-			// 			questionOptionAddHandler={handleQuestionOptionAdd}
-			// 			questionOptionRemoveHandler={handleQuestionOptionRemove}
-			// 		/>
-			// 	);
+			case 'MULTIPLE':
+				return (
+					<CheckBoxComponentt
+						question={answer.questions.question}
+						questionId={answer.questions.questionId}
+						options={answer.questions.options}
+						answeroptionadd = {handleaddremoveoption}
+
+					/>
+				);
 			case 'SINGLE':
 				return (
 					<RadioComponentt

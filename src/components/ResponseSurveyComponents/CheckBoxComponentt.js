@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { FormControl, FormLabel } from 'react-bootstrap';
 // import { BsFillTrashFill } from 'react-icons/bs';
 
-function RadioComponentt(props) {
+function CheckBoxComponentt(props) {
 	
 	const optionss = props.options;
 
+
 	const handlechange = (e) => {
-		// console.log(e.target.value);
-		props.answerOptionChange(props.questionId,e.target.value);
+		// var optionid = e.target.value;
+		props.answeroptionadd(props.questionId, e.target.value);
 	  }
 
 	return (
@@ -19,14 +20,18 @@ function RadioComponentt(props) {
 				<br />
 			</div>
 
-			<div onChange={handlechange}>
+			<div>
 				{optionss.map((option,i) => {
 					return (
 						<div  className='row' key={i}>
 							<div className='col-md-8'>
-								<input type="radio" value={option.optionId} name="allselect" /> {option.option}
+								<input 
+                                type="checkbox" 
+                                value={option.optionId}
+                                onChange={handlechange}/> {option.option}
 							</div>
 							<br></br>
+							{/* {i} */}
 						</div>
 					);
 				})}
@@ -37,4 +42,4 @@ function RadioComponentt(props) {
 	);
 }
 
-export default RadioComponentt;
+export default CheckBoxComponentt;

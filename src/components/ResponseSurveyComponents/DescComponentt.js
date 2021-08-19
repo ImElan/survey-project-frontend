@@ -23,7 +23,7 @@ function DescComponentt(props) {
 
 	return (
 		<div>
-			<form>
+			{/* <form> */}
 				{/* <TextField id="outlined-basic" label="Question" multiline={false}  onChange={handleChange} InputProps={{style:{width:'43ch'}}} /><br></br><br></br> */}
 				<Form>
 					<Form.Group className='mb-3' controlId='formBasicEmail'>
@@ -46,7 +46,7 @@ function DescComponentt(props) {
 						<br />
 					</Form.Group>
 				</Form>
-			</form>
+			{/* </form> */}
 		</div>
 	);
 }

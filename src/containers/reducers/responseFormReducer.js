@@ -36,6 +36,39 @@ const responseFormReducer = (state, action) => {
 				answerss: newAnswerssArray,
 			}
 
+		case 'OPTION_ADD_REMOVE':
+				const newAnswersArrayy = state.answerss.map((answers) => {
+					if (answers.questions.questionId !== action.questionId) {
+						return answers;
+					}					
+				
+					
+					var removequestion = [...answers.answer];
+					removequestion = removequestion.filter((ans) => ans !== action.optionId.toString());
+					// console.log(removequestion);      
+
+					var tempans = [...answers.answer]
+					if(removequestion.length == tempans.length)
+					{
+						tempans = [...answers.answer,action.optionId];
+					}
+					else
+					{
+						tempans = removequestion;
+					}
+
+					// const addanswer = [...answers.answer, action.optionId]
+					const addanswer = tempans;
+					return {
+						...answers,
+						answer: addanswer,
+					};
+				});
+				return {
+					...state,
+					answerss: newAnswersArrayy,
+				};
+
 		// case 'SET_INITIAL_ANSWERS':
 		// 	return {
 		// 		...state,
