@@ -22,9 +22,9 @@ function RadioComponent(props) {
 
 	// ADD option
 	const handleOptionAdd = () => {
-		let newOption = `Option ${props.options.length + 1}`;
+		let newOption = `Option ${props.options.optionsArray.length + 1}`;
 		setShow(false);
-		if (options.length === 10) {
+		if (options.optionsArray.length === 10) {
 			setShow(true);
 			isOptionArr(true);
 			isSameOption(false);
@@ -43,7 +43,7 @@ function RadioComponent(props) {
 
 	//After entering new Option in TextBox
 	const updateOption = (index) => {
-		if (options[index].option === '') {
+		if (options.optionsArray[index].option === '') {
 			setShow(true);
 			isOptionNull(true);
 			isOptionArr(false);
@@ -62,7 +62,10 @@ function RadioComponent(props) {
 	const handleRemove = (index) => {
 		isOptionArr(false);
 
-		props.questionOptionRemoveHandler(props.questionId, props.options[index].optionId);
+		props.questionOptionRemoveHandler(
+			props.questionId,
+			props.options.optionsArray[index].optionId
+		);
 	};
 
 	//OnCLickingLabel
@@ -95,7 +98,7 @@ function RadioComponent(props) {
 
 		let isSame;
 
-		props.options.map((value) => {
+		props.options.optionsArray.map((value) => {
 			if (x === value.option) {
 				setShow(false);
 				isSame = true;
@@ -112,14 +115,14 @@ function RadioComponent(props) {
 
 		let valid = false;
 
-		props.options.map((value) => {
-			props.options.map((value1) => {
+		props.options.optionsArray.map((value) => {
+			props.options.optionsArray.map((value1) => {
 				if (value.option === value1.option && value.optionId != value1.optionId) {
 					valid = true;
 				}
 			});
 		});
-		props.options.map((value) => {
+		props.options.optionsArray.map((value) => {
 			if (x === value.option || x === '' || value.option === '') {
 				valid = true;
 			}
@@ -129,7 +132,7 @@ function RadioComponent(props) {
 			console.log('false');
 			props.questionOptionChangeHandler(
 				props.questionId,
-				props.options[i].optionId,
+				props.options.optionsArray[i].optionId,
 				e.target.value,
 				false
 			);
@@ -137,7 +140,7 @@ function RadioComponent(props) {
 			console.log('true');
 			props.questionOptionChangeHandler(
 				props.questionId,
-				props.options[i].optionId,
+				props.options.optionsArray[i].optionId,
 				e.target.value,
 				true
 			);
@@ -166,7 +169,7 @@ function RadioComponent(props) {
 				<br />
 			</div>
 			<div>
-				{options.map((choice, i) => {
+				{options.optionsArray.map((choice, i) => {
 					return (
 						<div key={i} className='row'>
 							<div className='col-md-8'>
@@ -184,7 +187,7 @@ function RadioComponent(props) {
 									<div style={{ display: 'inline', marginLeft: '15px' }}>
 										<textarea
 											type='text'
-											value={options[i].option}
+											value={options.optionsArray[i].option}
 											className='form-control'
 											maxLength='250'
 											autoFocus='autofocus'
@@ -196,7 +199,7 @@ function RadioComponent(props) {
 								)}
 							</div>
 
-							{options.length > 2 ? (
+							{options.optionsArray.length > 2 ? (
 								<div className='col-md-4'>
 									<BsFillTrashFill
 										className='float-end'

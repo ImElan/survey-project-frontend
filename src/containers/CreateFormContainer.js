@@ -72,10 +72,13 @@ function CreateFormContainer(props) {
 			initialQuestions.push({
 				questionId: uuidv4(),
 				question: '',
-				options: [
-					{ optionId: uuidv4(), option: 'Option 1' },
-					{ optionId: uuidv4(), option: 'Option 2' },
-				],
+				options: {
+					optionsArray: [
+						{ optionId: uuidv4(), option: 'Option 1' },
+						{ optionId: uuidv4(), option: 'Option 2' },
+					],
+					isOptionsValid: true,
+				},
 				questionType: 'SINGLE',
 				required: false,
 				isValid: false,
@@ -111,14 +114,18 @@ function CreateFormContainer(props) {
 	};
 
 	// Method to handle question option change in single and multiple choice quesitons.
-	const handleQuestionOptionChange = (questionId, optionId, newOptionText, isValid) => {
-		console.log(isValid);
+	const handleQuestionOptionChange = (
+		questionId,
+		optionId,
+		newOptionText,
+		isOptionsValid
+	) => {
 		dispatch({
 			type: 'QUESTION_OPTION_CHANGE',
 			questionId,
 			optionId,
 			newOptionText,
-			isValid,
+			isOptionsValid,
 		});
 	};
 
