@@ -1,9 +1,10 @@
 import CreateFormContainer from './containers/CreateFormContainer';
-
+import ThankYouContainer from './containers/ThankYouContainer';
 function App() {
 	return (
 		<div>
-			<CreateFormContainer />
+			
+			<ThankYouContainer/>
 		</div>
 	);
 }
