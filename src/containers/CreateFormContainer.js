@@ -35,6 +35,8 @@ function CreateFormContainer(props) {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [questionsPerPage, setquestionsPerPage] = useState(5);
 
+	const [triedToSave, setTriedToSave] = useState(false);
+
 	const pagechangerequesthandler = (number) => {
 		setCurrentPage(number);
 	};
@@ -109,8 +111,15 @@ function CreateFormContainer(props) {
 	};
 
 	// Method to handle question option change in single and multiple choice quesitons.
-	const handleQuestionOptionChange = (questionId, optionId, newOptionText) => {
-		dispatch({ type: 'QUESTION_OPTION_CHANGE', questionId, optionId, newOptionText });
+	const handleQuestionOptionChange = (questionId, optionId, newOptionText, isValid) => {
+		console.log(isValid);
+		dispatch({
+			type: 'QUESTION_OPTION_CHANGE',
+			questionId,
+			optionId,
+			newOptionText,
+			isValid,
+		});
 	};
 
 	// Method to handle adding a option to single and multiple choice question.
@@ -150,6 +159,10 @@ function CreateFormContainer(props) {
 		dispatch({ type: 'QUESTION_REMOVE', questionId });
 	};
 
+	const handleTriedToSave = () => {
+		setTriedToSave(true);
+	};
+
 	// Method to save the form by sending a post request to backend
 	const handleSaveForm = async () => {
 		// send Post request to backend with the input state as body
@@ -170,6 +183,7 @@ function CreateFormContainer(props) {
 			formTitle: formState.title,
 			formDescription: formState.description,
 			surveyQuestions: questionsToSendToBackend,
+			isFormEditable: formState.isEditable,
 		};
 
 		console.log(requestBody);
@@ -319,8 +333,11 @@ function CreateFormContainer(props) {
 									style={{
 										padding: '10px 25px',
 										borderRadius: '8px',
-										backgroundColor: '#F0F0F0', //7866B2
 										boxShadow: '3px 3px 10px darkgray',
+										backgroundColor:
+											!question.isValid && triedToSave ? '#F8D7DA' : '#F0F0F0', //7866B2
+										border:
+											!question.isValid && triedToSave ? '2px solid #721c24' : 'none',
 										//#e6e6e6
 									}}
 								>
@@ -368,8 +385,10 @@ function CreateFormContainer(props) {
 					>
 						<SaveFormButton
 							formTitle={formState.title}
+							formDescription={formState.description}
 							questionList={formState.questions}
 							saveFormHandler={handleSaveForm}
+							triedToSaveHandler={handleTriedToSave}
 						/>
 					</Row>
 				</div>

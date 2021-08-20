@@ -3,7 +3,13 @@ import { Button, Alert } from 'react-bootstrap';
 import PopUpModal from './PopUpModal';
 
 function SaveFormButton(props) {
-	const { formTitle, questionList, saveFormHandler } = props;
+	const {
+		formTitle,
+		formDescription,
+		questionList,
+		saveFormHandler,
+		triedToSaveHandler,
+	} = props;
 
 	const [show, popup] = useState(false);
 	const [err, setAlert] = useState(false);
@@ -29,6 +35,7 @@ function SaveFormButton(props) {
 	};
 
 	const errorCheck = () => {
+		triedToSaveHandler();
 		let flag1 = true;
 		let questionArr = [];
 
@@ -46,9 +53,13 @@ function SaveFormButton(props) {
 		});
 
 		if (!flag1) {
-			showError('Could not save form! Empty fields found.');
+			showError('Could not save form! Empty fields or Duplicate options found.');
 		} else if (duplicateArr.length) {
 			showError('Could not save form! Duplicate questions found.');
+		} else if (formTitle.trim().length === 0) {
+			showError('Could not save form! Form Title Cannot be empty.');
+		} else if (formDescription.trim().length === 0) {
+			showError('Could not save formr! Form Description Cannot be empty.');
 		} else {
 			hideError();
 			popUpOpen();

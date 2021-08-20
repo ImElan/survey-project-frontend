@@ -51,6 +51,7 @@ const createFormReducer = (state, action) => {
 				return {
 					...question,
 					options: newOptionsArray,
+					isValid: action.isValid,
 				};
 			});
 			return {
@@ -238,8 +239,8 @@ const createFormReducer = (state, action) => {
 		case 'EDITABLE_CHANGE':
 			return {
 				...state,
-				isEditable: !state.isEditable
-			}
+				isEditable: !state.isEditable,
+			};
 		default:
 			return state;
 	}

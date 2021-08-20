@@ -130,14 +130,16 @@ function RadioComponent(props) {
 			props.questionOptionChangeHandler(
 				props.questionId,
 				props.options[i].optionId,
-				e.target.value
+				e.target.value,
+				false
 			);
 		} else {
 			console.log('true');
 			props.questionOptionChangeHandler(
 				props.questionId,
 				props.options[i].optionId,
-				e.target.value
+				e.target.value,
+				true
 			);
 		}
 	};
