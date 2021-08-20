@@ -28,7 +28,9 @@ const createFormReducer = (state, action) => {
 					question: action.newQuestionText,
 					isValid:
 						action.isValid &&
-						(question.options.isOptionsValid ? question.options.isOptionsValid : true),
+						(question.options.isOptionsValid !== undefined
+							? question.options.isOptionsValid
+							: true),
 				};
 			});
 			return {
