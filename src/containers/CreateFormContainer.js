@@ -174,7 +174,10 @@ function CreateFormContainer(props) {
 	const handleSaveForm = async () => {
 		// send Post request to backend with the input state as body
 		const questionsToSendToBackend = formState.questions.map((question) => {
-			const optionsArr = question.options.map((option) => option.option);
+			let optionsArr = null;
+			if (question.type === 'SINGLE' || question.type === 'MULTIPLE') {
+				optionsArr = question.options.optionsArray.map((option) => option.option);
+			}
 
 			return {
 				questionType: question.questionType,

@@ -164,6 +164,7 @@ function RadioComponent(props) {
 					placeholder='Question - Maximum 250 Characters'
 					size='50'
 					multiline={true}
+					rows='5'
 					maxLength='250'
 					onChange={handleChange}
 				/>

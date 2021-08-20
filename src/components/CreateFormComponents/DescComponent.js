@@ -36,7 +36,6 @@ function DescComponent(props) {
 						<br />
 
 						<Form.Control
-							style={{ height: 35 }}
 							as='textarea'
 							multiline={true}
 							onChange={handleChange}
@@ -44,6 +43,7 @@ function DescComponent(props) {
 							placeholder='Question - Maximum 250 Characters'
 							value={initial}
 							maxlength='250'
+							rows='5'
 						/>
 						{show1 && (
 							<div>

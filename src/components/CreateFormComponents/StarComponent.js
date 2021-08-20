@@ -89,13 +89,13 @@ function StarComponent(props) {
 					<Form.Group className='mb-3' controlId='formBasicEmail'>
 						<Form.Label></Form.Label>
 						<Form.Control
-							style={{ height: 35 }}
 							as='textarea'
 							onChange={questionChange}
 							title={props.question}
 							value={initial}
 							placeholder='Question - Maximum 250 Characters'
 							maxlength='250'
+							rows='5'
 						/>
 						{show1 && (
 							<Form.Text style={{ color: 'white' }} id='passwordHelpBlock' muted>
@@ -105,7 +105,7 @@ function StarComponent(props) {
 						)}
 						<br></br>
 						<br></br>
-						<div>Number of stars required : </div>
+						<div>Number of stars to be displayed : </div>
 						<br></br>
 						<DropdownButton
 							alignRight

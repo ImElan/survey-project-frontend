@@ -65,13 +65,17 @@ function NameForm(props) {
 				maxLength='250'
 				value={props.description}
 				onChange={handleChange2}
+				rows='5'
 			/>
 			{show2 && (
 				<Form.Text style={{ color: 'red' }} id='passwordHelpBlock' muted>
 					Form description cannot exceed 250 characters
 				</Form.Text>
 			)}
-			<EditableSwitch isEditable={props.isEditable} handleIsEditable={props.handleIsEditable}/>
+			<EditableSwitch
+				isEditable={props.isEditable}
+				handleIsEditable={props.handleIsEditable}
+			/>
 		</div>
 	);
 }

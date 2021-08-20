@@ -166,6 +166,7 @@ function CheckboxComponent(props) {
 					multiline={true}
 					maxLength='250'
 					onChange={handleChange}
+					rows='5'
 				/>
 				{questionMax && (
 					<Form.Text style={{ color: 'white' }} id='passwordHelpBlock' muted>

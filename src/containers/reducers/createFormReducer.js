@@ -22,10 +22,13 @@ const createFormReducer = (state, action) => {
 				if (question.questionId !== action.questionId) {
 					return question;
 				}
+
 				return {
 					...question,
 					question: action.newQuestionText,
-					isValid: action.isValid,
+					isValid:
+						action.isValid &&
+						(question.options.isOptionsValid ? question.options.isOptionsValid : true),
 				};
 			});
 			return {
@@ -55,6 +58,7 @@ const createFormReducer = (state, action) => {
 						optionsArray: newOptionsArray,
 						isOptionsValid: action.isOptionsValid,
 					},
+					isValid: action.isOptionsValid,
 				};
 			});
 			return {
@@ -103,6 +107,7 @@ const createFormReducer = (state, action) => {
 						optionsArray: newOptionsArray,
 						isOptionsValid: action.isOptionsValid,
 					},
+					isValid: action.isOptionsValid,
 				};
 			});
 			return {
