@@ -101,6 +101,7 @@ const createFormReducer = (state, action) => {
 					options: {
 						...question.options,
 						optionsArray: newOptionsArray,
+						isOptionsValid: action.isOptionsValid,
 					},
 				};
 			});

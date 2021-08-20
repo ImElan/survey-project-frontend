@@ -40,7 +40,7 @@ function SaveFormButton(props) {
 		let questionArr = [];
 
 		questionList.forEach(function (question) {
-			if (question.isValid === false) {
+			if (question.isValid === false || question.options.isOptionsValid === false) {
 				flag1 = false;
 			}
 			questionArr.push(question.question);

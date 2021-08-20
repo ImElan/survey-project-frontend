@@ -62,9 +62,16 @@ function CheckboxComponent(props) {
 	const handleRemove = (index) => {
 		isOptionArr(false);
 
+		function checkIfDuplicateExists(w) {
+			return new Set(w).size !== w.length;
+		}
+
+		const isValid = !checkIfDuplicateExists(options.optionsArray);
+
 		props.questionOptionRemoveHandler(
 			props.questionId,
-			props.options.optionsArray[index].optionId
+			props.options.optionsArray[index].optionId,
+			isValid
 		);
 	};
 

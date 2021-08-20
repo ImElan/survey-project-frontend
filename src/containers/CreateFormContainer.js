@@ -135,8 +135,8 @@ function CreateFormContainer(props) {
 	};
 
 	// Method to handle removing a option from single and multiple choice question.
-	const handleQuestionOptionRemove = (questionId, optionId) => {
-		dispatch({ type: 'QUESTION_OPTION_REMOVE', questionId, optionId });
+	const handleQuestionOptionRemove = (questionId, optionId, isOptionsValid) => {
+		dispatch({ type: 'QUESTION_OPTION_REMOVE', questionId, optionId, isOptionsValid });
 	};
 
 	// Method to handle changing a required field of a question.
