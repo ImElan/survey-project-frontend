@@ -1,5 +1,4 @@
 import React, {useEffect,useState} from 'react';
-import { button, FormControl, FormGroup } from 'react-bootstrap';
 import './LoginPage.css'
 import GoogleLogin from 'react-google-login';
 import axios from 'axios';
@@ -7,16 +6,14 @@ import axios from 'axios';
 function LoginPage() {
 
   const [username, setUsername] = useState('')
-	const [password, setPassword] = useState('')
+  const [password, setPassword] = useState('')
 
   const handleChange1 = (e) => {
     setUsername(e.target.value)
-    console.log(username);
   }
  
   const handleChange2 = (e) => {
     setPassword(e.target.value)
-    console.log(password);
   }
 
   const handleSubmit = (e) => {
@@ -26,13 +23,13 @@ function LoginPage() {
 
   const responseSuccessGoogle = (response) => {
 		console.log(response)
-    axios({
-      method: "POST",
-      url : "http://localhost/api/googlelogin",
-      data : {tokenId : response.tokenId}
-    }).then(response => {
-      console.log(response)
-    })
+    // axios({
+    //   method: "POST",
+    //   url : "http://localhost:3000/api/auth/login/oauth/google",
+    //   data : {tokenId : response.tokenId}
+    // }).then(response => {
+    //   console.log(response)
+    // })
 	}
   
 	const responseErrorGoogle = (response) => {
@@ -45,9 +42,9 @@ function LoginPage() {
                           <h2>Survey Form</h2>
                           {/* <div>
                             <form onSubmit={handleSubmit}>
-                                  <input type='email' name='email' placeholder='email...' required onChange={() =>handleChange1}/>
+                                  <input type='email' name='email' placeholder='email...' required onChange={handleChange1}/>
                             
-                                  <input type='password' name='pwd' placeholder='password...' required onChange={() =>handleChange2}/>
+                                  <input type='password' name='pwd' placeholder='password...' required onChange={handleChange2}/>
 
                                   <button type = 'submit' >Sign in</button>
                             </form>
@@ -62,6 +59,10 @@ function LoginPage() {
                           />
                           </div>
                       </div>
+                      <div className = "company">
+                            <h3 className= "accolite">Accolite</h3>
+                            <h3 className= "digital">Digital</h3>
+                          </div>
                   </div>
               )      
   }
