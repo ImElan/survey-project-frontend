@@ -1,11 +1,13 @@
-import CreateFormContainer from './containers/CreateFormContainer';
 import LoginPage from './components/TakeSurveyComponents/GoogleLogin/LoginPage';
+// import { LoginProvider } from './components/TakeSurveyComponents/GoogleLogin/LoginContext';
 
 function App() {
 	return (
-		<div>
-			<LoginPage/>
-		</div>
-	);
+		// <LoginProvider>
+			<div>
+				<LoginPage />
+			</div>
+		// </LoginProvider>
+	);  
 }
 export default App;
