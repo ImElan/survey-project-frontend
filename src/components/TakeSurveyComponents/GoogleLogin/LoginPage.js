@@ -37,7 +37,7 @@ function LoginPage() {
     //   }
     // }).then(response => {
     //   console.log(response)
-    //   if (response.user.role.equals("EMPLOYEE")) {                       //  Elan check if this correct or response.data.user
+    //   if (response.data.user.role.equals("EMPLOYEE")) {                      
     //     setEmployee(true);
     //   } else {
     //     setHr(true);
