@@ -10,11 +10,11 @@
 //     }
 //   ];
 
-export const  questionss = [
+export const questionss = [
     {
-        questions : 
+        questions:
         {
-           questionId: 1,
+            questionId: 1,
             question: 'Are you good in accolite ?',
             options: [
                 { optionId: 1, option: 'Option 1' },
@@ -24,13 +24,13 @@ export const  questionss = [
             required: false,
             isValid: false
         },
-        answer:'',
-        isvalid:false
+        answer: '',
+        isvalid: false
     },
     {
-        questions : 
+        questions:
         {
-           questionId: 2,
+            questionId: 2,
             question: 'Are you good in accolite ?',
             options: [
                 { optionId: 1, option: 'Option 1' },
@@ -42,13 +42,13 @@ export const  questionss = [
             required: false,
             isValid: false
         },
-        answer:'',
-        isvalid:false
+        answer: '',
+        isvalid: false
     },
     {
-        questions : 
+        questions:
         {
-           questionId: 3,
+            questionId: 3,
             question: 'Are you feeling good in accolite ?',
             options: [
                 { optionId: 1, option: 'Option 1' },
@@ -60,7 +60,21 @@ export const  questionss = [
             required: false,
             isValid: false
         },
-        answer:'',
-        isvalid:false
+        answer: '',
+        isvalid: false
+    },
+    {
+        questions:
+        {
+            questionId: 4,
+            question: 'How much do you rate Accolite as a company?',
+            numStars: 7,
+            isHalfStarAllowed: true,
+            questionType: 'STAR',
+            required: false,
+            isValid: false
+        },
+        answer: '',
+        isvalid: false
     }
 ];

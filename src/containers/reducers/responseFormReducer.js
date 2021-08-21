@@ -19,10 +19,28 @@ const responseFormReducer = (state, action) => {
 				...state,
 				answerss: newAnswersArray,
 			};
+		case 'CHANGE-RATING':
+			// console.log("b" + value);
+			console.log("a" + action.questionId);
+			const newAnswersssArray = state.answerss.map((answers) => {
+				if (answers.questions.questionId != action.questionId) {
+					return answers;
+				}
+				return {
+					...answers,
+					answer: action.value,
+					isvalid: true,
+				};
+			});
+			// console.log(newAnswersssArray);
+			return {
+				...state,
+				answerss: newAnswersssArray,
+			};
 
 		case 'OPTION_SINGLE_SELECT':
-			const newAnswerssArray = state.answerss.map((answers) =>{
-				if(answers.questions.questionId !== action.questionId){
+			const newAnswerssArray = state.answerss.map((answers) => {
+				if (answers.questions.questionId !== action.questionId) {
 					return answers;
 				}
 				return {
@@ -37,47 +55,45 @@ const responseFormReducer = (state, action) => {
 			}
 
 		case 'OPTION_ADD_REMOVE':
-				const newAnswersArrayy = state.answerss.map((answers) => {
-					if (answers.questions.questionId !== action.questionId) {
-						return answers;
-					}					
-				
-					
-					var removequestion = [...answers.answer];
-					removequestion = removequestion.filter((ans) => ans !== action.optionId.toString());
-					// console.log(removequestion);      
+			const newAnswersArrayy = state.answerss.map((answers) => {
+				if (answers.questions.questionId !== action.questionId) {
+					return answers;
+				}
 
-					var tempans = [...answers.answer]
-					if(removequestion.length == tempans.length)
-					{
-						tempans = [...answers.answer,action.optionId];
-					}
-					else
-					{
-						tempans = removequestion;
-					}
 
-					// const addanswer = [...answers.answer, action.optionId]
-					const addanswer = tempans;
-					return {
-						...answers,
-						answer: addanswer,
-					};
-				});
+				var removequestion = [...answers.answer];
+				removequestion = removequestion.filter((ans) => ans !== action.optionId.toString());
+				// console.log(removequestion);      
+
+				var tempans = [...answers.answer]
+				if (removequestion.length == tempans.length) {
+					tempans = [...answers.answer, action.optionId];
+				}
+				else {
+					tempans = removequestion;
+				}
+
+				// const addanswer = [...answers.answer, action.optionId]
+				const addanswer = tempans;
 				return {
-					...state,
-					answerss: newAnswersArrayy,
+					...answers,
+					answer: addanswer,
 				};
+			});
+			return {
+				...state,
+				answerss: newAnswersArrayy,
+			};
 
 		// case 'SET_INITIAL_ANSWERS':
 		// 	return {
 		// 		...state,
 		// 		answerss: action.initialAnswers,
 		// 	};
-			
+
 		default:
 			return state;
-    }
+	}
 }
 
-    export { responseFormReducer };
+export { responseFormReducer };
