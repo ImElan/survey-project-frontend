@@ -87,15 +87,15 @@ function ResponseFormContainer(props) {
 	// }
 
 	// Method to render different question component in the UI based on question type.
-	const renderQuestionComponent = (answer) => {
-		switch (answer.questions.questionType) {
+	const renderQuestionComponent = (question) => {
+		switch (question.questionType) {
 			case 'STAR':
 				return (
 					<StarComponent
-						question={answer.questions.question}
-						questionId={answer.questions.questionId}
-						numStars={answer.questions.numStars}
-						isHalfStarAllowed={answer.questions.isHalfStarAllowed}
+						question={question.question}
+						questionId={question.questionId}
+						numStars={question.numStars}
+						isHalfStarAllowed={question.isHalfStarAllowed}
 						answerStarSelectHandler={handleAnswerStarChange}
 					/>
 				);
