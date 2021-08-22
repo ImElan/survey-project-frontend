@@ -6,78 +6,11 @@ function PreviewFormContainer(props)
   const [newstate, setnewstate] = useState();
   useEffect(()=>{
     const formstate =JSON.parse(window.localStorage.getItem('formstate'));
-    //console.log(formstate);
     setnewstate(formstate);
-    //console.log('preview form loaded');
-    //console.log(newstate);
   },[]);
   return(
     <h1>TakeSurveyContainer state={newstate}</h1>
   );
-  // return (
-	// 	<Container fluid>
-	// 		<Row
-	// 			className='justify-content-md-center'
-	// 			style={{
-	// 				backgroundColor: '#4B0082', //4B0082
-	// 				paddingTop: '0px',
-	// 				paddingBottom: '35px',
-	// 			}}
-	// 		>
-  //     <Col sm={6}>
-  //       <input type="text" value="formname"/>
-  //       <input type="text" value="formdescription"/>
-  //     </Col>
-  //   </Row>
-  //   <Row className='justify-content-md-center'>
-  //     <div
-  //       style={{
-  //         backgroundColor: '#D8D8D8',
-  //         width: '75%',
-  //         border: 'solid lightgray 2px',
-  //         borderTop: '0px',
-  //         borderRadius: '8px',
-  //       }}
-  //     >
-  //       <Row
-  //         sm='auto'
-  //         className='justify-content-end'
-  //         style={{
-  //           padding: '12px',
-  //         }}
-  //       >
-  //       </Row>
-  //
-  //
-  //       <Row
-  //         sm='auto'
-  //         className='justify-content-end'
-  //         style={{
-  //           padding: '12px',
-  //         }}
-  //       >
-  //       <Col sm={6}>
-  //         <input type="text" value="formname"/>
-  //         <input type="text" value="formdescription"/>
-  //       </Col>
-  //       </Row>
-  //       <Row
-  //         sm='auto'
-  //         className='justify-content-end'
-  //         style={{
-  //           padding: '12px',
-  //         }}
-  //       >
-  //       <Col sm={6}>
-  //         <input type="text" value="formname"/>
-  //         <input type="text" value="formdescription"/>
-  //       </Col>
-  //       </Row>
-  //
-  //   </div>
-  //   </Row>
-  //
-  //     </Container>
-  //   );
+
 }
 export default PreviewFormContainer;
