@@ -16,6 +16,7 @@ import RadioButtonComponent from '../components/CreateFormComponents/RadioCompon
 import RequiredButton from '../components/CreateFormComponents/RequiredCom/Switch';
 import PopDown from '../components/CreateFormComponents/PopDown';
 import Paging from '../components/CreateFormComponents/Paging';
+import Preview from '../components/CreateFormComponents/Preview';
 
 import axios from 'axios';
 
@@ -375,6 +376,20 @@ function CreateFormContainer(props) {
 							formTitle={formState.title}
 							questionList={formState.questions}
 							saveFormHandler={handleSaveForm}
+						/>
+					</Row>
+					<Row
+						className='text-center'
+						style={{
+							paddingTop: '20px',
+							paddingBottom: '30px',
+						}}
+					>
+						<Preview
+						  formState={formState}
+							formTitle={formState.title}
+							formDescription={formState.description}
+							questionList={formState.questions}
 						/>
 					</Row>
 				</div>

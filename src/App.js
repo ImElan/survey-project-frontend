@@ -1,24 +1,26 @@
-// import CreateFormContainer from './containers/CreateFormContainer';
-import { useEffect, useState } from 'react';
-import ResponseFormContainer from './containers/ResponseFormContain';
+import CreateFormContainer from './containers/CreateFormContainer';
+import ResponseFormContainer from './containers/ResponseFormContainer';
+import PreviewFormContainer from './containers/PreviewFormContainer';
+import ViewFormContainer from './containers/ViewFormContainer';
+import {
+	BrowserRouter as Router,
+	Redirect,
+	Route,
+	Link
+  } from 'react-router-dom'
 
 function App() {
-	const [submitted, setSubmitted] = useState(false);
-	/*useEffect(() => {
-		const data = axios.get(path,requestbody)
-		if (data!=null) setSubmitted(true)
-	},[])*/
 	return (
 		<div>
-			{/* <div>
-				<CreateFormContainer />
-			</div> */
-			!submitted && <div>
-				<ResponseFormContainer setSubmitted = {setSubmitted}/>
+			<Router>
+				<Route exact path = '/' component = {CreateFormContainer} />
+				<Route exact path = '/preview' component = {PreviewFormContainer} />
+				<Route exact path = '/fillForm' component = {ViewFormContainer} />
+			</Router>
+			<div>
+				{/* <ResponseFormContainer/> */}
+				{/* <ViewFormContainer/> */}
 			</div>
-			/*submitted && <div>
-				<ThanksContainer />
-			</div> */}
 		</div>
 	);
 }
