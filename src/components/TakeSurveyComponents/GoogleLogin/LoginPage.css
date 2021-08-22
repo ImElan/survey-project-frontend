@@ -1,0 +1,61 @@
+.div-login{
+    width:400px;
+    height:500px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    border: 1px solid #949494;
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 10vh;
+    background-color: white;
+} 
+
+.div-login{
+    background-color: rgb(228, 255, 205);
+}
+
+.Title{
+    text-align: center;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-weight: 600;
+    color: rgb(109, 109, 109);
+    border-radius: 5px;
+}
+.company{
+    padding-top: 150px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+}
+
+h3{
+    font-family: 'Open Sans Condensed', sans-serif;
+}
+.accolite{
+    color: rgb(122, 122, 122);
+}
+.digital{
+    color: rgb(255, 68, 0);
+}
+
+h2{
+    padding-bottom: 80px;
+    padding-top: 50px;
+}
+
+.newuser{
+    padding-top: 30px;
+}
+
+.message{
+    position: relative;
+    text-align: center;
+    color: rgb(36, 167, 24);
+    padding-bottom: 100px;
+}
+
+.tryagain{
+    color: rgb(156, 0, 161);
+}

@@ -1,9 +1,7 @@
 import { useEffect, useReducer, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
-
 import { createFormReducer } from './reducers/createFormReducer';
-
 import StarComponent from '../components/CreateFormComponents/StarComponent';
 import DescriptionComponent from '../components/CreateFormComponents/DescComponent';
 import Dropdown from '../components/CreateFormComponents/DropdownMenu/DropdownMenu';
@@ -403,5 +401,4 @@ function CreateFormContainer(props) {
 		</Container>
 	);
 }
-
 export default CreateFormContainer;

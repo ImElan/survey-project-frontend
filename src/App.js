@@ -2,6 +2,9 @@ import CreateFormContainer from './containers/CreateFormContainer';
 import ResponseFormContainer from './containers/ResponseFormContainer';
 import PreviewFormContainer from './containers/PreviewFormContainer';
 import ViewFormContainer from './containers/ViewFormContainer';
+import LoginPage from './components/TakeSurveyComponents/GoogleLogin/LoginPage';
+// import { LoginProvider } from './components/TakeSurveyComponents/GoogleLogin/LoginContext';
+
 import {
 	BrowserRouter as Router,
 	Redirect,
@@ -12,6 +15,9 @@ import {
 function App() {
 	return (
 		<div>
+			<div>
+				<LoginPage />
+			</div>
 			<Router>
 				<Route exact path = '/' component = {CreateFormContainer} />
 				<Route exact path = '/preview' component = {PreviewFormContainer} />
