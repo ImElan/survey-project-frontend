@@ -59,6 +59,7 @@ const responseFormReducer = (state, action) => {
 
 					// const addanswer = [...answers.answer, action.optionId]
 					const addanswer = tempans;
+					console.log(addanswer);
 					return {
 						...answers,
 						answer: addanswer,

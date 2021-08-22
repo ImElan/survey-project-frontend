@@ -4,11 +4,12 @@ import {responseFormReducer} from './reducers/responseFormReducer';
 import isDeepEqual from 'fast-deep-equal/react'
 // import { useCallback } from 'react';
 import {questionss} from './questionss';
+import SubmitFormButton from '../components/ResponseSurveyComponents/SubmitFormButton';
 import DescComponentt from '../components/ResponseSurveyComponents/DescComponentt';
 import RadioComponentt from '../components/ResponseSurveyComponents/RadioComponentt';
 import CheckBoxComponentt from '../components/ResponseSurveyComponents/CheckBoxComponentt';
 
-
+import axios from 'axios';
 
 function ResponseFormContainer(props){
 
@@ -78,6 +79,39 @@ function ResponseFormContainer(props){
 		// 	dispatch({type: 'OPTION_REMOVE',questionId, optionId});
 		// 	console.log(responseState.answerss);
 		// }
+
+		const handleSubmitForm = async () => {
+			// send Post request to backend with the input state as body
+			console.log(responseState);
+			const answersToSendToBackend = responseState.answerss.map((question) => {
+				const optionsArr = question.questions.options.map((option) => option.option);
+	
+				return {
+					questionType: question.questions.questionType,
+					question: question.questions.question,
+					options: optionsArr,
+					noOfStars: question.questions.numStars,
+					isHalfStarAllowed: question.questions.isHalfStarAllowed,
+					isRequired: question.questions.required,
+					answer: question.answer
+				};
+			});
+	
+			const requestBody = {
+				surveyAnswers: answersToSendToBackend,
+			};
+	
+			console.log(requestBody);
+	
+			try {
+				const response = await axios.post('http://localhost:8080/api/addform', requestBody);
+				console.log(response.data);
+				props.setSubmitted(true);
+			} catch (error) {
+				console.log(error);
+				console.log(error.response);
+			} 
+		};
 
     // Method to render different question component in the UI based on question type.
 	const renderQuestionComponent = (answer) => {
@@ -180,7 +214,7 @@ function ResponseFormContainer(props){
 										<Col style={{ marginTop: '10px' }}>
 											<DeleteButton
 												questionId={question.questionId}
-												disabled={formState.questions.length <= minQuestionAllowed}
+												disabled={responseState.questions.length <= minQuestionAllowed}
 												minQuestions={minQuestionAllowed}
 												deleteQuestionHandler={handleRemoveQuestion}
 											/>
@@ -198,7 +232,10 @@ function ResponseFormContainer(props){
 								</Col>
 							</Row>
 						))}
-
+								<SubmitFormButton
+									answerList={responseState.answerss}
+									submitFormHandler={handleSubmitForm}
+								/>
 		</Container>
 
 	);
