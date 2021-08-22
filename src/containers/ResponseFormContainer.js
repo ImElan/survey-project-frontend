@@ -77,25 +77,28 @@ function ResponseFormContainer(props) {
 		dispatch({ type: 'OPTION_ADD_REMOVE', questionId, optionId });
 		console.log(responseState.answerss);
 	}
+	const handleAnswerStarChange = (questionId, value) => {
 
+		dispatch({ type: 'CHANGE-RATING', questionId, value });
+	}
 	// const handleremoveoption = (questionId, optionId) => {
 	// 	dispatch({type: 'OPTION_REMOVE',questionId, optionId});
 	// 	console.log(responseState.answerss);
 	// }
 
 	// Method to render different question component in the UI based on question type.
-	const renderQuestionComponent = (question) => {
-		switch (question.questionType) {//changes
-			// case 'STAR':
-			// 	return (
-			// 		<StarComponent
-			// 			question={question.question}
-			// 			questionId={question.questionId}
-			// 			numStars={questions.numStars}
-			// 			isHalfStarAllowed={question.isHalfStarAllowed}
-			// 			answerStarSelectHandler={handleAnswerStarChange}
-			// 		/>
-			// 	);
+	const renderQuestionComponent = (answer) => {
+		switch (answer.questions.questionType) {
+			case 'STAR':
+				return (
+					<StarComponent
+						question={answer.questions.question}
+						questionId={answer.questions.questionId}
+						numStars={answer.questions.numStars}
+						isHalfStarAllowed={answer.questions.isHalfStarAllowed}
+						answerStarSelectHandler={handleAnswerStarChange}
+					/>
+				);
 			case 'DESCRIPTIVE':
 				return (
 					<DescComponentt
