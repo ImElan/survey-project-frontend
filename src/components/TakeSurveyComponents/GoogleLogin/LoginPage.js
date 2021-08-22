@@ -3,27 +3,22 @@ import './LoginPage.css'
 import GoogleLogin from 'react-google-login';
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
-// import { LoginContext } from './LoginContext';
 
 function LoginPage() {
 
-  const [isEmployee, setEmployee] = useState(false);
-  const [isHr, setHr] = useState(false);
   const [isValid, setValid] = useState(false);
   const [inValid, setInValid] = useState(false);
-  const [Response, setRespone] = useState(null);
 
   let history = useHistory();
 
   useEffect(() => {
-    console.log("useEffect");
-    var x = window.localStorage.getItem('isEmployee');
-    var y = window.localStorage.getItem('isHr');
-    if(x){
+    var x = localStorage.getItem('isEmployee');
+    var y = localStorage.getItem('isHr');
+    if(x == "true"){
       console.log("Employee Path " + x);
       //history.push("/Employee_Path");                     // Aman please add the route to Take Survey Form Page here replacing "Employee_Path"
     }
-    else if(y){
+    if(y == "true"){
       console.log("Hr Path" + y);
       //history.push("/Hr_Path");                          // Aman please add the route to Create Survey Form Page here replacing "Hr_Path"
     }
@@ -31,24 +26,28 @@ function LoginPage() {
 
   const responseSuccessGoogle = (response) => {
     console.log(response)
-    // axios.get('http://localhost:3000/api/auth/login/oauth/google', {      // Elan check this Api call is correct or not
-    //   headers: {
-    //     Authorization: `Bearer ${idToken}`
-    //   }
-    // }).then(response => {
-    //   console.log(response)
-    //   if (response.data.user.role.equals("EMPLOYEE")) {                      
-    //     setEmployee(true);
-    //   } else {
-    //     setHr(true);
-    //   }
-    // })
+    var idToken = response.tokenId ;
+    console.log(idToken);
     setValid(true);
-    // setRespone(response);
-    window.localStorage.setItem('isLoggedIn', isValid);
-    window.localStorage.setItem('isEmployee', isEmployee);
-    window.localStorage.setItem('isHr', isHr);
-    window.localStorage.setItem('apiResponse', Response);
+    axios.get('http://localhost:8080/api/auth/login/oauth/google', {      
+      headers: {
+        Authorization: `Bearer ${idToken}`
+      }
+    }).then(elan => {
+      console.log(elan)
+      var check = elan.data.user.role ;
+      console.log(check);
+      if ( check == "EMPLOYEE") {                      
+        localStorage.setItem('isEmployee', true);
+        //history.push("/Employee_Path");                     // Aman please add the route to Take Survey Form Page here replacing "Employee_Path"
+      } else {
+        localStorage.setItem('isHr', true);
+        //history.push("/Hr_Path");                          // Aman please add the route to Create Survey Form Page here replacing "Hr_Path"
+      }
+      localStorage.setItem('apiResponse', JSON.stringify(response));
+      localStorage.setItem('backEndResponse', JSON.stringify(elan));
+      localStorage.setItem('isLoggedIn', true);
+    })
   }
 
   const responseErrorGoogle = (response) => {
