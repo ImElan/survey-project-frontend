@@ -28,7 +28,6 @@ function LoginPage() {
     console.log(response)
     var idToken = response.tokenId ;
     console.log(idToken);
-    setValid(true);
     axios.get('http://localhost:8080/api/auth/login/oauth/google', {      
       headers: {
         Authorization: `Bearer ${idToken}`
@@ -75,10 +74,6 @@ function LoginPage() {
         <h3 className="digital">Digital</h3>
       </div>
       <div className="message">
-        {isValid ?
-          <h4>LogIn Successful</h4>
-          : null
-        }
         {
           inValid ? <h4 className="tryagain">Please try again!</h4>
             : null
