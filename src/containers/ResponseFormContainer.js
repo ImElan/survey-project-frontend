@@ -12,9 +12,10 @@ import StarComponent from '../components/CreateFormComponents/StarComponent';
 
 function ResponseFormContainer(props) {
 	
-	const formstate = JSON.parse(window.localStorage.getItem('formstate'));
+	// const formstate = JSON.parse(window.localStorage.getItem('formstate'));
+	console.log(props)
 	var questions = props.questions;
-	console.log(questions);
+	// console.log(questions);
 	
 	const [responseState, dispatch] = useReducer(responseFormReducer, {
 		userid: '',
@@ -142,6 +143,20 @@ function ResponseFormContainer(props) {
 					paddingBottom: '35px',
 				}}
 			></Row>
+			<Row
+				className='justify-content-md-center'
+				style={{
+					paddingTop: '0px',
+					paddingBottom: '35px',
+				}}
+				// {
+				// 	<h5></h5>
+				// }
+			>
+				<h5>{props.title}</h5>
+				<h5>{props.description}</h5>
+
+			</Row>
 
 			{props.questions && props.questions
 				// .slice(

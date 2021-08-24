@@ -8,7 +8,7 @@ export default class ButtonLoader extends Component {
   fetchData = () => {
     this.setState({ loading: true });
 
-    //API call here for fetching data
+    //API call here for saving data
     setTimeout(() => {
       this.setState({ loading: false });
     }, 5000);

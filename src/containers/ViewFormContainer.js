@@ -5,6 +5,9 @@ import ResponseFormContainer from './ResponseFormContainer';
 
 function ViewFormContainer(props) {
     const [questions, setQuestions] = useState(null);
+    const [formTitle, setFormTitle] = useState(null);
+    const [formDescription, setFormDescription] = useState(null);
+
 
     useEffect(() => {
         console.log("here");
@@ -15,6 +18,8 @@ function ViewFormContainer(props) {
             const q = data.surveyQuestions;
             console.log(q);
             setQuestions(q);
+            setFormTitle(data.formTitle);
+            setFormDescription(data.formDescription);
         }
     }, []);
 
@@ -22,7 +27,7 @@ function ViewFormContainer(props) {
 
     const preview = "NOTPREVIEW";
     return (
-        <ResponseFormContainer calledBy={preview} questions={questions}/>
+        <ResponseFormContainer title={formTitle} description={formDescription} calledBy={preview} questions={questions}/>
         // <h5>hello</h5>
     );
 

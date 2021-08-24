@@ -17,10 +17,11 @@ import {
 function App() {
 	return (
 		<div>
-			<div>
+			{/* <div>
 				<LoginPage />
-			</div>
+			</div> */}
 			<Router>
+				<Route exact path='/login' component={LoginPage}/>
 				<Route exact path='/' component={CreateFormContainer} />
 				<Route exact path='/preview' component={PreviewFormContainer} />
 				<Route exact path='/fillForm' component={ViewFormContainer} />
