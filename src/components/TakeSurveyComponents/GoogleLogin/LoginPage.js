@@ -2,45 +2,50 @@ import React, { useEffect, useState, useContext } from 'react';
 import './LoginPage.css'
 import GoogleLogin from 'react-google-login';
 import axios from 'axios';
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 
 function LoginPage() {
 
+  const [redirectEmployee, setRedirectEmployee] = useState(false)
+  const [redirectHr, setRedirectHr] = useState(false)
   const [inValid, setInValid] = useState(false);
 
   let history = useHistory();
 
+  let formid = 1;
+
   useEffect(() => {
     var x = localStorage.getItem('isEmployee');
     var y = localStorage.getItem('isHr');
-    if(x == "true"){
+    if (x == "true") {
       console.log("Employee Path " + x);
-      //history.push("/Employee_Path");                     // Aman please add the route to Take Survey Form Page here replacing "Employee_Path"
+      setRedirectEmployee(true);
     }
-    if(y == "true"){
+    if (y == "true") {
       console.log("Hr Path" + y);
-      //history.push("/Hr_Path");                          // Aman please add the route to Create Survey Form Page here replacing "Hr_Path"
+      setRedirectHr(true);
     }
   })
 
   const responseSuccessGoogle = (response) => {
     console.log(response)
-    var idToken = response.tokenId ;
+    var idToken = response.tokenId;
     console.log(idToken);
-    axios.get('http://localhost:8080/api/auth/login/oauth/google', {      
+    axios.get('http://localhost:8080/api/auth/login/oauth/google', {
       headers: {
         Authorization: `Bearer ${idToken}`
       }
     }).then(elan => {
       console.log(elan)
-      var check = elan.data.user.role ;
+      var check = elan.data.user.role;
       console.log(check);
-      if ( check == "EMPLOYEE") {                      
+      if (check == "EMPLOYEE") {
+        console.log("Helooooooooo");
         localStorage.setItem('isEmployee', true);
-        //history.push("/Employee_Path");                     // Aman please add the route to Take Survey Form Page here replacing "Employee_Path"
+        setRedirectEmployee(true);
       } else {
         localStorage.setItem('isHr', true);
-        //history.push("/Hr_Path");                          // Aman please add the route to Create Survey Form Page here replacing "Hr_Path"
+        setRedirectHr(true);
       }
       localStorage.setItem('apiResponse', JSON.stringify(response));
       localStorage.setItem('backEndResponse', JSON.stringify(elan));
@@ -56,7 +61,7 @@ function LoginPage() {
   return (
     <div className='div-login'>
       <div className='Title'>
-        <h2>Survey Form</h2>
+        <h2>Survey Tool</h2>
         <div className="newuser">
           <GoogleLogin className="google"
             clientId="104208248429-bt7t5eo6pce3db752p4rbdh9ica46ap1.apps.googleusercontent.com"
@@ -76,6 +81,24 @@ function LoginPage() {
         {
           inValid ? <h4 className="tryagain">Please try again!</h4>
             : null
+        }
+      </div>
+      <div>
+        {
+          redirectEmployee ? <Redirect to={{
+            pathname: `/form/fill/${formid}`,                                                       // Employee path Takke suvey form
+            state: { from: history.location.pathname }
+          }}
+          /> : null
+        }
+      </div>
+      <div>
+        {
+          redirectHr ? <Redirect to={{
+            pathname: `/form/create`,
+            state: { from: history.location.pathname }
+          }}
+          /> : null
         }
       </div>
     </div>
