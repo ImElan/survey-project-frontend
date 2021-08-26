@@ -32,7 +32,7 @@ const responseFormReducer = (state, action) => {
 					isvalid: true,
 				};
 			});
-			// console.log(newAnswersssArray);
+			console.log(newAnswersssArray);
 			return {
 				...state,
 				answerss: newAnswersssArray,

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import React from 'react';
-import Rating from '@material-ui/lab/Rating';
-
+import ReactStars from "react-rating-stars-component";
 
 function StarComponent(props) {
     const [currentValue, setCurrentValue] = useState(0);
@@ -12,36 +11,21 @@ function StarComponent(props) {
         props.setRequiredd(-1);
     };
     return (
-        <div>
-            <div className='mt-5'>
-                <label>	{props.question}</label>
-                <br />
-                <br />
-            </div>
-
-            <Rating name="size-large"
-                size="large"
-                onChange={(event, value) => handleClick(event, value)}
-                defaultValue={0}
-                precision={props.isHalfStarAllowed ? 0.5 : 1}
-                max={props.numStars}
+        <div className='mt-5'>
+            <label>	{props.question}</label>
+            <br />
+            <ReactStars
+                count={props.numStars}
+                onChange={(value) => handleClick(value)}
+                size={48}
+                isHalf={props.isHalfStarAllowed}
+                emptyIcon={<i className="far fa-star"></i>}
+                halfIcon={<i className="fa fa-star-half-alt"></i>}
+                fullIcon={<i className="fa fa-star"></i>}
+                activeColor="#ffc107"
             />
-            <br></br>
-            <p>Your rating is:{currentValue}</p>
-        </div >
+        </div>
     );
 }
-
-const styles = {
-    container: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    stars: {
-        display: 'flex',
-        flexDirection: 'row',
-    },
-};
 
 export default StarComponent;
