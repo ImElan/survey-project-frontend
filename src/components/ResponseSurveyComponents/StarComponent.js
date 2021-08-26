@@ -9,6 +9,7 @@ function StarComponent(props) {
         console.log(props.questionId);
         props.answerStarSelectHandler(props.questionId, value);
         setCurrentValue(value);
+        props.setRequiredd(-1);
     };
     return (
         <div>
