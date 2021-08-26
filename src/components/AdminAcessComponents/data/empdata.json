@@ -1,0 +1,25 @@
+{
+    "employees":[
+        {
+            "id":1,
+            "name":"emp1",
+            "role":"employee"
+        },
+        {
+            "id":2,
+            "name":"emp2",
+            "role":"employee"
+        },
+        {
+            "id":3,
+            "name":"emp3",
+            "role":"employee"
+        },
+        {
+            "id":4,
+            "name":"emp4",
+            "role":"employee"
+        }
+
+    ]
+}
