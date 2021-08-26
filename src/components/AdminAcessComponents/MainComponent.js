@@ -1,131 +1,167 @@
-// import { useEffect, useReducer, useRef, useState } from 'react';
-// import React from 'react';
-
-
-
-// import { Container, Row, Col } from 'react-bootstrap';
-
-
-
-// function MainComponent(props) {
-
-//     const [responseState, dispatch] = useReducer(adminReducer, {
-//         curremployee: " ",
-// 		employedata: employees
-// 	});
-
-
-//     return(
-//         <div>
-            
-
-//         </div>
-//     )
-
-
-
-// }
-
 
 import React, { Component } from "react";
-import { Card,CardBody, CardTitle,CardText } from "reactstrap";
+import { Card, CardBody, CardTitle, CardText, Button, Modal, 
+    ModalHeader, ModalBody, Form, FormGroup, Input, Label } from "reactstrap";
 import AdminDataService from "./services/adminservice";
 // import { Link } from "react-router-dom";
 
 
-function RenderEmployee({emp})
+function RenderEmployee({emp,toggleMod})
 	{
 		return(
-				<div className="col-12 col-md-5 m-1">
+				<div className="col-12 col-md-6 m-1">
 					<Card>
-                        <CardBody>
-							<CardTitle>{emp.id}</CardTitle>
-							<CardText>{emp.name}</CardText>
-                            
-							<CardText>{emp.role}</CardText>
-						</CardBody>
+              <CardBody>
+							  <CardTitle><strong>Employee Id : </strong>{emp.id}</CardTitle>
+							  <CardText><strong>Employee Name : </strong>{emp.name}</CardText>            
+							  <CardText><strong>Employee Role : </strong>{emp.role}</CardText>
+						  </CardBody>
+                <br/>
+                <Button onClick={toggleMod} className="btn bg-success ml-auto">
+                    Edit
+                </Button>            
 			    	</Card>
+                    
 				</div>
 		);
 	}
+
+
+function RenderModal(props){
+
+  const { isModalOpen, emprole, empname, empid, changerole, changename, toggleModal, handleLogin } = props;
+
+  return(
+      <div>
+        <Modal isOpen={isModalOpen} toggle={toggleModal} style={{'marginTop':'100px'}}>
+          <ModalHeader toggle={toggleModal} ></ModalHeader>
+            <ModalBody>
+            <div >
+              <Label>Employee Name</Label>
+              
+                <input
+                  type="text"
+                  className="form-control mb - 4"
+                  placeholder="Enter Employee Name"
+                  value={empname}
+                  onChange={changename}
+                />
+            </div>
+
+            <div>
+              <Label>Employee Role</Label>
+
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Enter New Employee Role"
+                value={emprole}
+                onChange={changerole}
+              />
+
+            </div>
+
+            <div style={{flexDirection:'row', flexWrap:'wrap'}}>
+
+            <div className="ml-auto">
+              <button
+                className="btn btn-info"
+                type="button"
+                onClick={toggleModal}
+              >
+                Cancel
+              </button>
+            </div>
+              
+            <div className="ml-auto">
+              <button
+                className="btn btn-success"
+                type="button"
+                onClick={() => handleLogin(emprole,empname,empid)}
+              >
+                Save
+              </button>
+            </div>
+
+            </div>
+
+        
+          </ModalBody>
+        </Modal>
+      </div>
+    
+  )
+}
+
 
  export default class MainComponent extends Component {
   constructor(props) {
     super(props);
     this.onChangeSearchId = this.onChangeSearchId.bind(this);
-    // this.retrieveTutorials = this.retrieveTutorials.bind(this);
-    // this.refreshList = this.refreshList.bind(this);
-    // this.setActiveTutorial = this.setActiveTutorial.bind(this);
-    // this.removeAllTutorials = this.removeAllTutorials.bind(this);
+    this.onChangeSearchName = this.onChangeSearchName.bind(this);
+    this.onChangeSearchRole = this.onChangeSearchRole.bind(this);
     this.onsearchId = this.onsearchId.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
 
     
 
     this.state = {
         tutorials: [],
-        // searchTitle is the Id field
+        isModalOpen: false,
         istrue : false,
-        searchTitle: ""
+        searchId: "",
+        searchName: "",
+        searchRole: ""
       };
     }
   
 
-//   componentDidMount() {
-//     this.retrieveTutorials();
-//   }
-
+toggleModal() {
+    this.setState({
+        isModalOpen: !this.state.isModalOpen
+    })
+    console.log(this.state.isModalOpen)
+}
 
 onChangeSearchId(e) {
-    console.log(e.target.value);
     const searchTitle = e.target.value;
-
     this.setState({
-      searchTitle: searchTitle
+      searchId: searchTitle
     });
   }
 
-//   retrieveTutorials() {
-//     TutorialDataService.getAll()
-//       .then(response => {
-//         this.setState({
-//           tutorials: response.data
-//         });
-//         console.log(response.data);
-//       })
-//       .catch(e => {
-//         console.log(e);
-//       });
-//   }
+  onChangeSearchName(e) {
+    console.log(e.target.value);
+    const searchTitle = e.target.value;
+    this.setState({
+      searchName: searchTitle
+    });
+  }
 
-//   refreshList() {
-//     this.retrieveTutorials();
-//     this.setState({
-//       currentTutorial: null,
-//       currentIndex: -1
-//     });
-//   }
+  onChangeSearchRole(e) {
+    const searchTitle = e.target.value;
+    this.setState({
+      searchRole: searchTitle
+    });
+  }
 
-//   setActiveTutorial(tutorial, index) {
-//     this.setState({
-//       currentTutorial: tutorial,
-//       currentIndex: index
-//     });
-//   }
+  handleLogin(emprole,empname,empid) {
 
-//   removeAllTutorials() {
-//     TutorialDataService.deleteAll()
-//       .then(response => {
-//         console.log(response.data);
-//         this.refreshList();
-//       })
-//       .catch(e => {
-//         console.log(e);
-//       });
-//   }
+    AdminDataService.doUpdate(
+      empid,
+      emprole
+    )
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+}
 
   onsearchId() {
-    //   console.log(this.state.searchTitle);
-    AdminDataService.doGetById(this.state.searchTitle)
+      console.log(this.state.searchId);
+    AdminDataService.doGetById(this.state.searchId)
       .then(response => {
         this.setState({
           tutorials: response.data
@@ -142,18 +178,18 @@ onChangeSearchId(e) {
 
   render() {
     
-    const { searchTitle, tutorials, istrue } = this.state;
+    const { searchId, tutorials, istrue, searchName, searchRole } = this.state;
 
 
     return (
-      <div className="list row">
+      <div className="list row " style={{'marginLeft':'200px'}}>
         <div className="col-md-8 ">
           <div className="input-group mb-3">
             <input
               type="text"
               className="form-control"
               placeholder="Enter Employee Id"
-              value={searchTitle}
+              value={searchId}
               onChange={this.onChangeSearchId}
             />
             <div className="input-group-append">
@@ -168,77 +204,27 @@ onChangeSearchId(e) {
           </div>
         </div>
 
-        <div>
+        <div className="col-12 " style={{'marginLeft':'80px'}}>
             {
-                istrue && <RenderEmployee emp = {tutorials} />
+                istrue && <RenderEmployee emp = {tutorials} toggleMod = {this.toggleModal}/>
             }
         </div>
-        {/* <div className="col-md-6">
-          <h4>Tutorials List</h4>
 
-          <ul className="list-group">
-            {tutorials &&
-              tutorials.map((tutorial, index) => (
-                <li
-                  className={
-                    "list-group-item " +
-                    (index === currentIndex ? "active" : "")
-                  }
-                  onClick={() => this.setActiveTutorial(tutorial, index)}
-                  key={index}
-                >
-                  {tutorial.title}
-                </li>
-              ))}
-          </ul>
-
-          <button
-            className="m-3 btn btn-sm btn-danger"
-            onClick={this.removeAllTutorials}
-          >
-            Remove All
-          </button>
+        <div>
+          <RenderModal
+              isModalOpen = {this.state.isModalOpen}
+              toggleModal = {this.toggleModal}
+              emprole = {searchRole}
+              empname = {searchName}
+              changename = {this.onChangeSearchName}
+              changerole = {this.onChangeSearchRole}
+              empid = {searchId}
+              handleLogin = {this.handleLogin}
+          />
         </div>
-        <div className="col-md-6">
-          {currentTutorial ? (
-            <div>
-              <h4>Tutorial</h4>
-              <div>
-                <label>
-                  <strong>Title:</strong>
-                </label>{" "}
-                {currentTutorial.title}
-              </div>
-              <div>
-                <label>
-                  <strong>Description:</strong>
-                </label>{" "}
-                {currentTutorial.description}
-              </div>
-              <div>
-                <label>
-                  <strong>Status:</strong>
-                </label>{" "}
-                {currentTutorial.published ? "Published" : "Pending"}
-              </div>
-
-              <Link
-                to={"/tutorials/" + currentTutorial.id}
-                className="badge badge-warning"
-              >
-                Edit
-              </Link>
-            </div>
-          ) : (
-            <div>
-              <br />
-              <p>Please click on a Tutorial...</p>
-            </div>
-          )}
-        </div> */}
+        
       </div>
     );
-
   }
 }
 

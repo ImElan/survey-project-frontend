@@ -3,22 +3,22 @@
         {
             "id":1,
             "name":"emp1",
-            "role":"employee"
+            "role":"EMPLOYEE"
         },
         {
             "id":2,
             "name":"emp2",
-            "role":"employee"
+            "role":"EMPLOYEE"
         },
         {
             "id":3,
             "name":"emp3",
-            "role":"employee"
+            "role":"EMPLOYEE"
         },
         {
             "id":4,
             "name":"emp4",
-            "role":"employee"
+            "role":"EMPLOYEE"
         }
 
     ]

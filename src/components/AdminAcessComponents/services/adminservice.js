@@ -6,8 +6,10 @@ class AdminDataService{
         return http.get(`/${id}`);
     }
 
-    doUpdate(id, data){
-        return http.put(`/${id}`,data);
+    doUpdate(id, role){
+        // console.log(id);
+        // console.log(role);
+        return http.put(`/${id}`,role);
     }
 }
 

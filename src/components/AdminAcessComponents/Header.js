@@ -21,13 +21,14 @@ const Header = () => {
             <AppBar position = "fixed"  className = {classes.footerStyle}>
                 <Toolbar>
                     <IconButton edge = "start" color = "inherit" aria-label = "menu">
-                        {/* <MenuIcon/> */}
+                    
                         <Typography variant = "h6">
                             Admin
                         </Typography>
                     </IconButton>
                 </Toolbar>
             </AppBar>
+        
         </div>
     )
 }
