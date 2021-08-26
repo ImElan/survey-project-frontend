@@ -5,6 +5,7 @@ import ViewFormContainer from './containers/ViewFormContainer';
 import LoginPage from './components/TakeSurveyComponents/GoogleLogin/LoginPage';
 // import { LoginProvider } from './components/TakeSurveyComponents/GoogleLogin/LoginContext';
 import ThankYouContainer from './containers/ThankYouContainer';
+import FormResponseContainer from './containers/FormResponseContainer';
 
 
 import {
@@ -23,6 +24,7 @@ function App() {
 				<Route exact strict path='/form/preview' component={PreviewFormContainer} />
 				<Route exact strict path='/Form/fill/:id' component={ViewFormContainer} />
 				<Route exact strict path='/form/thankyou' component={ThankYouContainer} />
+				<Route exact strict path='/form/:formid/responses' component={FormResponseContainer} />
 			</Router>
 			<div>
 				{/* <ResponseFormContainer/> */}

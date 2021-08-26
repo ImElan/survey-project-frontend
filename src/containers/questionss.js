@@ -22,9 +22,8 @@ export const questionss = [
             ],
             questionType: 'DESCRIPTIVE',
             required: false,
-            isValid: false
         },
-        answer: '',
+        answer: 'yeah good',
         isvalid: false
     },
     {
@@ -42,7 +41,7 @@ export const questionss = [
             required: false,
             isValid: false
         },
-        answer: '',
+        answer: 'Option 3',
         isvalid: false
     },
     {
@@ -60,7 +59,7 @@ export const questionss = [
             required: false,
             isValid: false
         },
-        answer: '',
+        answer: ['Option 1', 'Option 2'],
         isvalid: false
     },
     {
@@ -74,7 +73,7 @@ export const questionss = [
             required: false,
             isValid: false
         },
-        answer: '',
+        answer: '4',
         isvalid: false
     }
 ];

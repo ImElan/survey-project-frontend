@@ -19,14 +19,16 @@ function StarComponent(props) {
             </div>
 
             <Rating name="size-large"
+                disabled = {props.readOnly}
                 size="large"
                 onChange={(event, value) => handleClick(event, value)}
-                defaultValue={0}
+                defaultValue={5}
                 precision={props.isHalfStarAllowed ? 0.5 : 1}
+                value={props.readOnly? props.answer: currentValue}
                 max={props.numStars}
             />
             <br></br>
-            <p>Your rating is:{currentValue}</p>
+            <p>Your rating is:{props.readOnly? props.answer: currentValue}</p>
         </div >
     );
 }

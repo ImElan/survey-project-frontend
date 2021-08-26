@@ -24,7 +24,12 @@ function RadioComponentt(props) {
 					return (
 						<div  className='row' key={i}>
 							<div className='col-md-8'>
-								<input type="radio" value={option.optionId} name="allselect" /> {option.option}
+								<input 
+								disabled={props.readOnly}
+								checked={props.answer === i}
+								type="radio" 
+								value={i} 
+								name="allselect" /> {option}
 							</div>
 							<br></br>
 						</div>

@@ -33,11 +33,12 @@ function DescComponentt(props) {
 						<br />
 
 						<Form.Control
+							disabled={props.readOnly}
 							as='textarea'
 							rows={7}
 							placeholder='Paragraph - Maximum 500 Characters'
 							onChange={handleChange2}
-							value={initial2}
+							value={props.readOnly? props.answer: initial2}
 							// validators = {{
 							// 	required, minLength: minLength(3), maxLength: maxLength(15)
 							// }}

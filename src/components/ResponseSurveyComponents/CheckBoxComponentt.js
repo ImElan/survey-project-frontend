@@ -26,9 +26,11 @@ function CheckBoxComponentt(props) {
 						<div  className='row' key={i}>
 							<div className='col-md-8'>
 								<input 
+								disabled={props.readOnly}
                                 type="checkbox" 
-                                value={option.optionId}
-                                onChange={handlechange}/> {option.option}
+								checked={props.answer?.includes(i)}
+                                value={i}
+                                onChange={handlechange}/> {option}
 							</div>
 							<br></br>
 							{/* {i} */}
