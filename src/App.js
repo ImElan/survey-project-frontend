@@ -1,5 +1,15 @@
+import React, { useState } from 'react';
+import CheckSendCopy from './components/TakeSurveyComponents/CheckSendCopy';
+
 function App() {
-	return <div className='App'>Survey Project</div>;
+
+  const [sendCopy,setSendCopy] = useState(0);
+
+  return (
+    <div className="App">
+      <CheckSendCopy sendCopy={sendCopy}/>
+    </div>
+  );
 }
 
 export default App;
