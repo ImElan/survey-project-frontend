@@ -6,26 +6,25 @@ import { useHistory, Redirect } from "react-router-dom";
 
 function LoginPage() {
 
-  var formid = 101;
-
   const [redirectEmployee, setRedirectEmployee] = useState(false)
   const [redirectHr, setRedirectHr] = useState(false)
   const [inValid, setInValid] = useState(false);
 
   let history = useHistory();
+  let formid = 1;
 
-  axios.interceptors.request.use(
-    (config) => {
-      const accessToken = localStorage.getItem("accessToken");
-      if (accessToken) {
-        config.headers["x-auth-token"] = accessToken;
-      }
-      return config;
-    },
-    (error) => {
-      Promise.reject(error);
+  useEffect(() => {
+    var x = localStorage.getItem('isEmployee');
+    var y = localStorage.getItem('isHr');
+    if (x == "true") {
+      console.log("Employee Path " + x);
+      setRedirectEmployee(true);
     }
-  );
+    if (y == "true") {
+      console.log("Hr Path" + y);
+      setRedirectHr(true);
+    }
+  })
 
   axios.interceptors.response.use(
     (response) => {
@@ -36,7 +35,7 @@ function LoginPage() {
       let refreshToken = localStorage.getItem("refreshToken");
       if (
         refreshToken &&
-        error.response.status === 401 &&
+        error.response.message === 'ACCESS_TOKEN_EXPIRED' &&
         !originalRequest._retry
       ) {
         originalRequest._retry = true;
@@ -47,7 +46,7 @@ function LoginPage() {
             }
           })
           .then((res) => {
-            if (res.status === 200) {
+            if (res.status === 200 || res.status === 400) {
               localStorage.setItem("accessToken", res.data.accessToken);
               console.log("Access token refreshed!");
               return axios(originalRequest);
@@ -58,21 +57,8 @@ function LoginPage() {
     }
   );
 
-  useEffect(() => {
-    var x = localStorage.getItem('isEmployee');
-    var y = localStorage.getItem('isHr');
-    if (x == "true") {
-      console.log("Employee Path " + x);
-      // setRedirectEmployee(true);
-    }
-    if (y == "true") {
-      console.log("Hr Path" + y);
-      // setRedirectHr(true);
-    }
-  })
-
   const responseSuccessGoogle = (response) => {
-     console.log(response)
+    console.log(response)
     var idToken = response.tokenId;
     console.log(idToken);
     axios.get('http://localhost:8080/api/auth/login/oauth/google', {
@@ -80,23 +66,22 @@ function LoginPage() {
         Authorization: `Bearer ${idToken}`
       }
     }).then(elan => {
-      console.log(elan)
-      var check = elan.data.user.role;
+      console.log(elan);
+      let { accessToken, refreshToken, user } = elan;
+      var check = elan.data.user.role ;
       console.log(check);
       if (check == "EMPLOYEE") {
         localStorage.setItem('isEmployee', true);
-        // setRedirectEmployee(true);
-      } else {
+        setRedirectEmployee(true);
+      } else if (check == "HR"){
         localStorage.setItem('isHr', true);
-        // setRedirectHr(true);
+        setRedirectHr(true);
       }
-      let { accessToken, refreshToken } = elan;
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
       localStorage.setItem('apiResponse', JSON.stringify(response));
       localStorage.setItem('backEndResponse', JSON.stringify(elan));
       localStorage.setItem('isLoggedIn', true);
-      // window.location.reload();
     })
   }
 
@@ -108,7 +93,7 @@ function LoginPage() {
   return (
     <div className='div-login'>
       <div className='Title'>
-        <h2>Survey Form</h2>
+        <h2>Survey Tool</h2>
         <div className="newuser">
           <GoogleLogin className="google"
             clientId="104208248429-bt7t5eo6pce3db752p4rbdh9ica46ap1.apps.googleusercontent.com"
