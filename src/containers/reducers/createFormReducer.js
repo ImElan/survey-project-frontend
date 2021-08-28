@@ -171,6 +171,7 @@ const createFormReducer = (state, action) => {
 				isValid: false,
 				numStars: null,
 				isHalfStarAllowed: null,
+				image: null,
 			};
 
 			if (action.questionType === 'DESCRIPTIVE' || action.questionType === 'STAR') {
@@ -196,6 +197,21 @@ const createFormReducer = (state, action) => {
 			return {
 				...state,
 				questions: newQuestionsArrayAfterRemovingQuestion,
+			};
+
+		case 'QUESTION_IMAGE_ADD':
+			const newQuestionsAfterAddingImage = state.questions.map((question) => {
+				if (question.questionId !== action.questionId) {
+					return question;
+				}
+				return {
+					...question,
+					image: action.image,
+				};
+			});
+			return {
+				...state,
+				questions: newQuestionsAfterAddingImage,
 			};
 
 		case 'SET_INITIAL_QUESTIONS':
