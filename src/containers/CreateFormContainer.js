@@ -15,6 +15,7 @@ import RequiredButton from '../components/CreateFormComponents/RequiredCom/Switc
 import PopDown from '../components/CreateFormComponents/PopDown';
 import Paging from '../components/CreateFormComponents/Paging';
 import Preview from '../components/CreateFormComponents/Preview';
+import QuestionImageComponent from '../components/CreateFormComponents/QuestionImageComponent/QuestionImageComponent';
 
 import axios from 'axios';
 
@@ -77,6 +78,7 @@ function CreateFormContainer(props) {
 				isValid: false,
 				numStars: null,
 				isHalfStarAllowed: null,
+				image: null,
 			});
 		}
 		dispatch({ type: 'SET_INITIAL_QUESTIONS', initialQuestions });
@@ -142,6 +144,11 @@ function CreateFormContainer(props) {
 	// Method to handle removing a new question.
 	const handleRemoveQuestion = (questionId) => {
 		dispatch({ type: 'QUESTION_REMOVE', questionId });
+	};
+
+	// Method to add a image to a question
+	const handleAddImageToQuestion = (questionId, image) => {
+		dispatch({ type: 'QUESTION_IMAGE_ADD', questionId, image });
 	};
 
 	// Method to save the form by sending a post request to backend
@@ -336,6 +343,14 @@ function CreateFormContainer(props) {
 										}}
 									>
 										<Col>
+											<QuestionImageComponent
+												key={question.questionId}
+												questionId={question.questionId}
+												profileImg={question.image}
+												addImageHandler={handleAddImageToQuestion}
+											/>
+										</Col>
+										<Col>
 											<Dropdown
 												questionId={question.questionId}
 												questionType={question.questionType}
@@ -384,7 +399,7 @@ function CreateFormContainer(props) {
 						}}
 					>
 						<Preview
-						  formState={formState}
+							formState={formState}
 							formTitle={formState.title}
 							formDescription={formState.description}
 							questionList={formState.questions}
