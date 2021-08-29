@@ -4,6 +4,7 @@ import CenteredTabs from './centeredTabs';
 import responseservice from './services/responseservice';
 import ExportResponse from '../ViewResponseComponents/ExportResponsesByFormId/ExportResponse';
 import { Row, Col, Container } from 'react-bootstrap';
+import FormResponseContainer from '../../containers/FormResponseContainer';
 const ResponseSummary = ({ formId }) => {
     const [display, setdisplay] = useState("");
     const change = (newVal) => {
@@ -15,14 +16,17 @@ const ResponseSummary = ({ formId }) => {
         }
     }
     const [responses, setResponses] = useState([]);
-    // useEffect(() => {
+    useEffect(() => {
 
-    //     responseservice.doGetById(formId).then(response => response.json())
-    //         .then(data => {
-    //             setResponses(data);
-    //             console.log(responses);
-    //         })
-    // })
+        getData();
+        async function getData() {
+            const result = await fetch(`http://localhost:8080/response/${formId}`)
+                .then(data => data);
+            const data = await result.json();
+            console.log(data);
+            setResponses(data);
+        }
+    })
     return (
         // <div>
         //     {console.log("OK")}
@@ -31,6 +35,7 @@ const ResponseSummary = ({ formId }) => {
             <Row>
                 <Col md={10} >
                     <CenteredTabs change={change}></CenteredTabs>
+                    <FormResponseContainer formId={formId} responses={responses}></FormResponseContainer>
                     {/* {display==""?<div/>:(display=="response"?<Summary responses={responses} ></Summary>:<Response responses={responses}></Response>)} */}
                 </Col>
                 <Col md={2} style={{ float: "right", marginTop: "5px" }}>
