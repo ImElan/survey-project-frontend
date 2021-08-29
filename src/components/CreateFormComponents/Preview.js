@@ -11,31 +11,30 @@ import {
 
 
 
-function Preview(props)
-{
+function Preview(props) {
 
-   const [show, setShow] = React.useState({
-   title: '',
-   description:'',
-   questions: [],
- });
+  const [show, setShow] = React.useState({
+    title: '',
+    description: '',
+    questions: [],
+  });
 
-useEffect(()=>{
-  show.title=props.formTitle;
-  show.description=props.formDescription;
-  show.questions=props.questionList;
-  window.localStorage.setItem('formstate',JSON.stringify(show));
-});
-const [view,showview]=useState(true);
- 
-  const handleclick=()=>{
+  useEffect(() => {
+    show.title = props.formTitle;
+    show.description = props.formDescription;
+    show.questions = props.questionList;
+    window.localStorage.setItem('formstate', JSON.stringify(show));
+  });
+  const [view, showview] = useState(true);
+
+  const handleclick = () => {
     showview(false);
   };
-  return(
+  return (
     <div>
-    {view&&
-       <Link to="/preview" target="_blank" rel="noopener noreferrer" className="btn btn-primary" onClick={handleclick} >Preview Form</Link>
-}
+      {view &&
+        <Link to="/preview" target="_blank" rel="noopener noreferrer" className="btn btn-primary" onClick={handleclick} >Preview Form</Link>
+      }
     </div>
   )
 }

@@ -1,67 +1,68 @@
 
 import React, { Component } from "react";
-import { Card, CardBody, CardTitle, CardText, Button, Modal, 
-    ModalHeader, ModalBody, Form, FormGroup, Input, Label } from "reactstrap";
+import {
+  Card, CardBody, CardTitle, CardText, Button, Modal,
+  ModalHeader, ModalBody, Form, FormGroup, Input, Label
+} from "reactstrap";
 import AdminDataService from "./services/adminservice";
 // import { Link } from "react-router-dom";
 
 
-function RenderEmployee({emp,toggleMod})
-	{
-		return(
-				<div className="col-12 col-md-6 m-1 " >
-					<Card>
-              <CardBody>
-							  <CardTitle><strong>Employee Id : </strong>{emp.email}</CardTitle>
-							  <CardText><strong>Employee Name : </strong>{emp.name}</CardText>            
-							  <CardText><strong>Employee Role : </strong>{emp.role}</CardText>
-						  </CardBody>
-                <br/>
-                <Button onClick={toggleMod} className="btn bg-success ml-auto">
-                    Edit
-                </Button>            
-			    	</Card>
-                    
-				</div>
-		);
-	}
+function RenderEmployee({ emp, toggleMod }) {
+  return (
+    <div className="col-12 col-md-6 m-1 " >
+      <Card>
+        <CardBody>
+          <CardTitle><strong>Employee Id : </strong>{emp.email}</CardTitle>
+          <CardText><strong>Employee Name : </strong>{emp.name}</CardText>
+          <CardText><strong>Employee Role : </strong>{emp.role}</CardText>
+        </CardBody>
+        <br />
+        <Button onClick={toggleMod} className="btn bg-success ml-auto">
+          Edit
+        </Button>
+      </Card>
+
+    </div>
+  );
+}
 
 
-function RenderModal(props){
+function RenderModal(props) {
 
   const { isModalOpen, emprole, empname, empid, changerole, changename, toggleModal, handleLogin } = props;
 
-  return(
-      <div>
-        <Modal isOpen={isModalOpen} toggle={toggleModal} style={{'marginTop':'100px'}}>
-          <ModalHeader toggle={toggleModal} ></ModalHeader>
-            <ModalBody>
-            <div >
-              <Label>Employee Name</Label>
-              
-                <input
-                  type="text"
-                  className="form-control mb - 4"
-                  placeholder="Enter Employee Name"
-                  value={empname}
-                  onChange={changename}
-                />
-            </div>
+  return (
+    <div>
+      <Modal isOpen={isModalOpen} toggle={toggleModal} style={{ 'marginTop': '100px' }}>
+        <ModalHeader toggle={toggleModal} ></ModalHeader>
+        <ModalBody>
+          <div >
+            <Label>Employee Name</Label>
 
-            <div>
-              <Label>Employee Role</Label>
+            <input
+              type="text"
+              className="form-control mb - 4"
+              placeholder="Enter Employee Name"
+              value={empname}
+              onChange={changename}
+            />
+          </div>
 
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Enter New Employee Role"
-                value={emprole}
-                onChange={changerole}
-              />
+          <div>
+            <Label>Employee Role</Label>
 
-            </div>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Enter New Employee Role"
+              value={emprole}
+              onChange={changerole}
+            />
 
-            <div style={{flexDirection:'row', flexWrap:'wrap'}}>
+          </div>
+
+          <div style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
 
             <div className="ml-auto">
               <button
@@ -72,29 +73,29 @@ function RenderModal(props){
                 Cancel
               </button>
             </div>
-              
+
             <div className="ml-auto">
               <button
                 className="btn btn-success"
                 type="button"
-                onClick={() => handleLogin(emprole,empname,empid)}
+                onClick={() => handleLogin(emprole, empname, empid)}
               >
                 Save
               </button>
             </div>
 
-            </div>
+          </div>
 
-        
-          </ModalBody>
-        </Modal>
-      </div>
-    
+
+        </ModalBody>
+      </Modal>
+    </div>
+
   )
 }
 
 
- export default class MainComponent extends Component {
+export default class MainComponent extends Component {
   constructor(props) {
     super(props);
     this.onChangeSearchId = this.onChangeSearchId.bind(this);
@@ -103,27 +104,27 @@ function RenderModal(props){
     this.onsearchId = this.onsearchId.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
 
-    
+
 
     this.state = {
-        tutorials: [],
-        isModalOpen: false,
-        istrue : false,
-        searchId: "",
-        searchName: "",
-        searchRole: ""
-      };
-    }
-  
+      tutorials: [],
+      isModalOpen: false,
+      istrue: false,
+      searchId: "",
+      searchName: "",
+      searchRole: ""
+    };
+  }
 
-toggleModal() {
+
+  toggleModal() {
     this.setState({
-        isModalOpen: !this.state.isModalOpen
+      isModalOpen: !this.state.isModalOpen
     })
     console.log(this.state.isModalOpen)
-}
+  }
 
-onChangeSearchId(e) {
+  onChangeSearchId(e) {
     const searchTitle = e.target.value;
     this.setState({
       searchId: searchTitle
@@ -145,7 +146,7 @@ onChangeSearchId(e) {
     });
   }
 
-  handleLogin(emprole,empid) {
+  handleLogin(emprole, empid) {
 
     AdminDataService.doUpdate(
       empid,
@@ -157,17 +158,17 @@ onChangeSearchId(e) {
       .catch(e => {
         console.log(e);
       });
-}
+  }
 
   onsearchId() {
-      console.log(this.state.searchId);
+    console.log(this.state.searchId);
     AdminDataService.doGetById(this.state.searchId)
       .then(response => {
         this.setState({
           tutorials: response.data
         });
         this.setState({
-            istrue:true
+          istrue: true
         })
         console.log(this.state.tutorials);
       })
@@ -177,7 +178,7 @@ onChangeSearchId(e) {
   }
 
   render() {
-    
+
     const { searchId, tutorials, istrue, searchName, searchRole } = this.state;
 
 
@@ -205,24 +206,24 @@ onChangeSearchId(e) {
         </div>
 
         <div className="row col-10 offset-1" >
-            {
-                istrue && <RenderEmployee emp = {tutorials} toggleMod = {this.toggleModal}/>
-            }
+          {
+            istrue && <RenderEmployee emp={tutorials} toggleMod={this.toggleModal} />
+          }
         </div>
 
         <div>
           <RenderModal
-              isModalOpen = {this.state.isModalOpen}
-              toggleModal = {this.toggleModal}
-              emprole = {searchRole}
-              empname = {searchName}
-              changename = {this.onChangeSearchName}
-              changerole = {this.onChangeSearchRole}
-              empid = {searchId}
-              handleLogin = {this.handleLogin}
+            isModalOpen={this.state.isModalOpen}
+            toggleModal={this.toggleModal}
+            emprole={searchRole}
+            empname={searchName}
+            changename={this.onChangeSearchName}
+            changerole={this.onChangeSearchRole}
+            empid={searchId}
+            handleLogin={this.handleLogin}
           />
         </div>
-        
+
       </div>
     );
   }

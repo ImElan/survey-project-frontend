@@ -9,35 +9,18 @@ import DescComponentt from '../components/ResponseSurveyComponents/DescComponent
 import RadioComponentt from '../components/ResponseSurveyComponents/RadioComponentt';
 import CheckBoxComponentt from '../components/ResponseSurveyComponents/CheckBoxComponentt';
 import StarComponent from '../components/ResponseSurveyComponents/StarComponent';
-import { questions } from './questionss';
 
 function ResponseFormContainer(props) {
 
-	// const formstate = JSON.parse(window.localStorage.getItem('formstate'));
-	// console.log(props)
-	// var questions = props.questions;
-	console.log(props.questions);
+	const formstate = JSON.parse(window.localStorage.getItem('formstate'));
+	console.log(props);
+	var questions = props.questions;
+	// console.log(questions);
 
 	const [responseState, dispatch] = useReducer(responseFormReducer, {
 		userid: '',
-		answerss: []
+		questions: questions,
 	});
-
-	useEffect(() => {
-		var initialAnswers = [];
-		for (var i = 0; i < props.questions.length; i++) {
-			initialAnswers.push({
-				questions: props.questions[i],
-				answerarr: props.answers ? props.answers[i].split(",") : [],
-				answer: props.answers ? props.answers[i] : '',
-				isvalid: false
-			})
-
-		}
-		console.log("initial answerss", initialAnswers)
-		dispatch({ type: 'SET_INITIAL_ANSWERS', initialAnswers })
-	}, [props.questions])
-	console.log("After update", responseState.answerss);
 
 
 
@@ -80,20 +63,23 @@ function ResponseFormContainer(props) {
 	// handleInitialanswers()
 
 
-	const handleoptionchange = (questionId, option) => {
-		dispatch({ type: 'OPTION_SINGLE_SELECT', questionId, option });
+	const handleoptionchange = (questionId, optionId) => {
+		dispatch({ type: 'OPTION_SINGLE_SELECT', questionId, optionId });
+		console.log(responseState.answerss);
 	}
 
 	// Method to handle question text change in answer of descriptive component
 	const handleAnswerParaChange = (questionId, newParaText, isvalid) => {
 		dispatch({ type: 'ANSWER_TEXT_CHANGE', questionId, newParaText, isvalid });
+		console.log(responseState.answerss);
 	};
 
-	const handleaddremoveoption = (questionId, option) => {
-		dispatch({ type: 'OPTION_ADD_REMOVE', questionId, option });
+	const handleaddremoveoption = (questionId, optionId) => {
+		dispatch({ type: 'OPTION_ADD_REMOVE', questionId, optionId });
+		console.log(responseState.answerss);
 	}
 	const handleAnswerStarChange = (questionId, value) => {
-		// console.log(value + " " + questionId);
+
 		dispatch({ type: 'CHANGE-RATING', questionId, value });
 	}
 	// const handleremoveoption = (questionId, optionId) => {
@@ -102,25 +88,25 @@ function ResponseFormContainer(props) {
 	// }
 
 	// Method to render different question component in the UI based on question type.
-	const renderQuestionComponent = (question, i) => {
+	const renderQuestionComponent = (question) => {
+		console.log(question);
 		switch (question.questionType) {
-			// case 'STAR':
-			// 	return (
-			// 		<StarComponent
-			// 			question={question.question}
-			// 			questionId={question.questionId}
-			// 			numStars={question.numStars}
-			// 			isHalfStarAllowed={question.isHalfStarAllowed}
-			// 			answerStarSelectHandler={handleAnswerStarChange}
-			// 		/>
-			// 	);
+			case 'STAR':
+				return (
+					<StarComponent
+						question={question.question}
+						questionId={question.questionId}
+						numStars={question.numStars}
+						isHalfStarAllowed={question.isHalfStarAllowed}
+						answerStarSelectHandler={handleAnswerStarChange}
+					/>
+				);
 			case 'DESCRIPTIVE':
 				return (
 					<DescComponentt
 						question={question.question}
 						questionId={question.questionId}
 						answerParagraphHandler={handleAnswerParaChange}
-						answer={props.answers ? props.answers[i] : null}
 					/>
 				);
 			case 'MULTIPLE':
@@ -130,14 +116,13 @@ function ResponseFormContainer(props) {
 						questionId={question.questionId}
 						options={question.options}
 						answeroptionadd={handleaddremoveoption}
-						answer={props.answers ? props.answers[i].split(",") : null}
+
 					/>
 				);
 			case 'SINGLE':
-				console.log(question.questionId)
+				console.log("came here too");
 				return (
 					<RadioComponentt
-						answer={props.answers ? props.answers[i] : null}
 						question={question.question}
 						questionId={question.questionId}
 						options={question.options}
@@ -165,43 +150,39 @@ function ResponseFormContainer(props) {
 				style={{
 					paddingTop: '0px',
 					paddingBottom: '35px',
-				}}
-			>
-				<h5>{props.title}</h5>
-				<h5>{props.description}</h5>
+				}}>
+				<h5 style={{ "text-align": "center" }} >{props.title}</h5>
+				<h5 style={{ "text-align": "center" }} >{props.description}</h5>
 
 			</Row>
 
-			{props.questions && props.questions
-				// .slice(
-				// 	paginationStartIndex,
-				// 	(currentPage - 1) * questionsPerPage + questionsPerPage
-				// )
-				.map((question, i) => (
-					<Row
-						className='justify-content-md-center'
-						key={question.questionId}
-						style={{
-							//marginRight: '5px',
-							padding: '10px 25px',
-							borderRadius: '8px',
-							backgroundColor: '#F0F0F0', //7866B2
-							border: 'solid black 1px',
-							//#e6e6e6
-						}}
-					>
-						<Col
-							sm={9}
+
+			{
+				props.questions && props.questions
+					.map((question) => (
+
+						< Row
+							className='justify-content-md-center'
+							key={question.questionId}
 							style={{
-								//marginRight: '5px',
-								padding: '10px 25px',
-								borderRadius: '8px',
-								backgroundColor: '#F0F0F0', //7866B2
-								border: 'solid black 1px',
-								//#e6e6e6
+								paddingTop: '0px',
+								paddingBottom: '10px',
+								marginTop: '20px',
+
 							}}
 						>
-							{/* <Row
+							<Col
+								sm={9}
+								style={{
+									//marginRight: '5px',
+									padding: '10px 25px',
+									borderRadius: '8px',
+									backgroundColor: '#F0F0F0', //7866B2
+									border: 'solid black 1px',
+									//#e6e6e6
+								}}
+							>
+								{/* <Row
 										sm='auto'
 										className='justify-content-end'
 										style={{
@@ -226,19 +207,20 @@ function ResponseFormContainer(props) {
 										</Col>
 									</Row> */}
 
-							{/* BASED ON QUESTION TYPE RENDER APPROPRIATE COMPONENT AND PASS IN THE PROPS */}
-							{renderQuestionComponent(question, i)}
-							{/* <RequiredButton
+								{/* BASED ON QUESTION TYPE RENDER APPROPRIATE COMPONENT AND PASS IN THE PROPS */}
+								{renderQuestionComponent(question)}
+								{/* <RequiredButton
 										rounded={true}
 										questionId={answer.questions.questionId}
 										required={answer.questions.required}
 										requiredChangeHandler={handleRequiredChange}
 									/> */}
-						</Col>
-					</Row>
-				))}
+							</Col>
+						</Row>
+					))
+			}
 
-		</Container>
+		</Container >
 
 	);
 

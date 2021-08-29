@@ -21,16 +21,16 @@ function CheckBoxComponentt(props) {
 			</div>
 
 			{<div>
-				{optionss.map((option, i) => {
+				{optionss.map((option) => {
 					return (
-						<div className='row' key={i}>
+						<div className='row' key={option.optionId}>
 							<div className='col-md-8'>
 								<input
 									disabled={props.readOnly ? props.readOnly : false}
 									type="checkbox"
-									defaultChecked={props.answer ? props.answer.includes(option) : false}
-									value={option}
-									onChange={handlechange} /> {option}
+									defaultChecked={props.answer ? props.answer.includes(option.option) : false}
+									value={option.option}
+									onChange={handlechange} /> {option.option}
 							</div>
 							<br></br>
 							{/* {i} */}

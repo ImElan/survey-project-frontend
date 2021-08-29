@@ -12,7 +12,7 @@ function DescComponentt(props) {
 	// const maxLength = (len) => (val) => !(val) || (val.length <= len)
 	// const minLength = (len) => (val) => (val) && (val.length >=len);
 
-	const [initial2, final2] = useState('' );
+	const [initial2, final2] = useState('');
 
 	const handleChange2 = (e) => {
 		final2(e.target.value);
@@ -24,29 +24,29 @@ function DescComponentt(props) {
 	return (
 		<div>
 			{/* <form> */}
-				{/* <TextField id="outlined-basic" label="Question" multiline={false}  onChange={handleChange} InputProps={{style:{width:'43ch'}}} /><br></br><br></br> */}
-				<Form>
-					<Form.Group className='mb-3' controlId='formBasicEmail'>
-						<Form.Label	style={{ height: 35 }}>
-							{props.question}
-						</Form.Label>
-						<br />
+			{/* <TextField id="outlined-basic" label="Question" multiline={false}  onChange={handleChange} InputProps={{style:{width:'43ch'}}} /><br></br><br></br> */}
+			<Form>
+				<Form.Group className='mb-3' controlId='formBasicEmail'>
+					<Form.Label style={{ height: 35 }}>
+						{props.question}
+					</Form.Label>
+					<br />
 
-						<Form.Control
-							disabled={props.readOnly? props.readOnly: false}
-							as='textarea'
-							rows={7}
-							placeholder='Paragraph - Maximum 500 Characters'
-							onChange={handleChange2}
-							defaultValue={props.answer? props.answer: initial2}
-							// validators = {{
-							// 	required, minLength: minLength(3), maxLength: maxLength(15)
-							// }}
-						/>
+					<Form.Control
+						disabled={props.readOnly ? props.readOnly : false}
+						as='textarea'
+						rows={7}
+						placeholder='Paragraph - Maximum 500 Characters'
+						onChange={handleChange2}
+						defaultValue={props.answer ? props.answer : initial2}
+					// validators = {{
+					// 	required, minLength: minLength(3), maxLength: maxLength(15)
+					// }}
+					/>
 
-						<br />
-					</Form.Group>
-				</Form>
+					<br />
+				</Form.Group>
+			</Form>
 			{/* </form> */}
 		</div>
 	);
