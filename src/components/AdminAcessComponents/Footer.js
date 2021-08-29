@@ -11,7 +11,7 @@ const useStyles = makeStyles( () =>
         footerStyle:{
             alignItems: 'center',
             // marginTop:570 
-            marginTop:590 
+            marginTop:595 
         }
     })
 )

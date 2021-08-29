@@ -10,7 +10,7 @@ function AdminAcessContainer(props){
     return(
         <div>
             <Header/>
-            <div style={{margin:100}}>
+            <div className = "container mt-4">
                 <MainComponent/>
             </div>
             <Footer/>

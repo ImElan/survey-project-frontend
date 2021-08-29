@@ -9,7 +9,7 @@ import AdminDataService from "./services/adminservice";
 function RenderEmployee({emp,toggleMod})
 	{
 		return(
-				<div className="col-12 col-md-6 m-1">
+				<div className="col-12 col-md-6 m-1 " >
 					<Card>
               <CardBody>
 							  <CardTitle><strong>Employee Id : </strong>{emp.id}</CardTitle>
@@ -182,7 +182,7 @@ onChangeSearchId(e) {
 
 
     return (
-      <div className="list row " style={{'marginLeft':'200px'}}>
+      <div className="list row offset-2" >
         <div className="col-md-8 ">
           <div className="input-group mb-3">
             <input
@@ -204,7 +204,7 @@ onChangeSearchId(e) {
           </div>
         </div>
 
-        <div className="col-12 " style={{'marginLeft':'80px'}}>
+        <div className="row col-10 offset-1" >
             {
                 istrue && <RenderEmployee emp = {tutorials} toggleMod = {this.toggleModal}/>
             }
