@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { FormControl, FormLabel } from 'react-bootstrap';
-// import { BsFillTrashFill } from 'react-icons/bs';
-
 function RadioComponentt(props) {
 
     const optionss = props.options;
@@ -52,7 +50,6 @@ function RadioComponentt(props) {
                         );
                     })}
                 </div>}
-            {/* <br /> */}
             <br></br>
         </div>
     );

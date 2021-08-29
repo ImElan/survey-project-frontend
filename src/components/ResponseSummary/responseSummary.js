@@ -26,7 +26,7 @@ const ResponseSummary = ({ formId }) => {
             console.log(data);
             setResponses(data);
         }
-    })
+    }, [])
     return (
         // <div>
         //     {console.log("OK")}
@@ -35,7 +35,11 @@ const ResponseSummary = ({ formId }) => {
             <Row>
                 <Col md={10} >
                     <CenteredTabs change={change}></CenteredTabs>
-                    <FormResponseContainer formId={formId} responses={responses}></FormResponseContainer>
+                    {
+                        display == "response" ?
+                            <FormResponseContainer formId={formId} responses={responses}></FormResponseContainer>
+                            : <div></div>
+                    }
                     {/* {display==""?<div/>:(display=="response"?<Summary responses={responses} ></Summary>:<Response responses={responses}></Response>)} */}
                 </Col>
                 <Col md={2} style={{ float: "right", marginTop: "5px" }}>

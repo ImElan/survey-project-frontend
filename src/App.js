@@ -6,7 +6,7 @@ import LoginPage from './components/TakeSurveyComponents/GoogleLogin/LoginPage';
 // import { LoginProvider } from './components/TakeSurveyComponents/GoogleLogin/LoginContext';
 import ThankYouContainer from './containers/ThankYouContainer';
 import FormResponseContainer from './containers/FormResponseContainer';
-
+import ResponseSummary from './components/ResponseSummary/responseSummary';
 
 import {
 	BrowserRouter as Router,
@@ -33,7 +33,7 @@ function App() {
 				{/* <h1>hi</h1> */}
 			{/* <ResponseFormContainer /> */}
 			{/* <ViewFormContainer/> */}
-			<ResponseSummary formId={1}></ResponseSummary>
+			<ResponseSummary formId={243}></ResponseSummary>
 		</div>
 	)
 }

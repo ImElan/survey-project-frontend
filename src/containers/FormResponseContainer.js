@@ -28,7 +28,7 @@ function FormResponseContainer({ formId, responses }) {
             const result1 = await fetch(`http://localhost:8080/api/form/${formId}`)
                 .then(data => data);
             const form = await result1.json();
-
+            console.log(form);
             setQuestions(form.surveyQuestions);
         }
 
