@@ -13,18 +13,21 @@ import {
 	Route,
 	Link
 } from 'react-router-dom'
+import HRContainer from './containers/HRContainer';
 
 function App() {
 	return (
 		<div>
 			<div>
-				<LoginPage />
+				<HRContainer />
 			</div>
 			<Router>
 				<Route exact path='/' component={CreateFormContainer} />
 				<Route exact path='/preview' component={PreviewFormContainer} />
 				<Route exact path='/fillForm' component={ViewFormContainer} />
 				<Route exact path='/thankyou' component={ThankYouContainer} />
+				<Route exact path='/hr' component={HRContainer} />
+
 			</Router>
 			<div>
 				{/* <ResponseFormContainer/> */}

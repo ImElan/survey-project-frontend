@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Alert } from 'react-bootstrap';
+import Modal from 'react-bootstrap/Modal'
 import PopUpModal from './PopUpModal';
+
 import 'tachyons';
 
 function SaveFormButton(props) {
