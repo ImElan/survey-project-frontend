@@ -24,13 +24,14 @@ function RadioComponentt(props) {
 					return (
 						<div  className='row' key={i}>
 							<div className='col-md-8'>
-								<input type="radio" value={option} name="allselect" /> {option}
+								<input type="radio" value={option.optionId} name="allselect" /> {option.option}
 							</div>
 							<br></br>
 						</div>
 					);
 				})}
 			</div>
+
 			<br />
 			<br></br>
 		</div>

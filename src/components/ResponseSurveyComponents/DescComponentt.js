@@ -7,10 +7,10 @@ import { Form } from 'react-bootstrap';
 
 function DescComponentt(props) {
 
-	const required = (val) => val && val.length;
+	// const required = (val) => val && val.length;
 	// it receivers len and val as parameter
-	const maxLength = (len) => (val) => !(val) || (val.length <= len)
-	const minLength = (len) => (val) => (val) && (val.length >=len);
+	// const maxLength = (len) => (val) => !(val) || (val.length <= len)
+	// const minLength = (len) => (val) => (val) && (val.length >=len);
 
 	const [initial2, final2] = useState('');
 
