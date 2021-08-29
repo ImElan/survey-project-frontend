@@ -6,7 +6,7 @@ import axios from "axios";
 import PopDown from "../CreateFormComponents/PopDown";
 import Paging from "../CreateFormComponents/Paging";
 import SendBtnModal from "./SendBtnModal";
-function Displayforms() {
+function Displayforms(props) {
     const [data,setData] = useState([]);
     const createdBy = localStorage.getItem('hrId');
     useEffect(() => {
