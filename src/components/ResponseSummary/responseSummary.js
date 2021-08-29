@@ -1,6 +1,6 @@
 import React from 'react';
 import CenteredTabs from './centeredTabs';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import responseservice from './services/responseservice';
 const ResponseSummary = ({ formId }) => {
     const [display, setdisplay] = useState("");
@@ -15,7 +15,7 @@ const ResponseSummary = ({ formId }) => {
     const [responses, setResponses] = useState([]);
     useEffect(() => {
 
-        await responseservice.doGetById(formId).then(response => response.json())
+        responseservice.doGetById(formId).then(response => response.json())
             .then(data => {
                 setResponses(data);
                 console.log(responses);
