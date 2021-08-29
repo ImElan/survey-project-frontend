@@ -31,7 +31,7 @@ function App() {
 				{/* <h1>hi</h1> */}
 				{/* <ResponseFormContainer /> */}
 				{/* <ViewFormContainer/> */}
-				<ResponseSummary></ResponseSummary>
+				<ResponseSummary formId={1}></ResponseSummary>
 			</div>
 		</div>
 	)
