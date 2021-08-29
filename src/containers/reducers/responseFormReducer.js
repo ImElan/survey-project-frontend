@@ -20,8 +20,8 @@ const responseFormReducer = (state, action) => {
 			};
 
 		case 'OPTION_SINGLE_SELECT':
-			const newAnswerssArray = state.answerss.map((answers) =>{
-				if(answers.questions.questionId !== action.questionId){
+			const newAnswerssArray = state.answerss.map((answers) => {
+				if (answers.questions.questionId !== action.questionId) {
 					return answers;
 				}
 				return {
@@ -34,10 +34,10 @@ const responseFormReducer = (state, action) => {
 				...state,
 				answerss: newAnswerssArray,
 			}
-		
-			case 'CHANGE-RATING':
+
+		case 'CHANGE-RATING':
 			// console.log("b" + value);
-			console.log("a" + action.questionId);
+			// console.log("a" + action.questionId);
 			const newAnswersssArray = state.answerss.map((answers) => {
 				if (answers.questions.questionId != action.questionId) {
 					return answers;
@@ -55,46 +55,44 @@ const responseFormReducer = (state, action) => {
 			};
 
 		case 'OPTION_ADD_REMOVE':
-				const newAnswersArrayy = state.answerss.map((answers) => {
-					if (answers.questions.questionId !== action.questionId) {
-						return answers;
-					}					
-				
-					// console.log(action.option);
-					var removequestion = [...answers.answerarr];
-					removequestion = removequestion.filter((ans) => ans != action.option );
-					// console.log(removequestion);      
+			const newAnswersArrayy = state.answerss.map((answers) => {
+				if (answers.questions.questionId !== action.questionId) {
+					return answers;
+				}
 
-					var tempans = [...answers.answerarr]
-					if(removequestion.length == tempans.length)
-					{
-						tempans = [...answers.answerarr,action.option];
-					}
-					else
-					{
-						tempans = removequestion;
-					}
+				// console.log(action.option);
+				var removequestion = [...answers.answerarr];
+				removequestion = removequestion.filter((ans) => ans != action.option);
+				// console.log(removequestion);      
 
-					// const addanswer = [...answers.answer, action.optionId]
-					const addanswer = tempans;
-					var strans = "";
-					// for(var i=0;i<tempans.length;i++)
-					// 	strans += addanswer[i]+", ";
-					strans = addanswer.join(',');
-					return {
-						...answers,
-						answerarr: addanswer,
-						answer: strans,
-					};
-				});
+				var tempans = [...answers.answerarr]
+				if (removequestion.length == tempans.length) {
+					tempans = [...answers.answerarr, action.option];
+				}
+				else {
+					tempans = removequestion;
+				}
+
+				// const addanswer = [...answers.answer, action.optionId]
+				const addanswer = tempans;
+				var strans = "";
+				// for(var i=0;i<tempans.length;i++)
+				// 	strans += addanswer[i]+", ";
+				strans = addanswer.join(',');
 				return {
-					...state,
-					answerss: newAnswersArrayy,
+					...answers,
+					answerarr: addanswer,
+					answer: strans,
 				};
-			
+			});
+			return {
+				...state,
+				answerss: newAnswersArrayy,
+			};
+
 		default:
 			return state;
-    }
+	}
 }
 
-    export { responseFormReducer };
+export { responseFormReducer };

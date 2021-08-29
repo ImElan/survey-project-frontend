@@ -49,7 +49,7 @@ function ResponseFormContainer(props) {
 		console.log(responseState.answerss);
 	}
 	const handleAnswerStarChange = (questionId, value) => {
-
+		// console.log(value + " " + questionId);
 		dispatch({ type: 'CHANGE-RATING', questionId, value });
 	}
 	// const handleremoveoption = (questionId, optionId) => {

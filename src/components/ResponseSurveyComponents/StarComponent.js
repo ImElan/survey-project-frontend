@@ -4,11 +4,11 @@ import ReactStars from "react-rating-stars-component";
 
 function StarComponent(props) {
     const [currentValue, setCurrentValue] = useState(0);
-    const handleClick = (event, value) => {
-        console.log(props.questionId);
+    const handleClick = (value) => {
+        // console.log(props.questionId);
         props.answerStarSelectHandler(props.questionId, value);
         setCurrentValue(value);
-        props.setRequiredd(-1);
+        // props.setRequiredd(-1);
     };
     return (
         <div className='mt-5'>
