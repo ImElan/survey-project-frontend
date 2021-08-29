@@ -6,7 +6,7 @@ import LoginPage from './components/TakeSurveyComponents/GoogleLogin/LoginPage';
 // import { LoginProvider } from './components/TakeSurveyComponents/GoogleLogin/LoginContext';
 import ThankYouContainer from './containers/ThankYouContainer';
 import AdminAcessContainer from './containers/AdminAcessContainer';
-
+import ResponseSummary from './components/ResponseSummary/responseSummary';
 
 import {
 	BrowserRouter as Router,
@@ -14,12 +14,13 @@ import {
 	Route,
 	Link
 } from 'react-router-dom'
+import Centeredtabs from './components/ResponseSummary/responseSummary';
 
 function App() {
 	return (
 		<div>
 			{/* <Router>
-				<Route exact path='/' component={LoginPage}/>
+				<Route exact path='/' component={LoginPage} />
 				<Route exact strict path='/form/create' component={CreateFormContainer} />
 				<Route exact strict path='/form/preview' component={PreviewFormContainer} />
 				<Route exact strict path='/Form/fill/:id' component={ViewFormContainer} />
@@ -28,8 +29,9 @@ function App() {
 			</Router> */}
 			<div>
 				{/* <h1>hi</h1> */}
-				<ResponseFormContainer/>
+				{/* <ResponseFormContainer /> */}
 				{/* <ViewFormContainer/> */}
+				<ResponseSummary></ResponseSummary>
 			</div>
 		</div>
 	)
