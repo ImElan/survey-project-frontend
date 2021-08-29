@@ -1,24 +1,24 @@
-import SendFormComponent from '../components/SendEmailComponents/SendEmailComponent';
+import SendEmailComponent from '../components/SendEmailComponents/SendEmailComponent';
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 
 
 function HRContainer(){
-const [modalShow, setModalShow] = React.useState(false);
+const [modalShow, setModalShow] = useState(false);
 
     return (
-        <>
-            <div class="text-center">
+            <div className="text-center">
                 <Button variant="primary" onClick={() => setModalShow(true)}>
                     Send Form
                 </Button>
 
-                <SendFormComponent
+                <SendEmailComponent
                     show={modalShow}
-                    onHide={() => setModalShow(false)}
+                    onHide={() => setModalShow(false)
+                    }
                 />
             </div>
-        </>
+       
     );
 }
 
