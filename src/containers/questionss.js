@@ -62,8 +62,8 @@ export const  questions = [
            questionId: 1,
             question: 'Are you good in accolite ?',
             options: [
-                { optionId: 1, option: 'Option 1' },
-                { optionId: 2, option: 'Option 2' },
+                'Option 1' ,
+                'Option 2'  
             ],
             questionType: 'DESCRIPTIVE',
             required: false,
@@ -74,10 +74,10 @@ export const  questions = [
            questionId: 2,
             question: 'Are you good in accolite ?',
             options: [
-                { optionId: 1, option: 'Option 1' },
-                { optionId: 2, option: 'Option 2' },
-                { optionId: 3, option: 'Option 3' },
-                { optionId: 4, option: 'Option 4' },
+                'Option 1' ,
+                'Option 2' ,
+                'Option 3' ,
+                 'Option 4' 
             ],
             questionType: 'SINGLE',
             required: false,
@@ -89,10 +89,10 @@ export const  questions = [
            questionId: 3,
             question: 'Are you feeling good in accolite ?',
             options: [
-                { optionId: 1, option: 'Option 1' },
-                { optionId: 2, option: 'Option 2' },
-                { optionId: 3, option: 'Option 3' },
-                { optionId: 4, option: 'Option 4' },
+                'Option 1' ,
+                'Option 2' ,
+                'Option 3' ,
+                 'Option 4' 
             ],
             questionType: 'MULTIPLE',
             required: false,

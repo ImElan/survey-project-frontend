@@ -9,14 +9,14 @@ import DescComponentt from '../components/ResponseSurveyComponents/DescComponent
 import RadioComponentt from '../components/ResponseSurveyComponents/RadioComponentt';
 import CheckBoxComponentt from '../components/ResponseSurveyComponents/CheckBoxComponentt';
 import StarComponent from '../components/CreateFormComponents/StarComponent';
-// import {questions} from './questionss';
+import {questions} from './questionss';
 
 function ResponseFormContainer(props) {
 	
 	// const formstate = JSON.parse(window.localStorage.getItem('formstate'));
-	console.log(props)
-	var questions = props.questions;
-	console.log(questions);
+	// console.log(props)
+	// var questions = props.questions;
+	// console.log(questions);
 	var anotherquestions = questions
 	for(var i=0;i<questions.length;i++)
 	{
@@ -24,8 +24,9 @@ function ResponseFormContainer(props) {
 		anotherquestions[i].answerarr = [];
         anotherquestions[i].answer = '';
         anotherquestions[i].isvalid = false;
+		
 	}
-	console.log(anotherquestions);
+	// console.log(anotherquestions);
 	
 	const [responseState, dispatch] = useReducer(responseFormReducer, {
 		userid: '',
@@ -33,8 +34,8 @@ function ResponseFormContainer(props) {
 	});
 
 
-	const handleoptionchange = (questionId, optionId) => {
-		dispatch({ type: 'OPTION_SINGLE_SELECT', questionId, optionId });
+	const handleoptionchange = (questionId, option) => {
+		dispatch({ type: 'OPTION_SINGLE_SELECT', questionId, option });
 		console.log(responseState.answerss);
 	}
 
@@ -44,8 +45,8 @@ function ResponseFormContainer(props) {
 		console.log(responseState.answerss);
 	};
 
-	const handleaddremoveoption = (questionId, optionId) => {
-		dispatch({ type: 'OPTION_ADD_REMOVE', questionId, optionId });
+	const handleaddremoveoption = (questionId, option) => {
+		dispatch({ type: 'OPTION_ADD_REMOVE', questionId, option });
 		console.log(responseState.answerss);
 	}
 	const handleAnswerStarChange = (questionId, value) => {

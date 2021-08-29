@@ -27,8 +27,8 @@ function CheckBoxComponentt(props) {
 							<div className='col-md-8'>
 								<input 
                                 type="checkbox" 
-                                value={option.optionId}
-                                onChange={handlechange}/> {option.option}
+                                value={option}
+                                onChange={handlechange}/> {option}
 							</div>
 							<br></br>
 							{/* {i} */}

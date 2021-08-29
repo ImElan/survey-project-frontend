@@ -26,7 +26,7 @@ const responseFormReducer = (state, action) => {
 				}
 				return {
 					...answers,
-					answer: action.optionId,
+					answer: action.option,
 				};
 			});
 
@@ -60,15 +60,15 @@ const responseFormReducer = (state, action) => {
 						return answers;
 					}					
 				
-					
+					// console.log(action.option);
 					var removequestion = [...answers.answerarr];
-					removequestion = removequestion.filter((ans) => ans !== action.optionId.toString());
+					removequestion = removequestion.filter((ans) => ans != action.option );
 					// console.log(removequestion);      
 
 					var tempans = [...answers.answerarr]
 					if(removequestion.length == tempans.length)
 					{
-						tempans = [...answers.answerarr,action.optionId];
+						tempans = [...answers.answerarr,action.option];
 					}
 					else
 					{
@@ -79,7 +79,7 @@ const responseFormReducer = (state, action) => {
 					const addanswer = tempans;
 					var strans = "";
 					for(var i=0;i<tempans.length;i++)
-						strans += addanswer[i].toString()+" ";
+						strans += addanswer[i]+" ";
 					return {
 						...answers,
 						answerarr: addanswer,
