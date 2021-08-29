@@ -57,56 +57,64 @@
 // ];
 
 
-export const  questions = [
+export const questions = [
     {
-           questionId: 1,
-            question: 'Are you good in accolite ?',
-            options: [
-                'Option 1' ,
-                'Option 2'  
-            ],
-            questionType: 'DESCRIPTIVE',
-            required: false,
-            isValid: false
-        
+        questionId: 1,
+        question: 'Are you good in accolite ?',
+        options: [
+            'Option 1',
+            'Option 2'
+        ],
+        questionType: 'DESCRIPTIVE',
+        required: false,
     },
-    {
-           questionId: 2,
-            question: 'Are you good in accolite ?',
-            options: [
-                'Option 1' ,
-                'Option 2' ,
-                'Option 3' ,
-                 'Option 4' 
-            ],
-            questionType: 'SINGLE',
-            required: false,
-            isValid: false
-       
+    answer: 'yeah good',
+    isvalid: false
     },
-    {
-      
-           questionId: 3,
-            question: 'Are you feeling good in accolite ?',
+{
+    questionId: 2,
+        question: 'Are you good in accolite ?',
             options: [
-                'Option 1' ,
-                'Option 2' ,
-                'Option 3' ,
-                 'Option 4' 
+                'Option 1',
+                'Option 2',
+                'Option 3',
+                'Option 4'
             ],
-            questionType: 'MULTIPLE',
-            required: false,
-            isValid: false
+                questionType: 'SINGLE',
+                    required: false,
+                        isValid: false
+},
+answer: 'Option 3',
+    isvalid: false
+    },
+{
 
+    questionId: 3,
+        question: 'Are you feeling good in accolite ?',
+            options: [
+                'Option 1',
+                'Option 2',
+                'Option 3',
+                'Option 4'
+            ],
+                questionType: 'MULTIPLE',
+                    required: false,
+                        isValid: false
+},
+answer: ['Option 1', 'Option 2'],
+    isvalid: false
     },
-    {
-       
-            questionId: 4,
-            question: 'How much do you rate Accolite as a company?',
+{
+
+    questionId: 4,
+        question: 'How much do you rate Accolite as a company?',
             numStars: 7,
-            isHalfStarAllowed: true,
-            questionType: 'STAR',
-            required: false,
-            isValid: false
+                isHalfStarAllowed: true,
+                    questionType: 'STAR',
+                        required: false,
+                            isValid: false
+},
+answer: '4',
+    isvalid: false
     }
 ];

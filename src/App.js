@@ -5,8 +5,8 @@ import ViewFormContainer from './containers/ViewFormContainer';
 import LoginPage from './components/TakeSurveyComponents/GoogleLogin/LoginPage';
 // import { LoginProvider } from './components/TakeSurveyComponents/GoogleLogin/LoginContext';
 import ThankYouContainer from './containers/ThankYouContainer';
-import AdminAcessContainer from './containers/AdminAcessContainer';
-import ResponseSummary from './components/ResponseSummary/responseSummary';
+import FormResponseContainer from './containers/FormResponseContainer';
+
 
 import {
 	BrowserRouter as Router,
@@ -14,7 +14,7 @@ import {
 	Route,
 	Link
 } from 'react-router-dom'
-import Centeredtabs from './components/ResponseSummary/responseSummary';
+import EditResponse from './components/EditResponse/EditResponse';
 
 function App() {
 	return (
@@ -25,14 +25,15 @@ function App() {
 				<Route exact strict path='/form/preview' component={PreviewFormContainer} />
 				<Route exact strict path='/Form/fill/:id' component={ViewFormContainer} />
 				<Route exact strict path='/form/thankyou' component={ThankYouContainer} />
-				<Route exact strict path='/form/adminacess' component={AdminAcessContainer} />
-			</Router> */}
+				<Route exact strict path='/form/:formid/responses' component={FormResponseContainer} />
+				<Route exact strict path='/form/edit' component={EditResponse} />
+
+			</Router>
 			<div>
 				{/* <h1>hi</h1> */}
-				{/* <ResponseFormContainer /> */}
-				{/* <ViewFormContainer/> */}
-				<ResponseSummary formId={1}></ResponseSummary>
-			</div>
+			{/* <ResponseFormContainer /> */}
+			{/* <ViewFormContainer/> */}
+			<ResponseSummary formId={1}></ResponseSummary>
 		</div>
 	)
 }

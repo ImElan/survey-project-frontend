@@ -11,6 +11,7 @@ function StarComponent(props) {
         // props.setRequiredd(-1);
     };
     return (
+<<<<<<< HEAD
         <div className='mt-5'>
             <label>	{props.question}</label>
             <br />
@@ -25,6 +26,27 @@ function StarComponent(props) {
                 activeColor="#ffc107"
             />
         </div>
+=======
+        <div>
+            <div className='mt-5'>
+                <label>	{props.question}</label>
+                <br />
+                <br />
+            </div>
+
+            <Rating name="size-large"
+                disabled = {props.readOnly}
+                size="large"
+                onChange={(event, value) => handleClick(event, value)}
+                defaultValue={5}
+                precision={props.isHalfStarAllowed ? 0.5 : 1}
+                value={props.readOnly? props.answer: currentValue}
+                max={props.numStars}
+            />
+            <br></br>
+            <p>Your rating is:{props.readOnly? props.answer: currentValue}</p>
+        </div >
+>>>>>>> ViewResponse
     );
 }
 

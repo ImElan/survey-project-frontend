@@ -5,17 +5,17 @@ import ResponseFormContainer from './ResponseFormContainer';
 import { useParams } from 'react-router-dom';
 
 function ViewFormContainer(props) {
-    const [questions, setQuestions] = useState(null);
+    const [questions, setQuestions] = useState([]);
     const [formTitle, setFormTitle] = useState(null);
     const [formDescription, setFormDescription] = useState(null);
 
-    const formid = useParams();
+    // const formid = useParams();
    
     useEffect(() => {
         console.log("here");
         getData();
         async function getData() {
-            const response = await fetch(`http://localhost:8080/api/form/1`);
+            const response = await fetch(`http://localhost:8080/api/form/242`);
             const data = await response.json();
             const q = data.surveyQuestions;
             console.log(q);

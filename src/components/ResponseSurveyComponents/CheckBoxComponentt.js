@@ -20,13 +20,18 @@ function CheckBoxComponentt(props) {
 				<br />
 			</div>
 
-			<div>
+			{<div>
 				{optionss.map((option,i) => {
 					return (
 						<div  className='row' key={i}>
 							<div className='col-md-8'>
 								<input 
+								disabled={props.readOnly? props.readOnly: false}
                                 type="checkbox" 
+<<<<<<< HEAD
+=======
+								defaultChecked={props.answer? props.answer.includes(option): false}
+>>>>>>> ViewResponse
                                 value={option}
                                 onChange={handlechange}/> {option}
 							</div>
@@ -35,7 +40,8 @@ function CheckBoxComponentt(props) {
 						</div>
 					);
 				})}
-			</div>
+			</div>}
+			
 			<br />
 			<br></br>
 		</div>

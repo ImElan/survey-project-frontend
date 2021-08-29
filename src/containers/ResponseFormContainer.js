@@ -16,37 +16,81 @@ function ResponseFormContainer(props) {
 	// const formstate = JSON.parse(window.localStorage.getItem('formstate'));
 	// console.log(props)
 	// var questions = props.questions;
-	// console.log(questions);
-	var anotherquestions = questions
-	for (var i = 0; i < questions.length; i++) {
-		anotherquestions[i].questions = questions[i];
-		anotherquestions[i].answerarr = [];
-		anotherquestions[i].answer = '';
-		anotherquestions[i].isvalid = false;
-
-	}
-	// console.log(anotherquestions);
+	console.log(props.questions);
 
 	const [responseState, dispatch] = useReducer(responseFormReducer, {
 		userid: '',
-		answerss: anotherquestions,
+		answerss: []
 	});
+
+	useEffect(() => {
+		var initialAnswers = [];
+		for (var i = 0; i < props.questions.length; i++) {
+			initialAnswers.push({
+				questions: props.questions[i],
+				answerarr: props.answers ? props.answers[i].split(",") : [],
+				answer: props.answers ? props.answers[i] : '',
+				isvalid: false
+			})
+
+		}
+		console.log("initial answerss", initialAnswers)
+		dispatch({ type: 'SET_INITIAL_ANSWERS', initialAnswers })
+	}, [props.questions])
+	console.log("After update", responseState.answerss);
+
+
+
+
+
+	// RENDER THE INITIAL NUMBER OF QUESTIONS ON THE SCREEN BASED ON MIN QUESTIONS ALLOWED VALUE
+
+	// const questionss = useCallback(() => {
+	// 	setOpen(true)
+	//   }, [])
+
+	// const questionRef = useRef(questionss);
+
+	// if (!isDeepEqual(questionRef.current, questionss)) {
+	// 	questionRef.current = questionss
+	//   }
+
+
+
+	// useEffect(() => {
+	// 	const initialAnswers = [];
+
+	// 	for (let i = 0; i < questionss.length; i++) {
+	// 		initialAnswers.push({
+	// 			questions : questionss[i],
+	// 			answerr : '',
+	// 			isvalid : false,
+	// 		});
+	// 	}
+	// 	dispatch({ type: 'SET_INITIAL_ANSWERS', initialAnswers });
+	// },[questionRef.current]);
+
+
+	// const handleInitialanswers = () => {
+	// 	dispatch({ type: 'SET_INITIAL_ANSWERS'});
+	// };
+
+	// handleInitialanswers(questionss);
+
+	// handleInitialanswers()
 
 
 	const handleoptionchange = (questionId, option) => {
 		dispatch({ type: 'OPTION_SINGLE_SELECT', questionId, option });
-		console.log(responseState.answerss);
 	}
 
 	// Method to handle question text change in answer of descriptive component
 	const handleAnswerParaChange = (questionId, newParaText, isvalid) => {
 		dispatch({ type: 'ANSWER_TEXT_CHANGE', questionId, newParaText, isvalid });
-		console.log(responseState.answerss);
 	};
 
 	const handleaddremoveoption = (questionId, option) => {
 		dispatch({ type: 'OPTION_ADD_REMOVE', questionId, option });
-		console.log(responseState.answerss);
 	}
 	const handleAnswerStarChange = (questionId, value) => {
 		// console.log(value + " " + questionId);
@@ -58,7 +102,7 @@ function ResponseFormContainer(props) {
 	// }
 
 	// Method to render different question component in the UI based on question type.
-	const renderQuestionComponent = (question) => {
+	const renderQuestionComponent = (question, i) => {
 		switch (question.questionType) {
 			// case 'STAR':
 			// 	return (
@@ -70,22 +114,13 @@ function ResponseFormContainer(props) {
 			// 			answerStarSelectHandler={handleAnswerStarChange}
 			// 		/>
 			// 	);
-			case 'STAR':
-				return (
-					<StarComponent
-						question={question.question}
-						questionId={question.questionId}
-						numStars={question.numStars}
-						isHalfStarAllowed={question.isHalfStarAllowed}
-						answerStarSelectHandler={handleAnswerStarChange}
-					/>
-				);
 			case 'DESCRIPTIVE':
 				return (
 					<DescComponentt
 						question={question.question}
 						questionId={question.questionId}
 						answerParagraphHandler={handleAnswerParaChange}
+						answer={props.answers ? props.answers[i] : null}
 					/>
 				);
 			case 'MULTIPLE':
@@ -95,12 +130,14 @@ function ResponseFormContainer(props) {
 						questionId={question.questionId}
 						options={question.options}
 						answeroptionadd={handleaddremoveoption}
-
+						answer={props.answers ? props.answers[i].split(",") : null}
 					/>
 				);
 			case 'SINGLE':
+				console.log(question.questionId)
 				return (
 					<RadioComponentt
+						answer={props.answers ? props.answers[i] : null}
 						question={question.question}
 						questionId={question.questionId}
 						options={question.options}
@@ -135,18 +172,15 @@ function ResponseFormContainer(props) {
 
 			</Row>
 
-			{questions.map(question => (
-				<Row
-					className='justify-content-md-center'
-					key={question.questionId}
-					style={{
-						paddingTop: '0px',
-						paddingBottom: '10px',
-						marginTop: '20px',
-					}}
-				>
-					<Col
-						sm={9}
+			{props.questions && props.questions
+				// .slice(
+				// 	paginationStartIndex,
+				// 	(currentPage - 1) * questionsPerPage + questionsPerPage
+				// )
+				.map((question, i) => (
+					<Row
+						className='justify-content-md-center'
+						key={question.questionId}
 						style={{
 							//marginRight: '5px',
 							padding: '10px 25px',
@@ -156,17 +190,53 @@ function ResponseFormContainer(props) {
 							//#e6e6e6
 						}}
 					>
-						{/* BASED ON QUESTION TYPE RENDER APPROPRIATE COMPONENT AND PASS IN THE PROPS */}
-						{renderQuestionComponent(question)}
-						{/* <RequiredButton
+						<Col
+							sm={9}
+							style={{
+								//marginRight: '5px',
+								padding: '10px 25px',
+								borderRadius: '8px',
+								backgroundColor: '#F0F0F0', //7866B2
+								border: 'solid black 1px',
+								//#e6e6e6
+							}}
+						>
+							{/* <Row
+										sm='auto'
+										className='justify-content-end'
+										style={{
+											marginBottom: '0px',
+											//padding: '12px',
+										}}
+									>
+										<Col>
+											<Dropdown
+												questionId={question.questionId}
+												questionType={question.questionType}
+												questionTypeChangeHandler={handleQuestionTypeChange}
+											/>
+										</Col>
+										<Col style={{ marginTop: '10px' }}>
+											<DeleteButton
+												questionId={question.questionId}
+												disabled={formState.questions.length <= minQuestionAllowed}
+												minQuestions={minQuestionAllowed}
+												deleteQuestionHandler={handleRemoveQuestion}
+											/>
+										</Col>
+									</Row> */}
+
+							{/* BASED ON QUESTION TYPE RENDER APPROPRIATE COMPONENT AND PASS IN THE PROPS */}
+							{renderQuestionComponent(question, i)}
+							{/* <RequiredButton
 										rounded={true}
 										questionId={answer.questions.questionId}
 										required={answer.questions.required}
 										requiredChangeHandler={handleRequiredChange}
 									/> */}
-					</Col>
-				</Row>
-			))}
+						</Col>
+					</Row>
+				))}
 
 		</Container>
 
