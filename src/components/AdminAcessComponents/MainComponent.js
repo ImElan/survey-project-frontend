@@ -12,7 +12,7 @@ function RenderEmployee({emp,toggleMod})
 				<div className="col-12 col-md-6 m-1 " >
 					<Card>
               <CardBody>
-							  <CardTitle><strong>Employee Id : </strong>{emp.id}</CardTitle>
+							  <CardTitle><strong>Employee Id : </strong>{emp.email}</CardTitle>
 							  <CardText><strong>Employee Name : </strong>{emp.name}</CardText>            
 							  <CardText><strong>Employee Role : </strong>{emp.role}</CardText>
 						  </CardBody>
@@ -145,7 +145,7 @@ onChangeSearchId(e) {
     });
   }
 
-  handleLogin(emprole,empname,empid) {
+  handleLogin(emprole,empid) {
 
     AdminDataService.doUpdate(
       empid,
