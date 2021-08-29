@@ -1,25 +1,23 @@
 {
-    "employees":[
-        {
-            "id":1,
-            "name":"emp1",
-            "role":"EMPLOYEE"
-        },
-        {
-            "id":2,
-            "name":"emp2",
-            "role":"EMPLOYEE"
-        },
-        {
-            "id":3,
-            "name":"emp3",
-            "role":"EMPLOYEE"
-        },
-        {
-            "id":4,
-            "name":"emp4",
-            "role":"EMPLOYEE"
-        }
-
-    ]
+  "employees": [
+    {
+      "role": "PN",
+      "email": "elan"
+    },
+    {
+      "email": "harish",
+      "name": "emp2",
+      "role": "EMPLOYEE"
+    },
+    {
+      "email": "kumar",
+      "name": "emp3",
+      "role": "EMPLOYEE"
+    },
+    {
+      "email": "someone",
+      "name": "emp4",
+      "role": "EMPLOYEE"
+    }
+  ]
 }

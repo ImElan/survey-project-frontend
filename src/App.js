@@ -7,7 +7,7 @@ import LoginPage from './components/TakeSurveyComponents/GoogleLogin/LoginPage';
 import ThankYouContainer from './containers/ThankYouContainer';
 import FormResponseContainer from './containers/FormResponseContainer';
 import ResponseSummary from './components/ResponseSummary/responseSummary';
-
+import AdminAcessContainer from './containers/AdminAcessContainer';
 import {
 	BrowserRouter as Router,
 	Redirect,
@@ -19,21 +19,19 @@ import EditResponse from './components/EditResponse/EditResponse';
 function App() {
 	return (
 		<div>
-			{/* <Router>
+			<Router>
 				<Route exact path='/' component={LoginPage} />
 				<Route exact strict path='/form/create' component={CreateFormContainer} />
 				<Route exact strict path='/form/preview' component={PreviewFormContainer} />
 				<Route exact strict path='/Form/fill/:id' component={ViewFormContainer} />
 				<Route exact strict path='/form/thankyou' component={ThankYouContainer} />
-				<Route exact strict path='/form/:formid/responses' component={FormResponseContainer} />
-				<Route exact strict path='/form/edit' component={EditResponse} />
-
+				<Route exact strict path='/form/adminacess' component={AdminAcessContainer} />
 			</Router>
 			<div>
 				{/* <h1>hi</h1> */}
-			{/* <ResponseFormContainer /> */}
-			{/* <ViewFormContainer/> */}
-			<ResponseSummary formId={243}></ResponseSummary>
+				{/* <ResponseFormContainer/> */}
+				{/* <ViewFormContainer/> */}
+			</div>
 		</div>
 	)
 }
