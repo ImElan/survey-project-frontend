@@ -8,26 +8,25 @@ import isDeepEqual from 'fast-deep-equal/react'
 import DescComponentt from '../components/ResponseSurveyComponents/DescComponentt';
 import RadioComponentt from '../components/ResponseSurveyComponents/RadioComponentt';
 import CheckBoxComponentt from '../components/ResponseSurveyComponents/CheckBoxComponentt';
-import StarComponent from '../components/CreateFormComponents/StarComponent';
-import {questions} from './questionss';
+import StarComponent from '../components/ResponseSurveyComponents/StarComponent';
+import { questions } from './questionss';
 
 function ResponseFormContainer(props) {
-	
+
 	// const formstate = JSON.parse(window.localStorage.getItem('formstate'));
 	// console.log(props)
 	// var questions = props.questions;
 	// console.log(questions);
 	var anotherquestions = questions
-	for(var i=0;i<questions.length;i++)
-	{
+	for (var i = 0; i < questions.length; i++) {
 		anotherquestions[i].questions = questions[i];
 		anotherquestions[i].answerarr = [];
-        anotherquestions[i].answer = '';
-        anotherquestions[i].isvalid = false;
-		
+		anotherquestions[i].answer = '';
+		anotherquestions[i].isvalid = false;
+
 	}
 	// console.log(anotherquestions);
-	
+
 	const [responseState, dispatch] = useReducer(responseFormReducer, {
 		userid: '',
 		answerss: anotherquestions,
@@ -71,6 +70,16 @@ function ResponseFormContainer(props) {
 			// 			answerStarSelectHandler={handleAnswerStarChange}
 			// 		/>
 			// 	);
+			case 'STAR':
+				return (
+					<StarComponent
+						question={question.question}
+						questionId={question.questionId}
+						numStars={question.numStars}
+						isHalfStarAllowed={question.isHalfStarAllowed}
+						answerStarSelectHandler={handleAnswerStarChange}
+					/>
+				);
 			case 'DESCRIPTIVE':
 				return (
 					<DescComponentt
@@ -127,37 +136,37 @@ function ResponseFormContainer(props) {
 			</Row>
 
 			{questions.map(question => (
-					<Row
-						className='justify-content-md-center'
-						key={question.questionId}
+				<Row
+					className='justify-content-md-center'
+					key={question.questionId}
+					style={{
+						paddingTop: '0px',
+						paddingBottom: '10px',
+						marginTop: '20px',
+					}}
+				>
+					<Col
+						sm={9}
 						style={{
-							paddingTop: '0px',
-							paddingBottom: '10px',
-							marginTop: '20px',
+							//marginRight: '5px',
+							padding: '10px 25px',
+							borderRadius: '8px',
+							backgroundColor: '#F0F0F0', //7866B2
+							border: 'solid black 1px',
+							//#e6e6e6
 						}}
 					>
-						<Col
-							sm={9}
-							style={{
-								//marginRight: '5px',
-								padding: '10px 25px',
-								borderRadius: '8px',
-								backgroundColor: '#F0F0F0', //7866B2
-								border: 'solid black 1px',
-								//#e6e6e6
-							}}
-						>
-							{/* BASED ON QUESTION TYPE RENDER APPROPRIATE COMPONENT AND PASS IN THE PROPS */}
-							{renderQuestionComponent(question)}
-							{/* <RequiredButton
+						{/* BASED ON QUESTION TYPE RENDER APPROPRIATE COMPONENT AND PASS IN THE PROPS */}
+						{renderQuestionComponent(question)}
+						{/* <RequiredButton
 										rounded={true}
 										questionId={answer.questions.questionId}
 										required={answer.questions.required}
 										requiredChangeHandler={handleRequiredChange}
 									/> */}
-						</Col>
-					</Row>
-				))}
+					</Col>
+				</Row>
+			))}
 
 		</Container>
 
