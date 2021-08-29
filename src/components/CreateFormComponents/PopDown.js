@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Dropdown } from 'react-bootstrap';
-const PopDown = ({ totalQuestions, questionsPerPageHandler }) => {
+const PopDown = ({ totalQuestions, questionsPerPageHandler,title }) => {
 	const [quesPerPageVal, setQuesPerPageVal] = useState(5);
 	const options = [];
 	options.push(1);
@@ -11,9 +11,13 @@ const PopDown = ({ totalQuestions, questionsPerPageHandler }) => {
 	}
 	return (
 		<div>
-			<Dropdown title='Questions Per Page' style={{ float: 'right' }}>
+			<Dropdown
+				title='Questions Per Page'
+				style={{ float: 'right', display: 'flex', alignItems: 'center' }}
+			>
+				<h5 style={{ marginRight: '20px' }}>{title} </h5>
 				<Dropdown.Toggle size='lg' variant='primary'>
-					Questions Per Page : {quesPerPageVal}
+					{quesPerPageVal}
 				</Dropdown.Toggle>
 				<Dropdown.Menu>
 					{options.map((option) => {

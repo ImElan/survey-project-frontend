@@ -1,16 +1,33 @@
 import React,{useState} from 'react';
 import CreateFormContainer from '../../containers/CreateFormContainer';
 import NameForm  from '../CreateFormComponents/NameForm';
+import { Link } from 'react-router-dom';
+import { Container, Row, Col } from 'react-bootstrap';
+import { FaUnderline } from 'react-icons/fa';
 
 function Header(props) {
 
-    let url = ''; 
-    let anchor ;
+    let anchor;
     if (props.isEditable === 'true') {
-        anchor = <a href = {url}>Edit your response</a>
+        anchor = <a style = {{textDecoration: "underline",cursor: "pointer",color: "blue"}} 
+                onClick = {()=>{props.history.push('Edit_Form_route')}}>Edit your response</a>
     }
     return (
-        <div style = {
+
+        <div style = {{
+            height: '100%',
+            backgroundColor : 'rgb(246 235 254)',
+            position : 'absolute',
+            width : '100%',
+            top : '0',
+            left : '0'
+        }}>
+        <Container fluid>
+            <Row
+                className='justify-content-md-center'
+            >
+                <Col xs={12} sm={6}>
+                <div style = {
             {
                 width: '100%',
                 border: '1px',
@@ -41,6 +58,23 @@ function Header(props) {
                 </div>
             </div>
         </div>
+                </Col>
+            </Row>
+        </Container>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
     )
 }
 export default Header;

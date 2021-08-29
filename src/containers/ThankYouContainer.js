@@ -1,6 +1,10 @@
 import { Container, Row, Col } from 'react-bootstrap';
 import Header from '../components/ThankYoupageComponents/Header';
-function ThankYouContainer() {
+function ThankYouContainer(props) {
+
+	const title = props.location.state.title;
+    const isEditable = props.location.state.isEditable;
+
     return (
 		<div style = {{
 				height: '100%',
@@ -15,7 +19,7 @@ function ThankYouContainer() {
 					className='justify-content-md-center'
 				>
 					<Col xs={12} sm={6}>
-						<Header title = "Survey Form" isEditable = "true"/> 
+						<Header title = {title} isEditable = {isEditable}/> 
 					</Col>
 				</Row>
 			</Container>

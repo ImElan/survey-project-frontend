@@ -284,6 +284,7 @@ function CreateFormContainer(props) {
 						<PopDown
 							totalQuestions={formState.questions.length}
 							questionsPerPageHandler={questionsPerPageHandler}
+							title = "Questions Per Page"
 						/>
 						{/* ADD BUTTON COMPONENT GOES HERE */}
 						<AddQuestionButton
