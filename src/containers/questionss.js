@@ -1,20 +1,65 @@
-// export const PROMOTIONS = [
+// export const  questionss = [
 //     {
-//       id: 0,
-//       name: 'Weekend Grand Buffet',
-//       image: '/assests/images/buffet.png',
-//       label: 'New',
-//       price: '19.99',
-//       featured: true,
-//       description: 'Featuring mouthwatering combinations with a choice of five different salads, six enticing appetizers, six main entrees and five choicest desserts. Free flowing bubbly and soft drinks. All for just $19.99 per person'
+//         questions : 
+//         {
+//            questionId: 1,
+//             question: 'Are you good in accolite ?',
+//             options: [
+//                 { optionId: 1, option: 'Option 1' },
+//                 { optionId: 2, option: 'Option 2' },
+//             ],
+//             questionType: 'DESCRIPTIVE',
+//             required: false,
+//             isValid: false
+//         },
+//         answerarr:[],
+//         answer:'',
+//         isvalid:false
+//     },
+//     {
+//         questions : 
+//         {
+//            questionId: 2,
+//             question: 'Are you good in accolite ?',
+//             options: [
+//                 { optionId: 1, option: 'Option 1' },
+//                 { optionId: 2, option: 'Option 2' },
+//                 { optionId: 3, option: 'Option 3' },
+//                 { optionId: 4, option: 'Option 4' },
+//             ],
+//             questionType: 'SINGLE',
+//             required: false,
+//             isValid: false
+//         },
+//         answerarr:[],
+//         answer:'',
+//         isvalid:false
+//     },
+//     {
+//         questions : 
+//         {
+//            questionId: 3,
+//             question: 'Are you feeling good in accolite ?',
+//             options: [
+//                 { optionId: 1, option: 'Option 1' },
+//                 { optionId: 2, option: 'Option 2' },
+//                 { optionId: 3, option: 'Option 3' },
+//                 { optionId: 4, option: 'Option 4' },
+//             ],
+//             questionType: 'MULTIPLE',
+//             required: false,
+//             isValid: false
+//         },
+//         answerarr:[],
+//         answer:'',
+//         isvalid:false
 //     }
-//   ];
+// ];
 
-export const questionss = [
+
+export const  questions = [
     {
-        questions:
-        {
-            questionId: 1,
+           questionId: 1,
             question: 'Are you good in accolite ?',
             options: [
                 { optionId: 1, option: 'Option 1' },
@@ -23,14 +68,10 @@ export const questionss = [
             questionType: 'DESCRIPTIVE',
             required: false,
             isValid: false
-        },
-        answer: '',
-        isvalid: false
+        
     },
     {
-        questions:
-        {
-            questionId: 2,
+           questionId: 2,
             question: 'Are you good in accolite ?',
             options: [
                 { optionId: 1, option: 'Option 1' },
@@ -41,14 +82,11 @@ export const questionss = [
             questionType: 'SINGLE',
             required: false,
             isValid: false
-        },
-        answer: '',
-        isvalid: false
+       
     },
     {
-        questions:
-        {
-            questionId: 3,
+      
+           questionId: 3,
             question: 'Are you feeling good in accolite ?',
             options: [
                 { optionId: 1, option: 'Option 1' },
@@ -59,13 +97,10 @@ export const questionss = [
             questionType: 'MULTIPLE',
             required: false,
             isValid: false
-        },
-        answer: '',
-        isvalid: false
+
     },
     {
-        questions:
-        {
+       
             questionId: 4,
             question: 'How much do you rate Accolite as a company?',
             numStars: 7,
@@ -73,8 +108,5 @@ export const questionss = [
             questionType: 'STAR',
             required: false,
             isValid: false
-        },
-        answer: '',
-        isvalid: false
     }
 ];

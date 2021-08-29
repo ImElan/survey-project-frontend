@@ -9,17 +9,27 @@ import DescComponentt from '../components/ResponseSurveyComponents/DescComponent
 import RadioComponentt from '../components/ResponseSurveyComponents/RadioComponentt';
 import CheckBoxComponentt from '../components/ResponseSurveyComponents/CheckBoxComponentt';
 import StarComponent from '../components/CreateFormComponents/StarComponent';
+import {questions} from './questionss';
 
 function ResponseFormContainer(props) {
 	
 	// const formstate = JSON.parse(window.localStorage.getItem('formstate'));
-	console.log(props)
-	var questions = props.questions;
-	// console.log(questions);
+	// console.log(props)
+	// var questions = props.questions;
+	console.log(questions);
+	var anotherquestions = questions
+	for(var i=0;i<questions.length;i++)
+	{
+		anotherquestions[i].questions = questions[i];
+		anotherquestions[i].answerarr = [];
+        anotherquestions[i].answer = '';
+        anotherquestions[i].isvalid = false;
+	}
+	console.log(anotherquestions);
 	
 	const [responseState, dispatch] = useReducer(responseFormReducer, {
 		userid: '',
-		questions: questions,
+		answerss: anotherquestions,
 	});
 
 
@@ -88,32 +98,32 @@ function ResponseFormContainer(props) {
 	// }
 
 	// Method to render different question component in the UI based on question type.
-	const renderQuestionComponent = (question) => {
-		switch (question.questionType) {
+	const renderQuestionComponent = (answer) => {
+		switch (answer.questions.questionType) {
 			case 'STAR':
 				return (
 					<StarComponent
-						question={question.question}
-						questionId={question.questionId}
-						numStars={question.numStars}
-						isHalfStarAllowed={question.isHalfStarAllowed}
+						question={answer.questions.question}
+						questionId={answer.questions.questionId}
+						numStars={answer.questions.numStars}
+						isHalfStarAllowed={answer.questions.isHalfStarAllowed}
 						answerStarSelectHandler={handleAnswerStarChange}
 					/>
 				);
 			case 'DESCRIPTIVE':
 				return (
 					<DescComponentt
-						question={question.question}
-						questionId={question.questionId}
+						question={answer.questions.question}
+						questionId={answer.questions.questionId}
 						answerParagraphHandler={handleAnswerParaChange}
 					/>
 				);
 			case 'MULTIPLE':
 				return (
 					<CheckBoxComponentt
-						question={question.question}
-						questionId={question.questionId}
-						options={question.options}
+						question={answer.questions.question}
+						questionId={answer.questions.questionId}
+						options={answer.questions.options}
 						answeroptionadd={handleaddremoveoption}
 
 					/>
@@ -121,9 +131,9 @@ function ResponseFormContainer(props) {
 			case 'SINGLE':
 				return (
 					<RadioComponentt
-						question={question.question}
-						questionId={question.questionId}
-						options={question.options}
+						question={answer.questions.question}
+						questionId={answer.questions.questionId}
+						options={answer.questions.options}
 						answerOptionChange={handleoptionchange}
 					/>
 				);
@@ -153,20 +163,15 @@ function ResponseFormContainer(props) {
 				// 	<h5></h5>
 				// }
 			>
-				<h5>{props.title}</h5>
-				<h5>{props.description}</h5>
+				{/* <h5>{props.title}</h5>
+				<h5>{props.description}</h5> */}
 
 			</Row>
 
-			{props.questions && props.questions
-				// .slice(
-				// 	paginationStartIndex,
-				// 	(currentPage - 1) * questionsPerPage + questionsPerPage
-				// )
-				.map((question) => (
+			{responseState.answerss.map((answer) => (
 					<Row
 						className='justify-content-md-center'
-						key={question.questionId}
+						key={answer.questionId}
 						style={{
 							paddingTop: '0px',
 							paddingBottom: '10px',
@@ -184,33 +189,10 @@ function ResponseFormContainer(props) {
 								//#e6e6e6
 							}}
 						>
-							{/* <Row
-										sm='auto'
-										className='justify-content-end'
-										style={{
-											marginBottom: '0px',
-											//padding: '12px',
-										}}
-									>
-										<Col>
-											<Dropdown
-												questionId={question.questionId}
-												questionType={question.questionType}
-												questionTypeChangeHandler={handleQuestionTypeChange}
-											/>
-										</Col>
-										<Col style={{ marginTop: '10px' }}>
-											<DeleteButton
-												questionId={question.questionId}
-												disabled={formState.questions.length <= minQuestionAllowed}
-												minQuestions={minQuestionAllowed}
-												deleteQuestionHandler={handleRemoveQuestion}
-											/>
-										</Col>
-									</Row> */}
+							
 
 							{/* BASED ON QUESTION TYPE RENDER APPROPRIATE COMPONENT AND PASS IN THE PROPS */}
-							{renderQuestionComponent(question)}
+							{renderQuestionComponent(answer)}
 							{/* <RequiredButton
 										rounded={true}
 										questionId={answer.questions.questionId}

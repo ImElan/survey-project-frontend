@@ -18,16 +18,17 @@ import {
 function App() {
 	return (
 		<div>
-			<Router>
+			{/* <Router>
 				<Route exact path='/' component={LoginPage}/>
 				<Route exact strict path='/form/create' component={CreateFormContainer} />
 				<Route exact strict path='/form/preview' component={PreviewFormContainer} />
 				<Route exact strict path='/Form/fill/:id' component={ViewFormContainer} />
 				<Route exact strict path='/form/thankyou' component={ThankYouContainer} />
 				<Route exact strict path='/form/adminacess' component={AdminAcessContainer} />
-			</Router>
+			</Router> */}
 			<div>
-				{/* <ResponseFormContainer/> */}
+				{/* <h1>hi</h1> */}
+				<ResponseFormContainer/>
 				{/* <ViewFormContainer/> */}
 			</div>
 		</div>
