@@ -78,8 +78,9 @@ const responseFormReducer = (state, action) => {
 					// const addanswer = [...answers.answer, action.optionId]
 					const addanswer = tempans;
 					var strans = "";
-					for(var i=0;i<tempans.length;i++)
-						strans += addanswer[i]+" ";
+					// for(var i=0;i<tempans.length;i++)
+					// 	strans += addanswer[i]+", ";
+					strans = addanswer.join(',');
 					return {
 						...answers,
 						answerarr: addanswer,
