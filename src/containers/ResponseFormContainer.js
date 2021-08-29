@@ -13,15 +13,32 @@ import StarComponent from '../components/CreateFormComponents/StarComponent';
 function ResponseFormContainer(props) {
 	
 	// const formstate = JSON.parse(window.localStorage.getItem('formstate'));
-	console.log(props)
-	var questions = props.questions;
-	// console.log(questions);
+	// console.log(props)
+	// var questions = props.questions;
+	 console.log(props.questions);
 	
-	const [responseState, dispatch] = useReducer(responseFormReducer, {
+	 const [responseState, dispatch] = useReducer(responseFormReducer, {
 		userid: '',
-		questions: questions,
+		answerss: []
 	});
 
+	useEffect(() => {
+		var initialAnswers = [];
+		for(var i=0;i<props.questions.length;i++)
+		{
+			initialAnswers.push({
+				questions: props.questions[i],
+				answerarr: props.answers? props.answers[i].split(","): [],
+				answer: props.answers? props.answers[i]:'',
+				isvalid: false
+			})
+		
+		}
+		console.log("initial answerss", initialAnswers)
+		dispatch({type: 'SET_INITIAL_ANSWERS', initialAnswers})
+	}, [props.questions])
+	console.log("After update",responseState.answerss);
+	
 
 
 
@@ -63,20 +80,17 @@ function ResponseFormContainer(props) {
 	// handleInitialanswers()
 
 
-	const handleoptionchange = (questionId, optionId) => {
-		dispatch({ type: 'OPTION_SINGLE_SELECT', questionId, optionId });
-		console.log(responseState.answerss);
+	const handleoptionchange = (questionId, option) => {
+		dispatch({ type: 'OPTION_SINGLE_SELECT', questionId, option });
 	}
 
 	// Method to handle question text change in answer of descriptive component
 	const handleAnswerParaChange = (questionId, newParaText, isvalid) => {
 		dispatch({ type: 'ANSWER_TEXT_CHANGE', questionId, newParaText, isvalid });
-		console.log(responseState.answerss);
 	};
 
-	const handleaddremoveoption = (questionId, optionId) => {
-		dispatch({ type: 'OPTION_ADD_REMOVE', questionId, optionId });
-		console.log(responseState.answerss);
+	const handleaddremoveoption = (questionId, option) => {
+		dispatch({ type: 'OPTION_ADD_REMOVE', questionId, option });
 	}
 	const handleAnswerStarChange = (questionId, value) => {
 
@@ -88,24 +102,25 @@ function ResponseFormContainer(props) {
 	// }
 
 	// Method to render different question component in the UI based on question type.
-	const renderQuestionComponent = (question) => {
+	const renderQuestionComponent = (question, i) => {
 		switch (question.questionType) {
-			case 'STAR':
-				return (
-					<StarComponent
-						question={question.question}
-						questionId={question.questionId}
-						numStars={question.numStars}
-						isHalfStarAllowed={question.isHalfStarAllowed}
-						answerStarSelectHandler={handleAnswerStarChange}
-					/>
-				);
+			// case 'STAR':
+			// 	return (
+			// 		<StarComponent
+			// 			question={question.question}
+			// 			questionId={question.questionId}
+			// 			numStars={question.numStars}
+			// 			isHalfStarAllowed={question.isHalfStarAllowed}
+			// 			answerStarSelectHandler={handleAnswerStarChange}
+			// 		/>
+			// 	);
 			case 'DESCRIPTIVE':
 				return (
 					<DescComponentt
 						question={question.question}
 						questionId={question.questionId}
 						answerParagraphHandler={handleAnswerParaChange}
+						answer = {props.answers? props.answers[i]: null}
 					/>
 				);
 			case 'MULTIPLE':
@@ -115,12 +130,14 @@ function ResponseFormContainer(props) {
 						questionId={question.questionId}
 						options={question.options}
 						answeroptionadd={handleaddremoveoption}
-
+						answer = {props.answers? props.answers[i].split(","): null}
 					/>
 				);
 			case 'SINGLE':
+				console.log(question.questionId)
 				return (
 					<RadioComponentt
+						answer = {props.answers? props.answers[i]: null}
 						question={question.question}
 						questionId={question.questionId}
 						options={question.options}
@@ -163,7 +180,7 @@ function ResponseFormContainer(props) {
 				// 	paginationStartIndex,
 				// 	(currentPage - 1) * questionsPerPage + questionsPerPage
 				// )
-				.map((question) => (
+				.map((question, i) => (
 					<Row
 						className='justify-content-md-center'
 						key={question.questionId}
@@ -210,7 +227,7 @@ function ResponseFormContainer(props) {
 									</Row> */}
 
 							{/* BASED ON QUESTION TYPE RENDER APPROPRIATE COMPONENT AND PASS IN THE PROPS */}
-							{renderQuestionComponent(question)}
+							{renderQuestionComponent(question, i)}
 							{/* <RequiredButton
 										rounded={true}
 										questionId={answer.questions.questionId}

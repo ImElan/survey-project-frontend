@@ -14,6 +14,7 @@ import {
 	Route,
 	Link
 } from 'react-router-dom'
+import EditResponse from './components/EditResponse/EditResponse';
 
 function App() {
 	return (
@@ -25,6 +26,8 @@ function App() {
 				<Route exact strict path='/Form/fill/:id' component={ViewFormContainer} />
 				<Route exact strict path='/form/thankyou' component={ThankYouContainer} />
 				<Route exact strict path='/form/:formid/responses' component={FormResponseContainer} />
+				<Route exact strict path='/form/edit' component={EditResponse} />
+
 			</Router>
 			<div>
 				{/* <ResponseFormContainer/> */}

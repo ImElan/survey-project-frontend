@@ -7,7 +7,7 @@ function RadioComponentt(props) {
 	const optionss = props.options;
 
 	const handlechange = (e) => {
-		// console.log(e.target.value);
+		console.log(e.target.value);
 		props.answerOptionChange(props.questionId,e.target.value);
 	  }
 
@@ -19,7 +19,8 @@ function RadioComponentt(props) {
 				<br />
 			</div>
 
-			<div onChange={handlechange}>
+			{props.readOnly? 
+			<div>
 				{optionss.map((option,i) => {
 					return (
 						<div  className='row' key={i}>
@@ -28,7 +29,7 @@ function RadioComponentt(props) {
 								disabled={props.readOnly}
 								checked={props.answer === i}
 								type="radio" 
-								value={i} 
+								value={option} 
 								name="allselect" /> {option}
 							</div>
 							<br></br>
@@ -36,6 +37,22 @@ function RadioComponentt(props) {
 					);
 				})}
 			</div>
+			: <div onChange={handlechange} >
+				{optionss.map((option,i) => {
+					return (
+						<div  className='row' key={i}>
+							<div className='col-md-8'>
+								<input 
+								defaultChecked={props.answer? props.answer === option: false}
+								type="radio" 
+								value={option} 
+								name="allselect" /> {option}
+							</div>
+							<br></br>
+						</div>
+					);
+				})}
+			</div>}
 			<br />
 			<br></br>
 		</div>

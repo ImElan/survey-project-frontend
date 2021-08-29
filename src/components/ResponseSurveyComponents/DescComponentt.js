@@ -12,7 +12,7 @@ function DescComponentt(props) {
 	const maxLength = (len) => (val) => !(val) || (val.length <= len)
 	const minLength = (len) => (val) => (val) && (val.length >=len);
 
-	const [initial2, final2] = useState('');
+	const [initial2, final2] = useState('' );
 
 	const handleChange2 = (e) => {
 		final2(e.target.value);
@@ -33,12 +33,12 @@ function DescComponentt(props) {
 						<br />
 
 						<Form.Control
-							disabled={props.readOnly}
+							disabled={props.readOnly? props.readOnly: false}
 							as='textarea'
 							rows={7}
 							placeholder='Paragraph - Maximum 500 Characters'
 							onChange={handleChange2}
-							value={props.readOnly? props.answer: initial2}
+							defaultValue={props.answer? props.answer: initial2}
 							// validators = {{
 							// 	required, minLength: minLength(3), maxLength: maxLength(15)
 							// }}

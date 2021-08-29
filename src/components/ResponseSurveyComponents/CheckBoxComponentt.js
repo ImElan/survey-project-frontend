@@ -20,16 +20,16 @@ function CheckBoxComponentt(props) {
 				<br />
 			</div>
 
-			<div>
+			{<div>
 				{optionss.map((option,i) => {
 					return (
 						<div  className='row' key={i}>
 							<div className='col-md-8'>
 								<input 
-								disabled={props.readOnly}
+								disabled={props.readOnly? props.readOnly: false}
                                 type="checkbox" 
-								checked={props.answer?.includes(i)}
-                                value={i}
+								defaultChecked={props.answer? props.answer.includes(option): false}
+                                value={option}
                                 onChange={handlechange}/> {option}
 							</div>
 							<br></br>
@@ -37,7 +37,8 @@ function CheckBoxComponentt(props) {
 						</div>
 					);
 				})}
-			</div>
+			</div>}
+			
 			<br />
 			<br></br>
 		</div>

@@ -44,17 +44,14 @@ function FormResponses(props) {
 					/>
 				);
 			case 'MULTIPLE':
-                let answersIndex = [];
-                for(var i=0;i<question.options.length;i++){
-                    if(answer.includes(question.options[i]))
-                        answersIndex.push(i);
-                } 
+				let answersArray = answer.split(",");
+				console.log("answers array", answersArray);
 				return (
 					<CheckBoxComponentt
                         readOnly={true}
 						question={question.question}
 						options={question.options}
-                        answer={answersIndex}
+                        answer={answersArray}
 					/>
 				);
 			case 'SINGLE':
