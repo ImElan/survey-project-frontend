@@ -13,6 +13,8 @@ function LoginPage() {
   let history = useHistory();
   let formid = 1;
 
+  let formid = 1;
+
   useEffect(() => {
     var x = localStorage.getItem('isEmployee');
     var y = localStorage.getItem('isHr');

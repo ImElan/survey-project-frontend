@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Alert } from 'react-bootstrap';
-import PopUpModal from './PopUpModal';
+import PopUpModal from '../CreateFormComponents/PopUpModal';
 import 'tachyons';
 
-function SaveFormButton(props) {
-	const { formTitle, questionList, saveFormHandler } = props;
+function SubmitFormButton(props) {
+	const { answerList, submitFormHandler } = props;
 
 	const [show, popup] = useState(false);
 	const [err, setAlert] = useState(false);
@@ -23,9 +23,14 @@ function SaveFormButton(props) {
 
 	const errorCheck = () => {
 		let flag = true;
-		questionList.forEach(function (question) {
-			if (question.isValid === false) {
-				flag = false;
+		console.log(answerList);
+		answerList.forEach(function (answer) {
+			if (answer.questions.required === true) {
+				if (answer.questions.questionType == 'SINGLE' || answer.questions.questionType == 'MULTIPLE') {
+					if (answer.answer.length == 0) flag = false;
+				} else {
+					if (answer.answer == '') flag = false;
+				}
 			}
 		});
 
@@ -38,11 +43,11 @@ function SaveFormButton(props) {
 		}
 	};
 
-	let popUpBody = `Are you sure you want to save "${formTitle}" form?`;
+	let popUpBody = `Are you sure you want to submit the form?`;
 	return (
 		<div className='text-center'>
 			<Alert show={err} variant='danger'>
-				<h5>Could not save! Some empty fields found in your form.</h5>
+				<h5>Could not submit! Some empty fields found in your form.</h5>
 				<Button onClick={() => setAlert(false)} variant='outline-danger'>
 					Close!
 				</Button>
@@ -52,7 +57,7 @@ function SaveFormButton(props) {
 				className='bg-purple f3 fw5 bw1 grow pointer'
 				onClick={errorCheck}
 			>
-				Save Form
+				Submit Form
 			</Button>
 
 			<PopUpModal
@@ -60,9 +65,9 @@ function SaveFormButton(props) {
 				popUpClose={popUpClose}
 				popUpTitle={popUpTitle}
 				popUpBody={popUpBody}
-				confirmHandler={saveFormHandler}
+				confirmHandler={submitFormHandler}
 			/>
 		</div>
 	);
 }
-export default SaveFormButton;
+export default SubmitFormButton;
