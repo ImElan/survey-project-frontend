@@ -31,6 +31,7 @@ function DescComponentt(props) {
 						{props.question}
 					</Form.Label>
 					<br />
+					{props.imageData && <img src={props.imageData} alt='' id='img' className='img' />}
 
 					<Form.Control
 						disabled={props.readOnly ? props.readOnly : false}

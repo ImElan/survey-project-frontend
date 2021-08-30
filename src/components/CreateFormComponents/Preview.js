@@ -22,7 +22,13 @@ function Preview(props) {
   useEffect(() => {
     show.title = props.formTitle;
     show.description = props.formDescription;
-    show.questions = props.questionList;
+    // show.questions = props.questionList;
+    show.questions = props.questionList.map(question => {
+      return {
+        ...question,
+        imageData: question.image
+      }
+    })
     window.localStorage.setItem('formstate', JSON.stringify(show));
   });
   const [view, showview] = useState(true);

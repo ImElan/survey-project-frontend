@@ -99,6 +99,7 @@ function ResponseFormContainer(props) {
 						numStars={question.numStars}
 						isHalfStarAllowed={question.isHalfStarAllowed}
 						answerStarSelectHandler={handleAnswerStarChange}
+						imageData={question.imageData}
 					/>
 				);
 			case 'DESCRIPTIVE':
@@ -107,6 +108,7 @@ function ResponseFormContainer(props) {
 						question={question.question}
 						questionId={question.questionId}
 						answerParagraphHandler={handleAnswerParaChange}
+						imageData={question.imageData}
 					/>
 				);
 			case 'MULTIPLE':
@@ -116,6 +118,7 @@ function ResponseFormContainer(props) {
 						questionId={question.questionId}
 						options={question.options}
 						answeroptionadd={handleaddremoveoption}
+						imageData={question.imageData}
 
 					/>
 				);
@@ -127,6 +130,7 @@ function ResponseFormContainer(props) {
 						questionId={question.questionId}
 						options={question.options}
 						answerOptionChange={handleoptionchange}
+						imageData={question.imageData}
 					/>
 				);
 			default:

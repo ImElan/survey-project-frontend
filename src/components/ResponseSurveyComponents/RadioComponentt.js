@@ -14,6 +14,7 @@ function RadioComponentt(props) {
                 {console.log(optionss)}
                 <label>	{props.question}</label>
                 <br />
+                {props.imageData && <img src={props.imageData} alt='' id='img' className='img' />}
                 <br />
             </div>
 

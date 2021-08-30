@@ -164,6 +164,7 @@ function CreateFormContainer(props) {
 				noOfStars: question.numStars,
 				isHalfStarAllowed: question.isHalfStarAllowed,
 				isRequired: question.required,
+				imageData: question.image
 			};
 		});
 
