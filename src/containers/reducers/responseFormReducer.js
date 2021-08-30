@@ -28,7 +28,7 @@ const responseFormReducer = (state, action) => {
 				}
 				return {
 					...answers,
-					answer: action.value,
+					answer: action.value.toString(),
 					isvalid: true,
 				};
 			});

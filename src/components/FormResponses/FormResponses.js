@@ -45,7 +45,7 @@ function FormResponses(props) {
 				);
 			case 'MULTIPLE':
 				let answersArray = answer.split(",");
-				console.log("answers array", answersArray);
+				console.log("answers array", answersArray, question.options);
 				return (
 					<CheckBoxComponentt
                         readOnly={true}

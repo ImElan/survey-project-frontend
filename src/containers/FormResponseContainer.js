@@ -11,7 +11,7 @@ function FormResponseContainer() {
             "userid": "123",
             "questiontype": ["STAR", "DESCRIPTIVE"],
             "questions": ["How much will you rate", "Please tell about yourself"],
-            "answers": ["5", "Pushpendra", "Honest", "Yes"],
+            "answers": ["5", "Pushpendra", "Punctual", "Yes"],
         },
         {
             "id": "13534643",
@@ -19,7 +19,7 @@ function FormResponseContainer() {
             "userid": "126",
             "questiontype": ["STAR", "DESCRIPTIVE"],
             "questions": ["How much will you rate", "Please tell about yourself"],
-            "answers": ["4", "Sharma", "Honest,Punctual", "No"]
+            "answers": ["4", "Sharma", "Honest,Punctual,Hard Working", "No"]
         }
     ]);
     useEffect(() => {

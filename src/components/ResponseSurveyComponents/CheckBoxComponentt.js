@@ -5,7 +5,7 @@ import { FormControl, FormLabel } from 'react-bootstrap';
 function CheckBoxComponentt(props) {
 	
 	const optionss = props.options;
-
+	console.log("in checkbox", props.answer? props.answer.includes(optionss[2]): false)
 
 	const handlechange = (e) => {
 		// var optionid = e.target.value;
@@ -20,13 +20,28 @@ function CheckBoxComponentt(props) {
 				<br />
 			</div>
 
-			{<div>
+			{props.readOnly? <div>
 				{optionss.map((option,i) => {
 					return (
 						<div  className='row' key={i}>
 							<div className='col-md-8'>
 								<input 
-								disabled={props.readOnly? props.readOnly: false}
+								disabled={true}
+                                type="checkbox" 
+								checked={props.answer? props.answer.includes(option): false}
+                                value={option}
+                                onChange={handlechange}/> {option}
+							</div>
+							<br></br>
+							{/* {i} */}
+						</div>
+					);
+				})}</div>
+				:<div>{optionss.map((option,i) => {
+					return (
+						<div  className='row' key={i}>
+							<div className='col-md-8'>
+								<input 
                                 type="checkbox" 
 								defaultChecked={props.answer? props.answer.includes(option): false}
                                 value={option}

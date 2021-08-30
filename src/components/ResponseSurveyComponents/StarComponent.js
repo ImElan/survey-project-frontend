@@ -4,7 +4,7 @@ import Rating from '@material-ui/lab/Rating';
 
 
 function StarComponent(props) {
-    const [currentValue, setCurrentValue] = useState(0);
+    const [currentValue, setCurrentValue] = useState(props.answer? parseInt(props.answer): 0);
     const handleClick = (event, value) => {
         console.log(props.questionId);
         props.answerStarSelectHandler(props.questionId, value);
@@ -19,12 +19,11 @@ function StarComponent(props) {
             </div>
 
             <Rating name="size-large"
-                disabled = {props.readOnly}
+                disabled = {props.readOnly? props.readOnly: false}
                 size="large"
                 onChange={(event, value) => handleClick(event, value)}
-                defaultValue={5}
                 precision={props.isHalfStarAllowed ? 0.5 : 1}
-                value={props.readOnly? props.answer: currentValue}
+                value={currentValue}
                 max={props.numStars}
             />
             <br></br>

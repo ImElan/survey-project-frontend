@@ -8,7 +8,7 @@ import isDeepEqual from 'fast-deep-equal/react'
 import DescComponentt from '../components/ResponseSurveyComponents/DescComponentt';
 import RadioComponentt from '../components/ResponseSurveyComponents/RadioComponentt';
 import CheckBoxComponentt from '../components/ResponseSurveyComponents/CheckBoxComponentt';
-import StarComponent from '../components/CreateFormComponents/StarComponent';
+import StarComponent from '../components/ResponseSurveyComponents/StarComponent';
 
 function ResponseFormContainer(props) {
 	
@@ -104,16 +104,17 @@ function ResponseFormContainer(props) {
 	// Method to render different question component in the UI based on question type.
 	const renderQuestionComponent = (question, i) => {
 		switch (question.questionType) {
-			// case 'STAR':
-			// 	return (
-			// 		<StarComponent
-			// 			question={question.question}
-			// 			questionId={question.questionId}
-			// 			numStars={question.numStars}
-			// 			isHalfStarAllowed={question.isHalfStarAllowed}
-			// 			answerStarSelectHandler={handleAnswerStarChange}
-			// 		/>
-			// 	);
+			case 'STAR':
+				return (
+					<StarComponent
+						answer = {props.answers? props.answers[i]: null}
+						question={question.question}
+						questionId={question.questionId}
+						numStars={question.numStars}
+						isHalfStarAllowed={question.isHalfStarAllowed}
+						answerStarSelectHandler={handleAnswerStarChange}
+					/>
+				);
 			case 'DESCRIPTIVE':
 				return (
 					<DescComponentt
