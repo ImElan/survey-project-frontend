@@ -9,7 +9,10 @@ import DescComponentt from '../components/ResponseSurveyComponents/DescComponent
 import RadioComponentt from '../components/ResponseSurveyComponents/RadioComponentt';
 import CheckBoxComponentt from '../components/ResponseSurveyComponents/CheckBoxComponentt';
 import StarComponent from '../components/ResponseSurveyComponents/StarComponent';
+import SubmitFormButton from '../components/ResponseSurveyComponents/SubmitFormButton';
 import { questions } from './questionss';
+
+import axios from 'axios';
 
 function ResponseFormContainer(props) {
 
@@ -32,6 +35,7 @@ function ResponseFormContainer(props) {
 		answerss: anotherquestions,
 	});
 
+	const [requiredd, setRequiredd] = useState(-1);
 
 	const handleoptionchange = (questionId, option) => {
 		dispatch({ type: 'OPTION_SINGLE_SELECT', questionId, option });
@@ -57,6 +61,39 @@ function ResponseFormContainer(props) {
 	// 	console.log(responseState.answerss);
 	// }
 
+	const handleSubmitForm = async () => {
+		// send Post request to backend with the input state as body
+		console.log(responseState);
+		const answersToSendToBackend = responseState.answerss.map((question) => {
+			const optionsArr = question.options.map((option) => option.option);
+
+			return {
+				questionType: question.questionType,
+				question: question.question,
+				options: optionsArr,
+				noOfStars: question.numStars,
+				isHalfStarAllowed: question.isHalfStarAllowed,
+				isRequired: question.required,
+				answer: question.answer
+			};
+		});
+
+		const requestBody = {
+			surveyAnswers: answersToSendToBackend,
+		};
+
+		console.log(requestBody);
+
+		try {
+			const response = await axios.post('http://localhost:8080/response', requestBody);
+			console.log(response.data);
+			props.setSubmitted(true);
+		} catch (error) {
+			console.log(error);
+			console.log(error.response);
+		} 
+	};
+
 	// Method to render different question component in the UI based on question type.
 	const renderQuestionComponent = (question) => {
 		switch (question.questionType) {
@@ -78,6 +115,9 @@ function ResponseFormContainer(props) {
 						numStars={question.numStars}
 						isHalfStarAllowed={question.isHalfStarAllowed}
 						answerStarSelectHandler={handleAnswerStarChange}
+						answerFeedbackHandler={handleAnswerParaChange}
+						threshold = {question.threshold}
+						setRequiredd = {setRequiredd}
 					/>
 				);
 			case 'DESCRIPTIVE':
@@ -86,6 +126,7 @@ function ResponseFormContainer(props) {
 						question={question.question}
 						questionId={question.questionId}
 						answerParagraphHandler={handleAnswerParaChange}
+						setRequiredd = {setRequiredd}
 					/>
 				);
 			case 'MULTIPLE':
@@ -95,7 +136,7 @@ function ResponseFormContainer(props) {
 						questionId={question.questionId}
 						options={question.options}
 						answeroptionadd={handleaddremoveoption}
-
+						setRequiredd = {setRequiredd}
 					/>
 				);
 			case 'SINGLE':
@@ -105,6 +146,7 @@ function ResponseFormContainer(props) {
 						questionId={question.questionId}
 						options={question.options}
 						answerOptionChange={handleoptionchange}
+						setRequiredd = {setRequiredd}
 					/>
 				);
 			default:
@@ -135,7 +177,7 @@ function ResponseFormContainer(props) {
 
 			</Row>
 
-			{questions.map(question => (
+			{questions.map((question,index) => (
 				<Row
 					className='justify-content-md-center'
 					key={question.questionId}
@@ -152,7 +194,7 @@ function ResponseFormContainer(props) {
 							padding: '10px 25px',
 							borderRadius: '8px',
 							backgroundColor: '#F0F0F0', //7866B2
-							border: 'solid black 1px',
+							border: requiredd==index ? 'solid red 2px' : 'solid black 1px',
 							//#e6e6e6
 						}}
 					>
@@ -167,7 +209,11 @@ function ResponseFormContainer(props) {
 					</Col>
 				</Row>
 			))}
-
+						<SubmitFormButton
+							answerList={responseState.answerss}
+							submitFormHandler={handleSubmitForm}
+							setRequiredd = {setRequiredd}
+						/>
 		</Container>
 
 	);

@@ -19,6 +19,7 @@ function DescComponentt(props) {
 		// console.log(e.target.value);
 		const isValid = e.target.value === '' ? false : true;
 		props.answerParagraphHandler(props.questionId, e.target.value, isValid);
+		props.setRequiredd(-1);
 	};
 
 	return (

@@ -57,6 +57,13 @@ function StarComponent(props) {
 		props.starNumChangeHandler(props.questionId, e);
 	};
 
+	const [threshold, setThreshold] = useState('2');
+
+	const thresholdChange = (e) => {
+		setThreshold(e);
+		props.starThresholdHandler(props.questionId, e);
+	};
+
 	const options = {
 		3: '3',
 		4: '4',
@@ -114,7 +121,7 @@ function StarComponent(props) {
 								name='radio'
 								checked={!props.isHalfStarAllowed}
 								onClick={typeStarChange}
-							>
+							>   
 								Full Star
 							</ToggleButton>
 							<ToggleButton
@@ -131,6 +138,21 @@ function StarComponent(props) {
 						{/* <div>{printQuestion(initial)}</div> */}
 						<br />
 						<br />
+
+						<div>Enable user feedback for rating below this : </div>
+						<DropdownButton
+							alignRight
+							title={options[value]}
+							id='threshold-menu-align-right'
+							onSelect={thresholdChange}
+							value={props.threshold}
+						>
+							{Object.keys(options).map((key, id) => (
+								<Dropdown.Item key={id} eventKey={key}>
+									{options[key]}
+								</Dropdown.Item>
+							))}
+						</DropdownButton>
 					</Form.Group>
 				</Form>
 			</form>

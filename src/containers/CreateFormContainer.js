@@ -77,12 +77,14 @@ function CreateFormContainer(props) {
 				required: false,
 				isValid: false,
 				numStars: null,
+				threshold:null,
 				isHalfStarAllowed: null,
 				image: null,
 			});
 		}
 		dispatch({ type: 'SET_INITIAL_QUESTIONS', initialQuestions });
 	}, [minQuestionAllowed]);
+	
 
 	// Method to handle title change in form header
 	const handleTitleChange = (newTitle) => {
@@ -100,6 +102,11 @@ function CreateFormContainer(props) {
 	};
 
 	const handleStarNumberChange = (questionId, value) => {
+		console.log(questionId, value);
+		dispatch({ type: 'STAR_NUMBER_CHANGE', questionId, value });
+	};
+
+	const handleThresholdChange = (questionId, value) => {
 		console.log(questionId, value);
 		dispatch({ type: 'STAR_NUMBER_CHANGE', questionId, value });
 	};
@@ -197,6 +204,8 @@ function CreateFormContainer(props) {
 						isHalfStarAllowed={question.isHalfStarAllowed}
 						starTypeChangeHandler={handleStarTypeChange}
 						starNumChangeHandler={handleStarNumberChange}
+						starThresholdHandler={handleThresholdChange}
+						threshold={question.threshold}
 					/>
 				);
 			case 'DESCRIPTIVE':

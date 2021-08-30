@@ -107,6 +107,7 @@ export const  questions = [
             isHalfStarAllowed: true,
             questionType: 'STAR',
             required: false,
+            threshold:5,
             isValid: false
     }
 ];

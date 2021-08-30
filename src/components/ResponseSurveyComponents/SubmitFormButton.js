@@ -4,7 +4,7 @@ import PopUpModal from '../CreateFormComponents/PopUpModal';
 import 'tachyons';
 
 function SubmitFormButton(props) {
-	const { answerList, submitFormHandler } = props;
+	const { answerList, submitFormHandler, setRequiredd } = props;
 
 	const [show, popup] = useState(false);
 	const [err, setAlert] = useState(false);
@@ -21,15 +21,23 @@ function SubmitFormButton(props) {
 		setAlert(true);
 	};
 
-	const errorCheck = () => {
+	const errorCheck = async () => {
 		let flag = true;
+		var idx=-1;
 		console.log(answerList);
-		answerList.forEach(function (answer) {
+		answerList.forEach(function (answer,index) {
 			if (answer.questions.required === true) {
-				if (answer.questions.questionType == 'SINGLE' || answer.questions.questionType == 'MULTIPLE') {
-					if (answer.answer.length == 0) flag = false;
+				if (answer.questions.questionType == 'SINGLE' 
+				|| answer.questions.questionType == 'MULTIPLE') {
+					if (answer.answer.length == 0) {
+						flag = false;
+						if (idx==-1) idx = index;
+					}
 				} else {
-					if (answer.answer == '') flag = false;
+					if (answer.answer == '') {
+						flag = false;
+						if (idx==-1) idx = index;
+					}
 				}
 			}
 		});
@@ -40,6 +48,7 @@ function SubmitFormButton(props) {
 		} else {
 			//error found
 			showError();
+			setRequiredd(idx);
 		}
 	};
 
@@ -53,7 +62,6 @@ function SubmitFormButton(props) {
 				</Button>
 			</Alert>
 			<Button
-				variant='dark'
 				className='bg-purple f3 fw5 bw1 grow pointer'
 				onClick={errorCheck}
 			>
