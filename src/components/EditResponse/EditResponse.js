@@ -11,7 +11,7 @@ import StarComponent from '../../components/ResponseSurveyComponents/StarCompone
 import ResponseFormContainerDuplicate from '../../containers/ResponseFormContainerDuplicate';
 
 
-function EditResponse() {
+function EditResponse(props) {
     const { userId, formId } = useParams();
     const [answers, setAnswers] = useState([]);
     const [questions, setQuestions] = useState([]);
@@ -38,7 +38,7 @@ function EditResponse() {
 
     return (
 
-        <ResponseFormContainerDuplicate questions={questions} answers={answers} sendCopy={sendCopy} ></ResponseFormContainerDuplicate>
+        <ResponseFormContainerDuplicate questions={questions} answers={answers} title={props.title} sendCopy={sendCopy} isEditable={true} isEdit={true} history={props.history} ></ResponseFormContainerDuplicate>
     );
 
 }

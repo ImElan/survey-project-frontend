@@ -164,6 +164,7 @@ function CreateFormContainer(props) {
 			const optionsArr = question.options.map((option) => option.option);
 
 			return {
+				questionId: question.questionId,
 				questionType: question.questionType,
 				question: question.question,
 				options: optionsArr,

@@ -19,7 +19,7 @@ class AdminDataService {
         let tokenn = localStorage.getItem("accessToken");
         return http.patch(`/api/auth/grantAccess`, objj, {
             headers: {
-                Authorization: tokenn
+                Authorization: `Bearer ${tokenn}`,
             }
         });
     }

@@ -103,7 +103,7 @@ export default class MainComponent extends Component {
     this.onChangeSearchRole = this.onChangeSearchRole.bind(this);
     this.onsearchId = this.onsearchId.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
-
+    this.handleLogin = this.handleLogin.bind(this);
 
 
     this.state = {
@@ -146,20 +146,30 @@ export default class MainComponent extends Component {
     });
   }
 
-  handleLogin(emprole, empid) {
+  // handleLogin(emprole, empid) {
 
-    AdminDataService.doUpdate(
-      empid,
-      emprole
-    )
-      .then(response => {
+  //   AdminDataService.doUpdate(
+  //     empid,
+  //     emprole
+  //   )
+  //     .then(response => {
+  //       console.log(response.data);
+  //     })
+  //     .catch(e => {
+  //       console.log(e);
+  //     });
+  // }
+
+
+  handleLogin(emprole, empid) {
+    AdminDataService.doUpdate(this.state.searchId, emprole)
+      .then((response) => {
         console.log(response.data);
       })
-      .catch(e => {
-        console.log(e);
+      .catch((e) => {
+        console.log(e.response);
       });
   }
-
   onsearchId() {
     console.log(this.state.searchId);
     AdminDataService.doGetById(this.state.searchId)
@@ -189,7 +199,7 @@ export default class MainComponent extends Component {
             <input
               type="text"
               className="form-control"
-              placeholder="Enter Employee Id"
+              placeholder="Enter Employee Email Id"
               value={searchId}
               onChange={this.onChangeSearchId}
             />

@@ -1,7 +1,7 @@
 import { useEffect, useReducer, useRef, useState } from 'react';
 import React from 'react';
 import axios from 'axios';
-
+import { useHistory } from 'react-router';
 import { Container, Row, Col } from 'react-bootstrap';
 import { responseFormReducer } from './reducers/responseFormReducer';
 import isDeepEqual from 'fast-deep-equal/react'
@@ -11,8 +11,9 @@ import RadioComponentt from '../components/ResponseSurveyComponents/RadioCompone
 import CheckBoxComponentt from '../components/ResponseSurveyComponents/CheckBoxComponentt';
 import StarComponent from '../components/ResponseSurveyComponents/StarComponent';
 import SubmitFormButton from '../components/ResponseSurveyComponents/SubmitFormButton';
-function ResponseFormContainer(props) {
-
+function ResponseFormContainerDuplicate(props) {
+    console.log(props.isEditable + " at top");
+    const [isEdit, setIsEdit] = useState()
     // const formstate = JSON.parse(window.localStorage.getItem('formstate'));
     // console.log(props)
     // var questions = props.questions;
@@ -72,43 +73,70 @@ function ResponseFormContainer(props) {
     // 	console.log(responseState.answerss);
     // }
     const handleSubmitForm = async () => {
+
         // send Post request to backend with the input state as body
         console.log(responseState);
-        const answersToSendToBackend = responseState.answerss.map((question) => {
-            console.log(question.options);
-            if (question.questionType == "STAR") {
-                return {
-                    questionType: question.questionType,
-                    question: question.question,
-                    noOfStars: question.numStars,
-                    isHalfStarAllowed: question.isHalfStarAllowed,
-                    isRequired: question.required,
-                    answer: question.answer
-                };
-
-            } else {
-                const optionsArr = question.options.map((option) => option);
-                return {
-                    questionType: question.questionType,
-                    question: question.question,
-                    options: optionsArr,
-                    isRequired: question.required,
-                    answer: question.answer
-                };
-            }
+        let questionType = [];
+        let questionText = [];
+        let answerText = [];
+        responseState.answerss.map((answer) => {
+            questionType.push(answer.questions.questionType);
+            questionText.push(answer.questions.question);
+            answerText.push(answer.answer)
+            // console.log(question.options);
+            // if (question.questionType == "STAR") {
+            //     var starAnswer = question.numStars + "~~" + question.answer;
+            //     return {
+            //         questionType: question.questionType,
+            //         question: question.question,
+            //         answer: starAnswer
+            //     };
+            // } else if (question.questionType == "MULTIPLE") {
+            //     var checkboxAnswer = "";
+            //     question.answer.forEach(function (answer) {
+            //         checkboxAnswer += answer + ",";
+            //     });
+            //     return {
+            //         questionType: question.questionType,
+            //         question: question.question,
+            //         answer: checkboxAnswer
+            //     };
+            // } else {
+            //     return {
+            //         questionType: question.questionType,
+            //         question: question.question,
+            //         answer: question.answer
+            //     };
+            // }
 
         });
 
         const requestBody = {
-            surveyAnswers: answersToSendToBackend,
+            // surveyAnswers: answersToSendToBackend,
+            formId: "243",
+            userId: "33",
+            questiontypes: questionType,
+            questions: questionText,
+            answers: answerText,
+            sendCopy: 0
         };
 
         console.log(requestBody);
 
         try {
-            const response = await axios.post('http://localhost:8080/response', requestBody);
-            console.log(response.data);
-            props.setSubmitted(true);
+            let response;
+
+            if (props.isEdit) {
+
+                response = await axios.put('http://localhost:8080/response/updateresponse', requestBody);
+                console.log(response.data);
+            } else {
+                response = await axios.post('http://localhost:8080/response', requestBody);
+
+            }
+            console.log(props.isEditable + " dup");
+            props.history.push('/form/thankyou', { title: props.title, isEditable: props.isEditable, formId: "243", userId: "33" })
+            // props.setSubmitted(true);
 
         } catch (error) {
             console.log(error);
@@ -296,4 +324,4 @@ function ResponseFormContainer(props) {
 
 }
 
-export default ResponseFormContainer;
+export default ResponseFormContainerDuplicate;
