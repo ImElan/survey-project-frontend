@@ -110,7 +110,7 @@ function CreateFormContainer(props) {
 	};
 	const handleThresholdChange = (questionId, value) => {
 		console.log(questionId, value);
-		dispatch({ type: 'STAR_NUMBER_CHANGE', questionId, value });
+		dispatch({ type: 'STAR_THRESHOLD_CHANGE', questionId, value });
 	};
 
 
@@ -206,6 +206,7 @@ function CreateFormContainer(props) {
 						starNumChangeHandler={handleStarNumberChange}
 						starThresholdHandler={handleThresholdChange}
 						threshold={question.threshold}
+
 					/>
 				);
 			case 'DESCRIPTIVE':

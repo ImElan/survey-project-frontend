@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import './LoginPage.css'
 import GoogleLogin from 'react-google-login';
 import axios from 'axios';
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 
 function LoginPage() {
 
@@ -11,8 +11,8 @@ function LoginPage() {
   const [inValid, setInValid] = useState(false);
 
   let history = useHistory();
-
   let formid = 1;
+
 
   useEffect(() => {
     var x = localStorage.getItem('isEmployee');
@@ -27,6 +27,37 @@ function LoginPage() {
     }
   })
 
+  axios.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    function (error) {
+      const originalRequest = error.config;
+      let refreshToken = localStorage.getItem("refreshToken");
+      if (
+        refreshToken &&
+        error.response.message === 'ACCESS_TOKEN_EXPIRED' &&
+        !originalRequest._retry
+      ) {
+        originalRequest._retry = true;
+        return axios
+          .get('http://localhost:8080/api/auth/refreshToken/getToken', {
+            headers: {
+              Authorization: `Bearer ${refreshToken}`
+            }
+          })
+          .then((res) => {
+            if (res.status === 200 || res.status === 400) {
+              localStorage.setItem("accessToken", res.data.accessToken);
+              console.log("Access token refreshed!");
+              return axios(originalRequest);
+            }
+          });
+      }
+      return Promise.reject(error);
+    }
+  );
+
   const responseSuccessGoogle = (response) => {
     console.log(response)
     var idToken = response.tokenId;
@@ -36,17 +67,19 @@ function LoginPage() {
         Authorization: `Bearer ${idToken}`
       }
     }).then(elan => {
-      console.log(elan)
+      console.log(elan);
+      let { accessToken, refreshToken, user } = elan;
       var check = elan.data.user.role;
       console.log(check);
       if (check == "EMPLOYEE") {
-        console.log("Helooooooooo");
         localStorage.setItem('isEmployee', true);
         setRedirectEmployee(true);
-      } else {
+      } else if (check == "HR") {
         localStorage.setItem('isHr', true);
         setRedirectHr(true);
       }
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
       localStorage.setItem('apiResponse', JSON.stringify(response));
       localStorage.setItem('backEndResponse', JSON.stringify(elan));
       localStorage.setItem('isLoggedIn', true);
@@ -86,7 +119,7 @@ function LoginPage() {
       <div>
         {
           redirectEmployee ? <Redirect to={{
-            pathname: `/form/fill/${formid}`,                                                       // Employee path Takke suvey form
+            pathname: `/form/fill/${formid}`,
             state: { from: history.location.pathname }
           }}
           /> : null

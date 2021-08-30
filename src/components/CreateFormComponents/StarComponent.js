@@ -51,7 +51,7 @@ function StarComponent(props) {
 	};
 
 	const [value, setValue] = useState('3');
-
+	const [temp, settemp] = useState(props.threshold);
 	const numStarsChange = (e) => {
 		setValue(e);
 		props.starNumChangeHandler(props.questionId, e);
@@ -60,6 +60,7 @@ function StarComponent(props) {
 
 	const thresholdChange = (e) => {
 		setThreshold(e);
+		settemp(e);
 		props.starThresholdHandler(props.questionId, e);
 	};
 
@@ -81,6 +82,7 @@ function StarComponent(props) {
 	return (
 		<div>
 			<form>
+				{console.log(props)}
 				{/* <TextField id="outlined-basic" label="Question" multiline={false}  onChange={handleChange} InputProps={{style:{width:'43ch'}}} /><br></br><br></br> */}
 				<Form>
 					<Form.Group className='mb-3' controlId='formBasicEmail'>
@@ -140,10 +142,11 @@ function StarComponent(props) {
 						<div>Enable user feedback for rating below this : </div>
 						<DropdownButton
 							alignRight
-							title={options[value]}
+							title={options[threshold]}
 							id='threshold-menu-align-right'
 							onSelect={thresholdChange}
 							value={props.threshold}
+
 						>
 							{Object.keys(options).map((key, id) => (
 								<Dropdown.Item key={id} eventKey={key}>

@@ -235,7 +235,22 @@ const createFormReducer = (state, action) => {
 				...state,
 				questions: newQuestionsAfterStarNumberChange,
 			};
-
+		case 'STAR_THRESHOLD_CHANGE':
+			const newQuestionsAfterStarThresholdChange = state.questions.map((question) => {
+				console.log("hua");
+				if (question.questionId !== action.questionId) {
+					return question;
+				}
+				return {
+					...question,
+					threshold: action.value,
+				};
+			});
+			console.log(newQuestionsAfterStarThresholdChange);
+			return {
+				...state,
+				questions: newQuestionsAfterStarThresholdChange,
+			};
 		case 'STAR_TYPE_CHANGE':
 			const newQuestionsAfterStarTypeChange = state.questions.map((question) => {
 				if (question.questionId !== action.questionId) {

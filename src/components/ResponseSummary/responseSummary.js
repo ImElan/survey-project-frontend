@@ -5,7 +5,9 @@ import responseservice from './services/responseservice';
 import ExportResponse from '../ViewResponseComponents/ExportResponsesByFormId/ExportResponse';
 import { Row, Col, Container } from 'react-bootstrap';
 import FormResponseContainer from '../../containers/FormResponseContainer';
-const ResponseSummary = ({ formId }) => {
+const ResponseSummary = (props) => {
+    console.log("hiiiiiiiiiiiiiiii");
+    const formId = props.location.state.id;
     const [display, setdisplay] = useState("");
     const change = (newVal) => {
         if (newVal == 1) {
@@ -16,6 +18,7 @@ const ResponseSummary = ({ formId }) => {
         }
     }
     const [responses, setResponses] = useState([]);
+    console.log(formId);
     useEffect(() => {
 
         getData();

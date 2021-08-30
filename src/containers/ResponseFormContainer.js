@@ -12,7 +12,15 @@ import StarComponent from '../components/ResponseSurveyComponents/StarComponent'
 import axios from 'axios';
 
 function ResponseFormContainer(props) {
+	let { sendCopy } = props;
 
+	function checkHandler() {
+		if (sendCopy === 0)
+			sendCopy = 1;
+		else
+			sendCopy = 0;
+		//console.log(sendCopy);
+	}
 	const formstate = JSON.parse(window.localStorage.getItem('formstate'));
 	console.log(props);
 	var questions = props.questions;
@@ -56,17 +64,28 @@ function ResponseFormContainer(props) {
 		// send Post request to backend with the input state as body
 		console.log(responseState);
 		const answersToSendToBackend = responseState.answerss.map((question) => {
-			const optionsArr = question.options.map((option) => option.option);
+			console.log(question.options);
+			if (question.questionType == "STAR") {
+				return {
+					questionType: question.questionType,
+					question: question.question,
+					noOfStars: question.numStars,
+					isHalfStarAllowed: question.isHalfStarAllowed,
+					isRequired: question.required,
+					answer: question.answer
+				};
 
-			return {
-				questionType: question.questionType,
-				question: question.question,
-				options: optionsArr,
-				noOfStars: question.numStars,
-				isHalfStarAllowed: question.isHalfStarAllowed,
-				isRequired: question.required,
-				answer: question.answer
-			};
+			} else {
+				const optionsArr = question.options.map((option) => option);
+				return {
+					questionType: question.questionType,
+					question: question.question,
+					options: optionsArr,
+					isRequired: question.required,
+					answer: question.answer
+				};
+			}
+
 		});
 
 		const requestBody = {
@@ -224,9 +243,26 @@ function ResponseFormContainer(props) {
 									/> */}
 							</Col>
 						</Row>
+
 					))
 			}
+			<Row
 
+
+				style={{
+					paddingTop: '0px',
+					paddingBottom: '10px',
+					marginTop: '20px',
+					marginLeft: '125px'
+				}}>
+				<Col md={4} style={{ margin: '10px' }}>
+					<input type='checkbox'
+						onChange={checkHandler}
+						style={{ marginRight: '6px', width: '15px', height: '15px' }}
+					/>
+					<label>Do you want a copy of your response?</label>
+				</Col>
+			</Row>
 			<SubmitFormButton
 				answerList={responseState.answerss}
 				submitFormHandler={handleSubmitForm}

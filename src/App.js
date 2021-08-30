@@ -9,6 +9,7 @@ import FormResponseContainer from './containers/FormResponseContainer';
 import ResponseSummary from './components/ResponseSummary/responseSummary';
 import AdminAcessContainer from './containers/AdminAcessContainer';
 
+import EditResponse from './components/EditResponse/EditResponse';
 import Displayforms from './components/DisplayallformHrComponents/Displayforms';
 import {
 	BrowserRouter as Router,
@@ -16,12 +17,11 @@ import {
 	Route,
 	Link
 } from 'react-router-dom'
-import EditResponse from './components/EditResponse/EditResponse';
 
 function App() {
 	return (
 		<div>
-			{/* <Router>
+			<Router>
 				<Route exact path='/' component={LoginPage} />
 				<Route exact strict path='/form/create' component={CreateFormContainer} />
 				<Route exact strict path='/preview' component={PreviewFormContainer} />
@@ -29,11 +29,13 @@ function App() {
 				<Route exact strict path='/form/thankyou' component={ThankYouContainer} />
 				<Route exact strict path='/form/adminacess' component={AdminAcessContainer} />
 				<Route exact strict path='/loginSuccess' component={Displayforms} />
-				<Route exact strict path='/viewresponses' component={ResponseFormContainer}></Route>
-			</Router> */}
+				<Route exact strict path='/viewresponses' component={ResponseSummary}></Route>
+				<Route exact strict path='/editresponse/:formId/:userId' component={EditResponse}></Route>
+
+			</Router>
 			<div>
 				{/* <h1>hi</h1> */}
-				<ResponseFormContainer />
+				{/* <ResponseFormContainer /> */}
 				{/* <ViewFormContainer/> */}
 			</div>
 

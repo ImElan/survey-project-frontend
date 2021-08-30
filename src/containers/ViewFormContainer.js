@@ -8,9 +8,10 @@ function ViewFormContainer(props) {
     const [questions, setQuestions] = useState([]);
     const [formTitle, setFormTitle] = useState(null);
     const [formDescription, setFormDescription] = useState(null);
+    const [sendCopy, setSendCopy] = useState(0);
 
     // const formid = useParams();
-   
+
     useEffect(() => {
         console.log("here");
         getData();
@@ -29,7 +30,7 @@ function ViewFormContainer(props) {
 
     const preview = "NOTPREVIEW";
     return (
-        <ResponseFormContainer title={formTitle} description={formDescription} calledBy={preview} questions={questions}/>
+        <ResponseFormContainer title={formTitle} description={formDescription} calledBy={preview} questions={questions} />
         // <h5>hello</h5>
     );
 

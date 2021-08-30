@@ -34,34 +34,34 @@ function Displayforms(props) {
 
     // const data = [
     //     {
-    //         id : 1,
-    //         title : "Survey Form1",
-    //         desc : "This is about to fill the survey form"
+    //         id: 1,
+    //         formTitle: "Survey Form1",
+    //         formDescription: "This is about to fill the survey form"
     //     },
     //     {
-    //         id : 2,
-    //         title : "Survey Form2",
-    //         desc : "This is about to fill the survey form"
+    //         id: 2,
+    //         title: "Survey Form2",
+    //         desc: "This is about to fill the survey form"
     //     },
     //     {
-    //         id : 3,
-    //         title : "Survey Form3",
-    //         desc : "This is about to fill the survey form"
+    //         id: 3,
+    //         title: "Survey Form3",
+    //         desc: "This is about to fill the survey form"
     //     },
     //     {
-    //         id : 4,
-    //         title : "Survey Form4",
-    //         desc : "This is about to fill the survey form"
+    //         id: 4,
+    //         title: "Survey Form4",
+    //         desc: "This is about to fill the survey form"
     //     },
     //     {
-    //         id : 5,
-    //         title : "Survey Form5",
-    //         desc : "This is about to fill the survey form"
+    //         id: 5,
+    //         title: "Survey Form5",
+    //         desc: "This is about to fill the survey form"
     //     },
     //     {
-    //         id : 6,
-    //         title : "Survey Form6",
-    //         desc : "This is about to fill the survey form"
+    //         id: 6,
+    //         title: "Survey Form6",
+    //         desc: "This is about to fill the survey form"
     //     },
     // ]
 
@@ -90,7 +90,7 @@ function Displayforms(props) {
                 <div className="forms-wrapper">
                     <div className="container">
                         <div className="row justify-content-center">
-                            <div className="col-md-7 col-sm-7 col-xs-12">
+                            <div className="col-md-10 col-sm-12 col-xs-12">
                                 <div className="popdown-wrapper">
                                     <PopDown
                                         title="Forms Per Page"
@@ -108,7 +108,7 @@ function Displayforms(props) {
                                                 (currentPage - 1) * questionsPerPage + questionsPerPage
                                             )
                                             .map((form) => (
-                                                <FormData key={form.id} {...form} />
+                                                <FormData key={form.id} history={props.history} form={form} />
                                             ))
                                     }
                                 </div>
