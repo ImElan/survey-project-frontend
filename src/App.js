@@ -3,7 +3,6 @@ import ResponseFormContainer from './containers/ResponseFormContainer';
 import PreviewFormContainer from './containers/PreviewFormContainer';
 import ViewFormContainer from './containers/ViewFormContainer';
 import LoginPage from './components/TakeSurveyComponents/GoogleLogin/LoginPage';
-// import { LoginProvider } from './components/TakeSurveyComponents/GoogleLogin/LoginContext';
 import ThankYouContainer from './containers/ThankYouContainer';
 import AdminAcessContainer from './containers/AdminAcessContainer';
 
