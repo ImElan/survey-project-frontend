@@ -77,6 +77,7 @@ function CreateFormContainer(props) {
 				required: false,
 				isValid: false,
 				numStars: null,
+				threshold: null,
 				isHalfStarAllowed: null,
 				image: null,
 			});
@@ -107,6 +108,11 @@ function CreateFormContainer(props) {
 	const handleStarTypeChange = (questionId) => {
 		dispatch({ type: 'STAR_TYPE_CHANGE', questionId });
 	};
+	const handleThresholdChange = (questionId, value) => {
+		console.log(questionId, value);
+		dispatch({ type: 'STAR_NUMBER_CHANGE', questionId, value });
+	};
+
 
 	// Method to handle question option change in single and multiple choice quesitons.
 	const handleQuestionOptionChange = (questionId, optionId, newOptionText) => {
@@ -198,6 +204,8 @@ function CreateFormContainer(props) {
 						isHalfStarAllowed={question.isHalfStarAllowed}
 						starTypeChangeHandler={handleStarTypeChange}
 						starNumChangeHandler={handleStarNumberChange}
+						starThresholdHandler={handleThresholdChange}
+						threshold={question.threshold}
 					/>
 				);
 			case 'DESCRIPTIVE':
@@ -289,6 +297,7 @@ function CreateFormContainer(props) {
 						}}
 					>
 						<PopDown
+							title="Questions per page"
 							totalQuestions={formState.questions.length}
 							questionsPerPageHandler={questionsPerPageHandler}
 						/>

@@ -10,6 +10,7 @@ function CheckBoxComponentt(props) {
 	const handlechange = (e) => {
 		// var optionid = e.target.value;
 		props.answeroptionadd(props.questionId, e.target.value);
+		props.setRequiredd(-1);
 	}
 
 	return (

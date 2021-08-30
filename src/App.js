@@ -8,6 +8,8 @@ import ThankYouContainer from './containers/ThankYouContainer';
 import FormResponseContainer from './containers/FormResponseContainer';
 import ResponseSummary from './components/ResponseSummary/responseSummary';
 import AdminAcessContainer from './containers/AdminAcessContainer';
+
+import Displayforms from './components/DisplayallformHrComponents/Displayforms';
 import {
 	BrowserRouter as Router,
 	Redirect,
@@ -19,19 +21,22 @@ import EditResponse from './components/EditResponse/EditResponse';
 function App() {
 	return (
 		<div>
-			<Router>
+			{/* <Router>
 				<Route exact path='/' component={LoginPage} />
 				<Route exact strict path='/form/create' component={CreateFormContainer} />
 				<Route exact strict path='/preview' component={PreviewFormContainer} />
 				<Route exact strict path='/Form/fill/:id' component={ViewFormContainer} />
 				<Route exact strict path='/form/thankyou' component={ThankYouContainer} />
 				<Route exact strict path='/form/adminacess' component={AdminAcessContainer} />
-			</Router>
+				<Route exact strict path='/loginSuccess' component={Displayforms} />
+				<Route exact strict path='/viewresponses' component={ResponseFormContainer}></Route>
+			</Router> */}
 			<div>
 				{/* <h1>hi</h1> */}
-				{/* <ResponseFormContainer/> */}
+				<ResponseFormContainer />
 				{/* <ViewFormContainer/> */}
 			</div>
+
 		</div>
 	)
 }

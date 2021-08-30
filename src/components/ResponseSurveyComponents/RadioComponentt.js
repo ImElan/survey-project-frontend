@@ -7,6 +7,7 @@ function RadioComponentt(props) {
     const handlechange = (e) => {
         console.log(e.target.value);
         props.answerOptionChange(props.questionId, e.target.value);
+        props.setRequiredd(-1);
     }
     return (
         < div >

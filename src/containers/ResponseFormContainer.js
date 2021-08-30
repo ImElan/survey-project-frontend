@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useRef, useState } from 'react';
 import React from 'react';
-
+import SubmitFormButton from '../components/ResponseSurveyComponents/SubmitFormButton';
 import { Container, Row, Col } from 'react-bootstrap';
 import { responseFormReducer } from './reducers/responseFormReducer';
 import isDeepEqual from 'fast-deep-equal/react'
@@ -9,6 +9,7 @@ import DescComponentt from '../components/ResponseSurveyComponents/DescComponent
 import RadioComponentt from '../components/ResponseSurveyComponents/RadioComponentt';
 import CheckBoxComponentt from '../components/ResponseSurveyComponents/CheckBoxComponentt';
 import StarComponent from '../components/ResponseSurveyComponents/StarComponent';
+import axios from 'axios';
 
 function ResponseFormContainer(props) {
 
@@ -26,43 +27,7 @@ function ResponseFormContainer(props) {
 
 
 
-	// RENDER THE INITIAL NUMBER OF QUESTIONS ON THE SCREEN BASED ON MIN QUESTIONS ALLOWED VALUE
-
-	// const questionss = useCallback(() => {
-	// 	setOpen(true)
-	//   }, [])
-
-	// const questionRef = useRef(questionss);
-
-	// if (!isDeepEqual(questionRef.current, questionss)) {
-	// 	questionRef.current = questionss
-	//   }
-
-
-
-	// useEffect(() => {
-	// 	const initialAnswers = [];
-
-	// 	for (let i = 0; i < questionss.length; i++) {
-	// 		initialAnswers.push({
-	// 			questions : questionss[i],
-	// 			answerr : '',
-	// 			isvalid : false,
-	// 		});
-	// 	}
-	// 	dispatch({ type: 'SET_INITIAL_ANSWERS', initialAnswers });
-	// },[questionRef.current]);
-
-
-	// const handleInitialanswers = () => {
-	// 	dispatch({ type: 'SET_INITIAL_ANSWERS'});
-	// };
-
-	// handleInitialanswers(questionss);
-
-	// handleInitialanswers()
-
-
+	const [requiredd, setRequiredd] = useState(-1);
 	const handleoptionchange = (questionId, optionId) => {
 		dispatch({ type: 'OPTION_SINGLE_SELECT', questionId, optionId });
 		console.log(responseState.answerss);
@@ -87,6 +52,38 @@ function ResponseFormContainer(props) {
 	// 	console.log(responseState.answerss);
 	// }
 
+	const handleSubmitForm = async () => {
+		// send Post request to backend with the input state as body
+		console.log(responseState);
+		const answersToSendToBackend = responseState.answerss.map((question) => {
+			const optionsArr = question.options.map((option) => option.option);
+
+			return {
+				questionType: question.questionType,
+				question: question.question,
+				options: optionsArr,
+				noOfStars: question.numStars,
+				isHalfStarAllowed: question.isHalfStarAllowed,
+				isRequired: question.required,
+				answer: question.answer
+			};
+		});
+
+		const requestBody = {
+			surveyAnswers: answersToSendToBackend,
+		};
+
+		console.log(requestBody);
+
+		try {
+			const response = await axios.post('http://localhost:8080/response', requestBody);
+			console.log(response.data);
+			props.setSubmitted(true);
+		} catch (error) {
+			console.log(error);
+			console.log(error.response);
+		}
+	};
 	// Method to render different question component in the UI based on question type.
 	const renderQuestionComponent = (question) => {
 		console.log(question);
@@ -100,6 +97,9 @@ function ResponseFormContainer(props) {
 						isHalfStarAllowed={question.isHalfStarAllowed}
 						answerStarSelectHandler={handleAnswerStarChange}
 						imageData={question.imageData}
+						answerFeedbackHandler={handleAnswerParaChange}
+						threshold={question.threshold}
+						setRequiredd={setRequiredd}
 					/>
 				);
 			case 'DESCRIPTIVE':
@@ -109,6 +109,7 @@ function ResponseFormContainer(props) {
 						questionId={question.questionId}
 						answerParagraphHandler={handleAnswerParaChange}
 						imageData={question.imageData}
+						setRequiredd={setRequiredd}
 					/>
 				);
 			case 'MULTIPLE':
@@ -119,6 +120,7 @@ function ResponseFormContainer(props) {
 						options={question.options}
 						answeroptionadd={handleaddremoveoption}
 						imageData={question.imageData}
+						setRequiredd={setRequiredd}
 
 					/>
 				);
@@ -131,6 +133,7 @@ function ResponseFormContainer(props) {
 						options={question.options}
 						answerOptionChange={handleoptionchange}
 						imageData={question.imageData}
+						setRequiredd={setRequiredd}
 					/>
 				);
 			default:
@@ -182,7 +185,7 @@ function ResponseFormContainer(props) {
 									padding: '10px 25px',
 									borderRadius: '8px',
 									backgroundColor: '#F0F0F0', //7866B2
-									border: 'solid black 1px',
+									border: requiredd == question.questionId ? 'solid red 2px' : 'solid black 1px',
 									//#e6e6e6
 								}}
 							>
@@ -224,6 +227,11 @@ function ResponseFormContainer(props) {
 					))
 			}
 
+			<SubmitFormButton
+				answerList={responseState.answerss}
+				submitFormHandler={handleSubmitForm}
+				setRequiredd={setRequiredd}
+			/>
 		</Container >
 
 	);

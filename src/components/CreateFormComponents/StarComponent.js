@@ -56,6 +56,12 @@ function StarComponent(props) {
 		setValue(e);
 		props.starNumChangeHandler(props.questionId, e);
 	};
+	const [threshold, setThreshold] = useState('2');
+
+	const thresholdChange = (e) => {
+		setThreshold(e);
+		props.starThresholdHandler(props.questionId, e);
+	};
 
 	const options = {
 		3: '3',
@@ -131,33 +137,24 @@ function StarComponent(props) {
 						{/* <div>{printQuestion(initial)}</div> */}
 						<br />
 						<br />
+						<div>Enable user feedback for rating below this : </div>
+						<DropdownButton
+							alignRight
+							title={options[value]}
+							id='threshold-menu-align-right'
+							onSelect={thresholdChange}
+							value={props.threshold}
+						>
+							{Object.keys(options).map((key, id) => (
+								<Dropdown.Item key={id} eventKey={key}>
+									{options[key]}
+								</Dropdown.Item>
+							))}
+						</DropdownButton>
 					</Form.Group>
 				</Form>
 			</form>
-			{/* <div style={styles.stars}>
-				{stars.map((_, index) => {
-					return (
-						<FaStar
-							key={index}
-							size={25}
-							onClick={() => handleClick(index + 1)}
-							onMouseOver={() => handleMouseOver(index + 1)}
-							onMouseLeave={handleMouseLeave}
-							color={(hoverValue || currentValue) > index ? colors.purple : colors.grey}
-							style={{
-								marginRight: 10,
-								cursor: 'pointer',
-							}}
-						/>
-					);
-				})}
-			</div> */}
 
-			{/* Display the Rating */}
-
-			{/* <p>Your Rating Is : {hoverValue || currentValue}</p> */}
-
-			{/* currentValue holds the RATING FINAL VALUE */}
 		</div>
 	);
 }

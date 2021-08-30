@@ -118,3 +118,58 @@
 //     isvalid: false
 //     }
 // ];
+
+export const questions = [
+    {
+        questionId: 1,
+        question: 'Are you good in accolite ?',
+        options: [
+            'Option 1',
+            'Option 2'
+        ],
+        questionType: 'DESCRIPTIVE',
+        required: false,
+        isValid: false
+
+    },
+    {
+        questionId: 2,
+        question: 'Are you good in accolite ?',
+        options: [
+            'Option 1',
+            'Option 2',
+            'Option 3',
+            'Option 4'
+        ],
+        questionType: 'SINGLE',
+        required: false,
+        isValid: false
+
+    },
+    {
+
+        questionId: 3,
+        question: 'Are you feeling good in accolite ?',
+        options: [
+            'Option 1',
+            'Option 2',
+            'Option 3',
+            'Option 4'
+        ],
+        questionType: 'MULTIPLE',
+        required: false,
+        isValid: false
+
+    },
+    {
+
+        questionId: 4,
+        question: 'How much do you rate Accolite as a company?',
+        numStars: 7,
+        isHalfStarAllowed: true,
+        questionType: 'STAR',
+        required: false,
+        threshold: 5,
+        isValid: false
+    }
+];
