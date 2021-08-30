@@ -8,13 +8,14 @@ import DescComponentt from '../../components/ResponseSurveyComponents/DescCompon
 import RadioComponentt from '../../components/ResponseSurveyComponents/RadioComponentt';
 import CheckBoxComponentt from '../../components/ResponseSurveyComponents/CheckBoxComponentt';
 import StarComponent from '../../components/ResponseSurveyComponents/StarComponent';
-import ResponseFormContainer from '../../containers/ResponseFormContainer';
+import ResponseFormContainerDuplicate from '../../containers/ResponseFormContainerDuplicate';
 
 
 function EditResponse() {
     const { userId, formId } = useParams();
     const [answers, setAnswers] = useState([]);
     const [questions, setQuestions] = useState([]);
+    const [sendCopy, setSendCopy] = useState(0);
     useEffect(() => {
         console.log();
         getData();
@@ -29,7 +30,7 @@ function EditResponse() {
             console.log(form);
             console.log(response.answers);
             setAnswers(response.answers);
-
+            setSendCopy(response.sendCopy);
             setQuestions(form.surveyQuestions);
         }
     }, []);
@@ -37,7 +38,7 @@ function EditResponse() {
 
     return (
 
-        <ResponseFormContainer questions={questions} answers={answers}></ResponseFormContainer>
+        <ResponseFormContainerDuplicate questions={questions} answers={answers} sendCopy={sendCopy} ></ResponseFormContainerDuplicate>
     );
 
 }

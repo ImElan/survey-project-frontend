@@ -98,6 +98,7 @@ function ResponseFormContainer(props) {
 			const response = await axios.post('http://localhost:8080/response', requestBody);
 			console.log(response.data);
 			props.setSubmitted(true);
+
 		} catch (error) {
 			console.log(error);
 			console.log(error.response);
@@ -265,6 +266,7 @@ function ResponseFormContainer(props) {
 			</Row>
 			<SubmitFormButton
 				answerList={responseState.answerss}
+				sendCopy={sendCopy}
 				submitFormHandler={handleSubmitForm}
 				setRequiredd={setRequiredd}
 			/>
