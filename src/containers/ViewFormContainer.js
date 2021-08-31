@@ -64,7 +64,7 @@ function ViewFormContainer(props) {
 
 	const preview = "NOTPREVIEW";
 	return (
-		<ResponseFormContainerDuplicate title={formTitle} formId={id} description={formDescription} calledBy={preview} history={props.history} questions={questions} isFormEditable={isFormEditable} isEdit={false} />
+		<ResponseFormContainerDuplicate title={formTitle} formId={id} description={formDescription}  calledBy={preview} history={props.history} questions={questions} isFormEditable={isFormEditable} isEdit={false} sendCopy={sendCopy}/>
 		// <h5>hello</h5>
 	);
 

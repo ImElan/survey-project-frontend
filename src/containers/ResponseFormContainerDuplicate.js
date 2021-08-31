@@ -118,7 +118,7 @@ function ResponseFormContainerDuplicate(props) {
             questiontypes: questionType,
             questions: questionText,
             answers: answerText,
-            sendCopy: 0
+            sendCopy: props.sendCopy
         };
 
         console.log(requestBody);
@@ -196,6 +196,7 @@ function ResponseFormContainerDuplicate(props) {
                         isHalfStarAllowed={question.isHalfStarAllowed}
                         answerStarSelectHandler={handleAnswerStarChange}
                         threshold={question.threshold}
+                        imageData={question.imageData}
                         answerFeedbackHandler={handleAnswerParaChange}
                         setRequiredd={setRequiredd}
 

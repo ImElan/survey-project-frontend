@@ -26,7 +26,8 @@ function PopUpModal(props) {
 					onClick={() => {
 						confirmHandler();
 						hidePopUp();
-						props.afterClick();
+						if (props.afterClick)
+							props.afterClick();
 					}}
 				>
 					{' '}

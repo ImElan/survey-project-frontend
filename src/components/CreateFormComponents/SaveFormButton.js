@@ -12,6 +12,7 @@ function SaveFormButton(props) {
 
 	const [loading, setLoading] = useState(false);
 	const changeLoading = () => {
+		console.log("call hua")
 		setLoading(false);
 	}
 
@@ -57,7 +58,7 @@ function SaveFormButton(props) {
 		<div className='text-center'>
 			<Alert show={err} variant='danger'>
 				<h5>Could not save! Some empty fields found in your form.</h5>
-				<Button onClick={() => setAlert(false)} variant='outline-danger'>
+				<Button onClick={() => { changeLoading(); setAlert(false); }} variant='outline-danger'>
 					Close!
 				</Button>
 			</Alert>
@@ -80,7 +81,7 @@ function SaveFormButton(props) {
 						/>
 					)}
 					{loading && <span>Loading...</span>}
-					{!loading && <span>Save Form</span>}
+					{!loading && <span style={{ color: "#2080df" }} >Save Form</span>}
 				</Button>
 			</div>
 

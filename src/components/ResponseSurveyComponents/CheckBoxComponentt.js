@@ -71,7 +71,8 @@ function CheckBoxComponentt(props) {
 				<br />
 				<br />
 			</div>
-
+			{props.imageData && <img src={props.imageData} alt='' id='img' className='img' />}
+			<br></br>
 			{props.readOnly ? <div>
 				{optionss.map((option, i) => {
 					return (
