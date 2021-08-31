@@ -5,12 +5,15 @@ import responseservice from './services/responseservice';
 import ExportResponse from '../ViewResponseComponents/ExportResponsesByFormId/ExportResponse';
 import { Row, Col, Container } from 'react-bootstrap';
 import FormResponseContainer from '../../containers/FormResponseContainer';
+import SummaryContainer from './SummaryContainer';
 const ResponseSummary = (props) => {
     console.log("hiiiiiiiiiiiiiiii");
     const formId = props.location.state.id;
     const [display, setdisplay] = useState("");
     const idToken = localStorage.getItem('accessToken');
     const change = (newVal) => {
+        console.log(display);
+
         if (newVal == 1) {
             setdisplay("response");
         }
@@ -36,6 +39,12 @@ const ResponseSummary = (props) => {
             setResponses(data);
         }
     }, [])
+    // if(display == ""){
+    //     <div></div>
+    // }
+    // else if(display == "response"){
+
+    // }
     return (
         // <div>
         //     {console.log("OK")}
@@ -49,7 +58,11 @@ const ResponseSummary = (props) => {
                             <FormResponseContainer formId={formId} responses={responses}></FormResponseContainer>
                             : <div></div>
                     }
-                    {/* {display==""?<div/>:(display=="response"?<Summary responses={responses} ></Summary>:<Response responses={responses}></Response>)} */}
+                    {
+                        display == "summary" ?
+                            <SummaryContainer formId={formId} responses={responses} ></SummaryContainer>
+                            : <div></div>
+                    }
                 </Col>
                 <Col md={2} style={{ float: "right", marginTop: "5px" }}>
                     <ExportResponse formId={formId} />

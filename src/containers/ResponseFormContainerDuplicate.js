@@ -153,6 +153,7 @@ function ResponseFormContainerDuplicate(props) {
                 //     requestBody
                 // });
                 console.log(response.data);
+
             } else {
                 console.log("isedit running");
                 try {
@@ -166,6 +167,7 @@ function ResponseFormContainerDuplicate(props) {
                             },
                             body: JSON.stringify(requestBody)
                         });
+                    console.log(requestBody);
                 } catch (error) {
                     console.log(error.response);
                 }
