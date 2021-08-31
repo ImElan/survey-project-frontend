@@ -4,6 +4,7 @@ import Paging from '../components/CreateFormComponents/Paging';
 import { Container } from 'react-bootstrap';
 function FormResponseContainer({ formId, responses }) {
     const [questions, setQuestions] = useState([]);
+    const idToken = localStorage.getItem('accessToken');
     // const [responses, setResponses] = useState([
     //     {
     //         "id": "13534643",
@@ -25,7 +26,12 @@ function FormResponseContainer({ formId, responses }) {
     useEffect(() => {
         getData();
         async function getData() {
-            const result1 = await fetch(`http://localhost:8080/api/form/${formId}`)
+            const result1 = await fetch(`http://localhost:8080/api/form/${formId}`, {
+                headers: {
+                    "Authorization": `Bearer ${idToken}`,
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            })
                 .then(data => data);
             const form = await result1.json();
             console.log(form);

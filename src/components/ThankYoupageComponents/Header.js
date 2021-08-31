@@ -9,11 +9,11 @@ function Header(props) {
     // if (props.isEditable === 'true') {
     //     anchor = <a href = {url}>Edit your response</a>
     // }
-    console.log(props.isEditable + " header");
+    console.log(props.isFormEditable + " header");
     let anchor;
-    if (props.isEditable === true) {
+    if (props.isFormEditable === true) {
         anchor = <a style={{ textDecoration: "underline", cursor: "pointer", color: "blue" }}
-            onClick={() => { props.history.push(`/editresponse/${props.formId}/${props.userId}`) }}>Edit your response</a>
+            onClick={() => { props.history.push(`/editresponse/${props.formId}/${props.userId}`, { title: props.title, isFormEditable: props.isFormEditable }) }}>Edit your response</a>
     }
     return (
         <div style={

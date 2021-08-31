@@ -7,15 +7,22 @@ import PopDown from "../CreateFormComponents/PopDown";
 import Paging from "../CreateFormComponents/Paging";
 function Displayforms(props) {
     const [data, setData] = useState([]);
-    const createdBy = localStorage.getItem('hrId');
+    const idToken = localStorage.getItem('accessToken');
+    const createdBy = localStorage.getItem('userId');
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/formbyhr/${createdBy}`);
+                const response = await axios.get(`http://localhost:8080/api/formbyhr/${createdBy}`, {
+                    headers: {
+                        "Authorization": `Bearer ${idToken}`,
+
+                    }
+                });
                 console.log(response.data);
                 setData(response.data);
             } catch (error) {
-                console.log(error);
+                console.log(error.response);
+                console.log(error.data);
             }
         };
 

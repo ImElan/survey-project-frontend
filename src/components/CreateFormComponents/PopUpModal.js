@@ -21,10 +21,12 @@ function PopUpModal(props) {
 
 			<Modal.Footer>
 				<Button
+
 					variant='primary'
 					onClick={() => {
 						confirmHandler();
 						hidePopUp();
+						props.afterClick();
 					}}
 				>
 					{' '}

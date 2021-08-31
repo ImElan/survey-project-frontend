@@ -15,31 +15,49 @@ import {
 	BrowserRouter as Router,
 	Redirect,
 	Route,
-	Link
+	Link,
+	Switch
 } from 'react-router-dom'
 
 function App() {
-	return (
-		<div>
-			<Router>
-				<Route exact path='/' component={LoginPage} />
+	let routes;
+	const role = localStorage.getItem('role');
+	console.log(role);
+	if (role === 'HR') {
+		routes = (
+			<Switch>
+				<Route exact strict path='/form/adminacess' component={AdminAcessContainer} />
 				<Route exact strict path='/form/create' component={CreateFormContainer} />
 				<Route exact strict path='/preview' component={PreviewFormContainer} />
+				<Route exact strict path='/viewresponses' component={ResponseSummary}></Route>
+				<Route exact strict path='/loginSuccess' component={Displayforms} />
+				<Redirect to='/loginSuccess' />
+			</Switch>
+		);
+	} else if (role === 'EMPLOYEE') {
+		routes = (
+			<Switch>
 				<Route exact strict path='/Form/fill/:id' component={ViewFormContainer} />
 				<Route exact strict path='/form/thankyou' component={ThankYouContainer} />
-				<Route exact strict path='/form/adminacess' component={AdminAcessContainer} />
-				<Route exact strict path='/loginSuccess' component={Displayforms} />
-				<Route exact strict path='/viewresponses' component={ResponseSummary}></Route>
 				<Route exact strict path='/editresponse/:formId/:userId' component={EditResponse}></Route>
 
-			</Router>
-			<div>
-				{/* <h1>hi</h1> */}
-				{/* <ResponseFormContainerDuplicate /> */}
-				{/* <ViewFormContainer/> */}
-			</div>
 
+
+			</Switch>
+		);
+	} else if (!role) {
+		routes = (
+			<Switch>
+				<Route exact path='/' component={LoginPage} />
+				<Redirect to='/' />
+			</Switch>
+		);
+	}
+
+	return (
+		<div>
+			<Router>{routes}</Router>
 		</div>
-	)
+	);
 }
 export default App;

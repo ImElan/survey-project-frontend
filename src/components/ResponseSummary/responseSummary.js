@@ -9,6 +9,7 @@ const ResponseSummary = (props) => {
     console.log("hiiiiiiiiiiiiiiii");
     const formId = props.location.state.id;
     const [display, setdisplay] = useState("");
+    const idToken = localStorage.getItem('accessToken');
     const change = (newVal) => {
         if (newVal == 1) {
             setdisplay("response");
@@ -23,7 +24,12 @@ const ResponseSummary = (props) => {
 
         getData();
         async function getData() {
-            const result = await fetch(`http://localhost:8080/response/${formId}`)
+            const result = await fetch(`http://localhost:8080/response/${formId}`, {
+                headers: {
+                    "Authorization": `Bearer ${idToken}`,
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            })
                 .then(data => data);
             const data = await result.json();
             console.log(data);

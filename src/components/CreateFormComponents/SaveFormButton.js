@@ -10,6 +10,20 @@ function SaveFormButton(props) {
 	const [err, setAlert] = useState(false);
 	const [popUpTitle] = useState('Confirm Submission');
 
+	const [loading, setLoading] = useState(false);
+	const changeLoading = () => {
+		setLoading(false);
+	}
+
+	const fetchData = () => {
+		setLoading(true);
+
+		//Faking API call here
+		// setTimeout(() => {
+		// 	setLoading(false);
+		// }, 3000);
+	};
+
 	const popUpOpen = () => {
 		popup(true);
 	};
@@ -47,13 +61,28 @@ function SaveFormButton(props) {
 					Close!
 				</Button>
 			</Alert>
-			<Button
+			{/* <Button
 				variant='dark'
 				className='bg-purple f3 fw5 bw1 grow pointer'
 				onClick={errorCheck}
 			>
 				Save Form
-			</Button>
+			</Button> */}
+
+			<div style={{ marginTop: "60px" }}>
+				<Button variant="dark" className="bg-purple f3 fw5 bw1 grow pointer"
+					onClick={() => { errorCheck(); fetchData(); }}
+					disabled={loading}>
+					{loading && (
+						<i
+							className="fa fa-refresh fa-spin"
+							style={{ marginRight: "5px" }}
+						/>
+					)}
+					{loading && <span>Loading...</span>}
+					{!loading && <span>Save Form</span>}
+				</Button>
+			</div>
 
 			<PopUpModal
 				show={show}
@@ -61,6 +90,7 @@ function SaveFormButton(props) {
 				popUpTitle={popUpTitle}
 				popUpBody={popUpBody}
 				confirmHandler={saveFormHandler}
+				afterClick={changeLoading}
 			/>
 		</div>
 	);

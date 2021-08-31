@@ -14,8 +14,8 @@ const ExportResponse = (props) => {
     const { formId } = props;
     let fname = 'Form-' + formId + '_Responses';
 
-    useEffect(() => {
-        loadData();
+    useEffect(async () => {
+        await loadData();
     }, []);
 
     let exportData = [];
@@ -32,6 +32,7 @@ const ExportResponse = (props) => {
         let question = [];
 
         let data = await getResponsesByFormId(formId);
+        console.log(data);
 
         data[0].questions.forEach(function (ques) {
             question.push(ques);
@@ -76,6 +77,7 @@ const ExportResponse = (props) => {
     function exportPdf() {
 
         let rows = [];
+        console.log(exportData);
         let cols = Object.keys(exportData[0]);
         //console.log(cols);
 

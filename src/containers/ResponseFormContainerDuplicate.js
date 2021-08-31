@@ -13,7 +13,7 @@ import StarComponent from '../components/ResponseSurveyComponents/StarComponent'
 import SubmitFormButton from '../components/ResponseSurveyComponents/SubmitFormButton';
 function ResponseFormContainerDuplicate(props) {
     console.log(props.isEditable + " at top");
-    const [isEdit, setIsEdit] = useState()
+    const [isEdit, setIsEdit] = useState(false)
     // const formstate = JSON.parse(window.localStorage.getItem('formstate'));
     // console.log(props)
     // var questions = props.questions;
@@ -42,7 +42,6 @@ function ResponseFormContainerDuplicate(props) {
                 answer: props.answers ? props.answers[i] : '',
                 isvalid: false
             })
-
         }
         console.log("initial answerss", initialAnswers)
         dispatch({ type: 'SET_INITIAL_ANSWERS', initialAnswers })
@@ -73,7 +72,8 @@ function ResponseFormContainerDuplicate(props) {
     // 	console.log(responseState.answerss);
     // }
     const handleSubmitForm = async () => {
-
+        const idToken = localStorage.getItem('accessToken');
+        const userId = localStorage.getItem('userId');
         // send Post request to backend with the input state as body
         console.log(responseState);
         let questionType = [];
@@ -113,8 +113,8 @@ function ResponseFormContainerDuplicate(props) {
 
         const requestBody = {
             // surveyAnswers: answersToSendToBackend,
-            formId: "243",
-            userId: "33",
+            formId: props.formId,
+            userId: userId,
             questiontypes: questionType,
             questions: questionText,
             answers: answerText,
@@ -128,14 +128,51 @@ function ResponseFormContainerDuplicate(props) {
 
             if (props.isEdit) {
 
-                response = await axios.put('http://localhost:8080/response/updateresponse', requestBody);
+                // response = await axios.put('http://localhost:8080/response/updateresponse',
+                //     {
+                //         headers: {
+                //             "Authorization": `Bearer ${idToken}`,
+                //             "Content-type": "application/json; charset=UTF-8"
+                //         }
+                //     }, requestBody);
+
+                response = await fetch('http://localhost:8080/response/updateresponse',
+                    {
+                        method: 'PUT',
+                        headers: {
+                            "Authorization": `Bearer ${idToken}`,
+                            "Content-type": "application/json; charset=UTF-8"
+                        },
+                        body: JSON.stringify(requestBody)
+                    });
+                //     const response = await fetch(`http://localhost:8080/response/updateresponse`, {
+                // 	headers: {
+                // 		"Authorization": `Bearer ${idToken}`,
+                // 		"Content-type": "application/json; charset=UTF-8"
+                // 	},
+                //     requestBody
+                // });
                 console.log(response.data);
             } else {
-                response = await axios.post('http://localhost:8080/response', requestBody);
+                console.log("isedit running");
+                try {
+
+                    response = await fetch('http://localhost:8080/response',
+                        {
+                            method: 'POST',
+                            headers: {
+                                "Authorization": `Bearer ${idToken}`,
+                                "Content-type": "application/json; charset=UTF-8"
+                            },
+                            body: JSON.stringify(requestBody)
+                        });
+                } catch (error) {
+                    console.log(error.response);
+                }
 
             }
             console.log(props.isEditable + " dup");
-            props.history.push('/form/thankyou', { title: props.title, isEditable: props.isEditable, formId: "243", userId: "33" })
+            props.history.push('/form/thankyou', { title: props.title, isFormEditable: props.isFormEditable, formId: props.formId, userId: userId })
             // props.setSubmitted(true);
 
         } catch (error) {

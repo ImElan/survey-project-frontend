@@ -12,19 +12,32 @@ import ResponseFormContainerDuplicate from '../../containers/ResponseFormContain
 
 
 function EditResponse(props) {
+    const idToken = localStorage.getItem('accessToken');
     const { userId, formId } = useParams();
     const [answers, setAnswers] = useState([]);
     const [questions, setQuestions] = useState([]);
     const [sendCopy, setSendCopy] = useState(0);
+    const title=props.location.state.title;
+    const isFormEditable=props.location.state.isFormEditable;
     useEffect(() => {
         console.log();
         getData();
         async function getData() {
-            const result = await fetch(`http://localhost:8080/response/${formId}/${userId}`)
+            const result = await fetch(`http://localhost:8080/response/${formId}/${userId}`, {
+                headers: {
+                    "Authorization": `Bearer ${idToken}`,
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            })
                 .then(data => data);
             const response = await result.json();
             console.log(response)
-            const result2 = await fetch(`http://localhost:8080/api/form/${formId}`)
+            const result2 = await fetch(`http://localhost:8080/api/form/${formId}`, {
+                headers: {
+                    "Authorization": `Bearer ${idToken}`,
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            })
                 .then(data => data)
             const form = await result2.json();
             console.log(form);
@@ -38,7 +51,9 @@ function EditResponse(props) {
 
     return (
 
-        <ResponseFormContainerDuplicate questions={questions} answers={answers} title={props.title} sendCopy={sendCopy} isEditable={true} isEdit={true} history={props.history} ></ResponseFormContainerDuplicate>
+        <ResponseFormContainerDuplicate questions={questions} formId={formId} answers={answers} title={title} sendCopy={sendCopy} isFormEditable={isFormEditable} isEdit={true} history={props.history} ></ResponseFormContainerDuplicate>
+		// <ResponseFormContainerDuplicate title={formTitle} description={formDescription} calledBy={preview} history={props.history} questions={questions} isFormEditable={isFormEditable} isEdit={false} />
+
     );
 
 }

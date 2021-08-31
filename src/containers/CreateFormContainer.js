@@ -26,7 +26,8 @@ function CreateFormContainer(props) {
 		description: '',
 		questions: [],
 	});
-
+	const idToken = localStorage.getItem('accessToken')
+	console.log(idToken);
 	// State holding maximum question allowed (will get from backend later)
 	const [minQuestionAllowed, setMinQuestionAllowed] = useState(1);
 	const [maxQuestionAllowed, setMaxQuestionAllowed] = useState(10);
@@ -184,7 +185,13 @@ function CreateFormContainer(props) {
 		console.log(requestBody);
 
 		try {
-			const response = await axios.post('http://localhost:8080/api/addform', requestBody);
+			const response = await axios.post('http://localhost:8080/api/addform', requestBody, {
+
+				headers: {
+					"Authorization": `Bearer ${idToken}`,
+					"Content-type": "application/json; charset=UTF-8"
+				}
+			}, requestBody);
 			console.log(response.data);
 		} catch (error) {
 			console.log(error);
