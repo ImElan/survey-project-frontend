@@ -9,20 +9,20 @@ function StarComponent(props) {
         finalfb(e.target.value);
         console.log(e.target.value);
         const isValid = e.target.value === '' ? false : true;
-        props.answerFeedbackHandler(props.questionId, e.target.value, isValid);
+        // props.answerFeedbackHandler(props.questionId, e.target.value, isValid);
     };
 
     const handleClick = (value) => {
         props.answerStarSelectHandler(props.questionId, value);
 
-        var userFeedback = document.getElementById('userFeedback');
-        if (value >= props.threshold) {
-            userFeedback.style = "display:none";
-        } else {
-            userFeedback.style = "display:block";
-        }
-        console.log(userFeedback.innerText);
-        props.setRequiredd(-1);
+        // var userFeedback = document.getElementById('userFeedback');
+        // if (value >= props.threshold) {
+        //     userFeedback.style = "display:none";
+        // } else {
+        //     userFeedback.style = "display:block";
+        // }
+        // console.log(userFeedback.innerText);
+        // props.setRequiredd(-1);
     };
     return (
         <div className='mt-5'>
@@ -41,8 +41,10 @@ function StarComponent(props) {
                 halfIcon={<i className="fa fa-star-half-alt"></i>}
                 fullIcon={<i className="fa fa-star"></i>}
                 activeColor="#ffc107"
+                value={props.answer ? props.answer : 0}
+                disabled={(props.readOnly) ? props.readOnly : false}
             />
-            <Form.Control
+            {/* <Form.Control
                 id='userFeedback'
                 style={{ display: 'none' }}
                 as='textarea'
@@ -50,7 +52,9 @@ function StarComponent(props) {
                 placeholder='give feedback'
                 onChange={handleChangefb}
                 value={initialfb}
-            />
+                disabled={props.readOnly ? props.readOnly : false}
+
+            /> */}
         </div>
     );
 }

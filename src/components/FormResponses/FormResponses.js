@@ -32,6 +32,8 @@ function FormResponses(props) {
 						question={question.question}
 						numStars={parseInt(question.noOfStars)}
 						answer={parseInt(answer)}
+						imageData={question.imageData}
+						isHalfStarAllowed={props.halfStarAllowed}
 					/>
 				);
 			case 'DESCRIPTIVE':
@@ -40,6 +42,7 @@ function FormResponses(props) {
 						readOnly={true}
 						question={question.question}
 						answer={answer}
+						imageData={question.imageData}
 					/>
 				);
 			case 'MULTIPLE':
@@ -51,6 +54,7 @@ function FormResponses(props) {
 						question={question.question}
 						options={question.options}
 						answer={answersArray}
+						imageData={question.imageData}
 					/>
 				);
 			case 'SINGLE':
@@ -65,6 +69,7 @@ function FormResponses(props) {
 						question={question.question}
 						options={question.options}
 						answer={singleIndex}
+						imageData={question.imageData}
 					/>
 				);
 			default:

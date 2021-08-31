@@ -106,7 +106,7 @@ function DescComponentt(props) {
 					{props.imageData && <img src={props.imageData} alt='' id='img' className='img' />}
 					<br></br>
 					<Form.Control
-						disabled={props.readOnly ? props.readOnly : false}
+						disabled={(props.readOnly) ? true : false}
 						as='textarea'
 						rows={7}
 						placeholder='Paragraph - Maximum 500 Characters'

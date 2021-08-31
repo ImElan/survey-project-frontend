@@ -64,6 +64,7 @@ function SubmitFormButton(props) {
 			<Button
 				className='bg-purple f3 fw5 bw1 grow pointer'
 				onClick={errorCheck}
+				disabled={props.disabled}
 			>
 				Submit Form
 			</Button>

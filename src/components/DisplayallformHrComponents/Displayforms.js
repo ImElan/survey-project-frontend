@@ -115,7 +115,7 @@ function Displayforms(props) {
                                                 (currentPage - 1) * questionsPerPage + questionsPerPage
                                             )
                                             .map((form) => (
-                                                <FormData key={form.id} history={props.history} form={form} />
+                                                <FormData key={form.id} formId={form.id} history={props.history} form={form} />
                                             ))
                                     }
                                 </div>

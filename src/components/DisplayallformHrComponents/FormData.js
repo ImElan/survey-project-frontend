@@ -40,12 +40,12 @@ function FormData(props) {
                     <div className="flex-left">
                         <button className="btn btn-primary" onClick={() => props.history.push('/viewresponses', { id: props.form.id })}>Responses</button>
                     </div>
-                    <div className="flex-left">
+                    {/* <div className="flex-left">
                         <button className="btn btn-primary" onClick={() => {
                             setFormData();
                             props.history.push('/preview')
                         }}>View</button>
-                    </div>
+                    </div> */}
                     <div className="flex-left">
                         <Button variant="primary" onClick={() => setModalShow(true)}>
                             Send
@@ -53,6 +53,7 @@ function FormData(props) {
 
                         <SendEmailComponent
                             show={modalShow}
+                            formId={props.formId}
                             onHide={() => setModalShow(false)}
                         />
                     </div>

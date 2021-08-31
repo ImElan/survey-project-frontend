@@ -2,6 +2,7 @@ import React, { Component, useEffect, useState } from 'react';
 
 import styled from 'styled-components'
 import { useTable, useRowSelect } from 'react-table'
+import axios from 'axios';
 // import SendEmailComponent from '../components/SendEmailComponents/SendEmailComponent';
 
 
@@ -114,7 +115,7 @@ function Table({ columns, data }) {
                     })}
                 </tbody>
             </table>
-            <p>Selected Rows: {Object.keys(selectedRowIds).length}</p>
+            {/* <p>Selected Rows: {Object.keys(selectedRowIds).length}</p>
             <pre>
                 <code>
                     {JSON.stringify(
@@ -128,13 +129,16 @@ function Table({ columns, data }) {
                         2
                     )}
                 </code>
-            </pre>
+            </pre> */}
+            <br></br>
             <input className="btn btn-primary" type="button" value="Send Mail" onClick={() => {
                 console.log("send formbutton clicked");
                 // sendemail(selectedFlatRows.map(
                 //     d => d.original["Email Mail ID"]
                 // ));
-                sendemail(["bhargavi.sunkireddy@accolitedigital.com"]);
+                sendemail(selectedFlatRows.map(
+                    d => d.original["Email Mail ID"]
+                ));
 
 
             }} />
@@ -147,18 +151,21 @@ function Table({ columns, data }) {
 // }
 async function sendemail(data) {
     console.log(data);
+    const idToken = localStorage.getItem('accessToken');
 
-    const response = await fetch('http://localhost:8080/accolite/send_email', {
-        headers: {
-            "Content-type": "application/json; charset=UTF-8"
-        },
-        method: "POST",
-        body: JSON.stringify({
-            tomailid: data
-        }),
+    try {
 
-    });
-    console.log(response);
+        const response = await axios.post('http://localhost:8080/accolite/send_email', { tomailid: data }, {
+            headers: {
+                "Authorization": `Bearer ${idToken}`,
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        })
+
+        console.log(response);
+    } catch (error) {
+        console.log(error.response)
+    }
 }
 
 function EmployeeListComponent(props) {
@@ -189,16 +196,19 @@ function EmployeeListComponent(props) {
     );
 
     const emp = async () => {
+        const idToken = localStorage.getItem('accessToken');
+
         const response = await fetch('http://localhost:8080/accolite/filter_employees', {
             headers: {
+                "Authorization": `Bearer ${idToken}`,
                 "Content-type": "application/json; charset=UTF-8"
             },
             method: "POST",
             body: JSON.stringify({
-                formid: "1",//props.formid
-                from_date: "01/08/2021",
-                to_date: "02/08/2021",
-                no_of_days_after_mail: 180
+                formid: props.formId,//props.formid
+                from_date: props.from_date,
+                to_date: props.to_date,
+                no_of_days_after_mail: props.no_of_days_after_mail
             }),
 
         });

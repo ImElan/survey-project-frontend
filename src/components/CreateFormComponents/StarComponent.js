@@ -157,7 +157,7 @@ function StarComponent(props) {
 						{/* <div>{printQuestion(initial)}</div> */}
 						<br />
 						<br />
-						<div>Enable user feedback for rating below this : </div>
+						{/*	<div>Enable user feedback for rating below this : </div>
 						<DropdownButton
 							alignRight
 							title={options[threshold]}
@@ -165,18 +165,18 @@ function StarComponent(props) {
 							onSelect={thresholdChange}
 							value={props.threshold}
 
-						>
-							{Object.keys(options).map((key, id) => (
-								<Dropdown.Item key={id} eventKey={key}>
-									{options[key]}
-								</Dropdown.Item>
-							))}
-						</DropdownButton>
+						> */}
+						{/* {Object.keys(options).map((key, id) => (
+							<Dropdown.Item key={id} eventKey={key}>
+								{options[key]}
+							</Dropdown.Item>
+						))}
+						</DropdownButton> */}
 					</Form.Group>
 				</Form>
 			</form>
 
-		</div>
+		</div >
 	);
 }
 

@@ -83,31 +83,7 @@ function ResponseFormContainerDuplicate(props) {
             questionType.push(answer.questions.questionType);
             questionText.push(answer.questions.question);
             answerText.push(answer.answer)
-            // console.log(question.options);
-            // if (question.questionType == "STAR") {
-            //     var starAnswer = question.numStars + "~~" + question.answer;
-            //     return {
-            //         questionType: question.questionType,
-            //         question: question.question,
-            //         answer: starAnswer
-            //     };
-            // } else if (question.questionType == "MULTIPLE") {
-            //     var checkboxAnswer = "";
-            //     question.answer.forEach(function (answer) {
-            //         checkboxAnswer += answer + ",";
-            //     });
-            //     return {
-            //         questionType: question.questionType,
-            //         question: question.question,
-            //         answer: checkboxAnswer
-            //     };
-            // } else {
-            //     return {
-            //         questionType: question.questionType,
-            //         question: question.question,
-            //         answer: question.answer
-            //     };
-            // }
+
 
         });
 
@@ -193,13 +169,12 @@ function ResponseFormContainerDuplicate(props) {
                         questionId={question.questionId}
                         numStars={question.numStars}
                         imageData={question.imageData}
-                        isHalfStarAllowed={question.isHalfStarAllowed}
+                        isHalfStarAllowed={question.halfStarAllowed}
                         answerStarSelectHandler={handleAnswerStarChange}
                         threshold={question.threshold}
-                        imageData={question.imageData}
                         answerFeedbackHandler={handleAnswerParaChange}
                         setRequiredd={setRequiredd}
-
+                    // preview={props.readOnly}
 
                     />
                 );
@@ -212,6 +187,8 @@ function ResponseFormContainerDuplicate(props) {
                         answer={props.answers ? props.answers[i] : null}
                         imageData={question.imageData}
                         setRequiredd={setRequiredd}
+                    // preview={props.readOnly}
+
 
                     />
                 );
@@ -225,6 +202,8 @@ function ResponseFormContainerDuplicate(props) {
                         answer={props.answers ? props.answers[i].split(",") : null}
                         imageData={question.imageData}
                         setRequiredd={setRequiredd}
+                    // preview={props.readOnly}
+
 
                     />
                 );
@@ -239,6 +218,8 @@ function ResponseFormContainerDuplicate(props) {
                         answerOptionChange={handleoptionchange}
                         imageData={question.imageData}
                         setRequiredd={setRequiredd}
+                    // preview={props.readOnly}
+
                     />
                 );
             default:
@@ -356,6 +337,7 @@ function ResponseFormContainerDuplicate(props) {
                 sendCopy={sendCopy}
                 submitFormHandler={handleSubmitForm}
                 setRequiredd={setRequiredd}
+                disabled={props.preview ? true : false}
             />
         </Container>
 

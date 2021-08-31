@@ -16,7 +16,7 @@ import PopDown from '../components/CreateFormComponents/PopDown';
 import Paging from '../components/CreateFormComponents/Paging';
 import Preview from '../components/CreateFormComponents/Preview';
 import QuestionImageComponent from '../components/CreateFormComponents/QuestionImageComponent/QuestionImageComponent';
-
+import { useHistory } from 'react-router';
 import axios from 'axios';
 
 function CreateFormContainer(props) {
@@ -32,8 +32,7 @@ function CreateFormContainer(props) {
 	// State holding maximum question allowed (will get from backend later)
 	const [minQuestionAllowed, setMinQuestionAllowed] = useState(1);
 	const [maxQuestionAllowed, setMaxQuestionAllowed] = useState(10);
-
-	const [currentPage, setCurrentPage] = useState(1);
+	const history = useHistory(); const [currentPage, setCurrentPage] = useState(1);
 	const [questionsPerPage, setquestionsPerPage] = useState(5);
 
 	const [triedToSave, setTriedToSave] = useState(false);
@@ -187,7 +186,7 @@ function CreateFormContainer(props) {
 		// send Post request to backend with the input state as body
 		const questionsToSendToBackend = formState.questions.map((question) => {
 			let optionsArr = null;
-			if (question.type === 'SINGLE' || question.type === 'MULTIPLE') {
+			if (question.questionType === 'SINGLE' || question.questionType === 'MULTIPLE') {
 				optionsArr = question.options.optionsArray.map((option) => option.option);
 			}
 
@@ -220,6 +219,7 @@ function CreateFormContainer(props) {
 					"Content-type": "application/json; charset=UTF-8"
 				}
 			}, requestBody);
+			history.push('/loginSuccess')
 			console.log(response.data);
 		} catch (error) {
 			console.log(error);
@@ -333,7 +333,7 @@ function CreateFormContainer(props) {
 						}}
 					>
 						<PopDown
-							title="Questions per page"
+							title=""
 							totalQuestions={formState.questions.length}
 							questionsPerPageHandler={questionsPerPageHandler}
 						/>

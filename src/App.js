@@ -37,7 +37,7 @@ function App() {
 	} else if (role === 'EMPLOYEE') {
 		routes = (
 			<Switch>
-				<Route exact strict path='/Form/fill/:id' component={ViewFormContainer} />
+				<Route exact strict path='/forms/:id' component={ViewFormContainer} />
 				<Route exact strict path='/form/thankyou' component={ThankYouContainer} />
 				<Route exact strict path='/editresponse/:formId/:userId' component={EditResponse}></Route>
 
