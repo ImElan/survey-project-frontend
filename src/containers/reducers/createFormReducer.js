@@ -22,10 +22,15 @@ const createFormReducer = (state, action) => {
 				if (question.questionId !== action.questionId) {
 					return question;
 				}
+
 				return {
 					...question,
 					question: action.newQuestionText,
-					isValid: action.isValid,
+					isValid:
+						action.isValid &&
+						(question.options.isOptionsValid !== undefined
+							? question.options.isOptionsValid
+							: true),
 				};
 			});
 			return {
@@ -39,7 +44,7 @@ const createFormReducer = (state, action) => {
 				if (question.questionId !== action.questionId) {
 					return question;
 				}
-				const newOptionsArray = question.options.map((option) => {
+				const newOptionsArray = question.options.optionsArray.map((option) => {
 					if (option.optionId !== action.optionId) {
 						return option;
 					}
@@ -50,7 +55,12 @@ const createFormReducer = (state, action) => {
 				});
 				return {
 					...question,
-					options: newOptionsArray,
+					options: {
+						...question.options,
+						optionsArray: newOptionsArray,
+						isOptionsValid: action.isOptionsValid,
+					},
+					isValid: action.isOptionsValid,
 				};
 			});
 			return {
@@ -65,12 +75,15 @@ const createFormReducer = (state, action) => {
 					return question;
 				}
 				const newOptionsArray = [
-					...question.options,
+					...question.options.optionsArray,
 					{ optionId: uuidv4(), option: action.newOption },
 				];
 				return {
 					...question,
-					options: newOptionsArray,
+					options: {
+						...question.options,
+						optionsArray: newOptionsArray,
+					},
 				};
 			});
 			return {
@@ -85,13 +98,18 @@ const createFormReducer = (state, action) => {
 					return question;
 				}
 
-				const newOptionsArray = question.options.filter(
+				const newOptionsArray = question.options.optionsArray.filter(
 					(option) => option.optionId !== action.optionId
 				);
 
 				return {
 					...question,
-					options: newOptionsArray,
+					options: {
+						...question.options,
+						optionsArray: newOptionsArray,
+						isOptionsValid: action.isOptionsValid,
+					},
+					isValid: action.isOptionsValid,
 				};
 			});
 			return {
@@ -142,10 +160,13 @@ const createFormReducer = (state, action) => {
 					action.newQuestionType === 'SINGLE' ||
 					action.newQuestionType === 'MULTIPLE'
 				) {
-					newQuestion.options = [
-						{ optionId: uuidv4(), option: 'Option 1' },
-						{ optionId: uuidv4(), option: 'Option 2' },
-					];
+					newQuestion.options = {
+						optionsArray: [
+							{ optionId: uuidv4(), option: 'Option 1' },
+							{ optionId: uuidv4(), option: 'Option 2' },
+						],
+						isOptionsValid: true,
+					};
 					newQuestion.numStars = null;
 					newQuestion.isHalfStarAllowed = null;
 				}
@@ -162,10 +183,13 @@ const createFormReducer = (state, action) => {
 			const newQuestion = {
 				questionId: uuidv4(),
 				question: '',
-				options: [
-					{ optionId: uuidv4(), option: 'Option 1' },
-					{ optionId: uuidv4(), option: 'Option 2' },
-				],
+				options: {
+					optionsArray: [
+						{ optionId: uuidv4(), option: 'Option 1' },
+						{ optionId: uuidv4(), option: 'Option 2' },
+					],
+					isOptionsValid: true,
+				},
 				questionType: action.questionType,
 				required: false,
 				isValid: false,
@@ -264,6 +288,12 @@ const createFormReducer = (state, action) => {
 			return {
 				...state,
 				questions: newQuestionsAfterStarTypeChange,
+			};
+
+		case 'EDITABLE_CHANGE':
+			return {
+				...state,
+				isEditable: !state.isEditable,
 			};
 		default:
 			return state;

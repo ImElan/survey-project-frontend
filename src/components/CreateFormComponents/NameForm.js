@@ -1,4 +1,5 @@
 import React, { Component, useEffect, useState } from 'react';
+import EditableSwitch from './EditableSwitch/EditableSwitch';
 import ReactDOM from 'react-dom';
 import { Form, InputGroup, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 
@@ -11,22 +12,33 @@ function NameForm(props) {
 	const showtext2 = () => {
 		formdesc(true);
 	};
+	const showtext3 = () => {
+		formtit(false);
+	};
+	const showtext4 = () => {
+		formdesc(false);
+	};
 	const handleChange1 = (event) => {
 		var x = event.target.value;
 		if (x.length > (event.maxLength || 0) + 79) showtext1();
-		else props.titleChangeHandler(event.target.value);
+		else {
+			showtext3();
+			props.titleChangeHandler(event.target.value);
+		}
 	};
 
 	const handleChange2 = (event) => {
 		var x = event.target.value;
 		if (x.length > (event.maxLength || 0) + 249) showtext2();
-		else props.descriptionChangeHandler(event.target.value);
+		else {
+			showtext4();
+			props.descriptionChangeHandler(event.target.value);
+		}
 	};
 
 	return (
 		<div>
-			<br />
-			<Form.Label style={{ color: 'white' }}>Form Name</Form.Label>
+			<Form.Label style={{ marginTop: '15px', color: 'white' }}>Form Name</Form.Label>
 			<FormControl
 				aria-label='Default'
 				aria-describedby='inputGroup-sizing-default'
@@ -37,13 +49,13 @@ function NameForm(props) {
 			/>
 			{show1 && (
 				<div>
-					<Form.Text style={{ color: 'white' }} id='passwordHelpBlock' muted>
+					<Form.Text style={{ color: 'red' }} id='passwordHelpBlock' muted>
 						Form title cannot exceed 80 characters
 					</Form.Text>
 					<br />
 				</div>
 			)}
-			<Form.Label style={{ marginTop: '10px', color: 'white' }}>
+			<Form.Label style={{ marginTop: '20px', color: 'white' }}>
 				Form Description
 			</Form.Label>
 			<FormControl
@@ -53,12 +65,17 @@ function NameForm(props) {
 				maxLength='250'
 				value={props.description}
 				onChange={handleChange2}
+				rows='5'
 			/>
 			{show2 && (
-				<Form.Text style={{ color: 'white' }} id='passwordHelpBlock' muted>
+				<Form.Text style={{ color: 'red' }} id='passwordHelpBlock' muted>
 					Form description cannot exceed 250 characters
 				</Form.Text>
 			)}
+			<EditableSwitch
+				isEditable={props.isEditable}
+				handleIsEditable={props.handleIsEditable}
+			/>
 		</div>
 	);
 }

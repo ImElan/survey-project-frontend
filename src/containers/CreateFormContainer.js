@@ -24,6 +24,7 @@ function CreateFormContainer(props) {
 	const [formState, dispatch] = useReducer(createFormReducer, {
 		title: '',
 		description: '',
+		isEditable: false,
 		questions: [],
 	});
 	const idToken = localStorage.getItem('accessToken')
@@ -34,6 +35,8 @@ function CreateFormContainer(props) {
 
 	const [currentPage, setCurrentPage] = useState(1);
 	const [questionsPerPage, setquestionsPerPage] = useState(5);
+
+	const [triedToSave, setTriedToSave] = useState(false);
 
 	const pagechangerequesthandler = (number) => {
 		setCurrentPage(number);
@@ -70,10 +73,13 @@ function CreateFormContainer(props) {
 			initialQuestions.push({
 				questionId: uuidv4(),
 				question: '',
-				options: [
-					{ optionId: uuidv4(), option: 'Option 1' },
-					{ optionId: uuidv4(), option: 'Option 2' },
-				],
+				options: {
+					optionsArray: [
+						{ optionId: uuidv4(), option: 'Option 1' },
+						{ optionId: uuidv4(), option: 'Option 2' },
+					],
+					isOptionsValid: true,
+				},
 				questionType: 'SINGLE',
 				required: false,
 				isValid: false,
@@ -116,8 +122,19 @@ function CreateFormContainer(props) {
 
 
 	// Method to handle question option change in single and multiple choice quesitons.
-	const handleQuestionOptionChange = (questionId, optionId, newOptionText) => {
-		dispatch({ type: 'QUESTION_OPTION_CHANGE', questionId, optionId, newOptionText });
+	const handleQuestionOptionChange = (
+		questionId,
+		optionId,
+		newOptionText,
+		isOptionsValid
+	) => {
+		dispatch({
+			type: 'QUESTION_OPTION_CHANGE',
+			questionId,
+			optionId,
+			newOptionText,
+			isOptionsValid,
+		});
 	};
 
 	// Method to handle adding a option to single and multiple choice question.
@@ -126,8 +143,8 @@ function CreateFormContainer(props) {
 	};
 
 	// Method to handle removing a option from single and multiple choice question.
-	const handleQuestionOptionRemove = (questionId, optionId) => {
-		dispatch({ type: 'QUESTION_OPTION_REMOVE', questionId, optionId });
+	const handleQuestionOptionRemove = (questionId, optionId, isOptionsValid) => {
+		dispatch({ type: 'QUESTION_OPTION_REMOVE', questionId, optionId, isOptionsValid });
 	};
 
 	// Method to handle changing a required field of a question.
@@ -148,6 +165,10 @@ function CreateFormContainer(props) {
 		});
 	};
 
+	const handleIsEditable = () => {
+		dispatch({ type: 'EDITABLE_CHANGE' });
+	};
+
 	// Method to handle removing a new question.
 	const handleRemoveQuestion = (questionId) => {
 		dispatch({ type: 'QUESTION_REMOVE', questionId });
@@ -156,13 +177,19 @@ function CreateFormContainer(props) {
 	// Method to add a image to a question
 	const handleAddImageToQuestion = (questionId, image) => {
 		dispatch({ type: 'QUESTION_IMAGE_ADD', questionId, image });
+	}
+	const handleTriedToSave = () => {
+		setTriedToSave(true);
 	};
 
 	// Method to save the form by sending a post request to backend
 	const handleSaveForm = async () => {
 		// send Post request to backend with the input state as body
 		const questionsToSendToBackend = formState.questions.map((question) => {
-			const optionsArr = question.options.map((option) => option.option);
+			let optionsArr = null;
+			if (question.type === 'SINGLE' || question.type === 'MULTIPLE') {
+				optionsArr = question.options.optionsArray.map((option) => option.option);
+			}
 
 			return {
 				questionId: question.questionId,
@@ -180,6 +207,7 @@ function CreateFormContainer(props) {
 			formTitle: formState.title,
 			formDescription: formState.description,
 			surveyQuestions: questionsToSendToBackend,
+			isFormEditable: formState.isEditable,
 		};
 
 		console.log(requestBody);
@@ -257,9 +285,9 @@ function CreateFormContainer(props) {
 	// setting tooltip message based on maxQuestionAllowed and number of questions added.
 	let tooltipMessage;
 	if (formState.questions.length >= maxQuestionAllowed) {
-		tooltipMessage = 'Maximum number of questions per form is reached.';
+		tooltipMessage = 'Maximum number of questions per form is reached';
 	} else {
-		tooltipMessage = 'Click the button to choose question type.';
+		tooltipMessage = 'Click the button to choose question type';
 	}
 
 	let paginationStartIndex;
@@ -273,17 +301,18 @@ function CreateFormContainer(props) {
 			<Row
 				className='justify-content-md-center'
 				style={{
-					backgroundColor: '#4B0082', //4B0082
-					paddingTop: '0px',
-					paddingBottom: '35px',
+					backgroundColor: '#33006F', //#33006F#4B0082
+					paddingBottom: '25px',
 				}}
 			>
 				<Col sm={6}>
 					<FormHeader
 						title={formState.title}
 						description={formState.description}
+						isEditable={formState.isEditable}
 						titleChangeHandler={handleTitleChange}
 						descriptionChangeHandler={handleDescriptionChange}
+						handleIsEditable={handleIsEditable}
 					/>
 				</Col>
 			</Row>
@@ -292,17 +321,15 @@ function CreateFormContainer(props) {
 				<div
 					style={{
 						backgroundColor: '#D8D8D8',
-						width: '75%',
-						border: 'solid lightgray 2px',
-						borderTop: '0px',
-						borderRadius: '8px',
+						width: '100%',
+						border: 'solid #D8D8D8 1px',
 					}}
 				>
 					<Row
 						sm='auto'
 						className='justify-content-end'
 						style={{
-							padding: '12px',
+							margin: '20px',
 						}}
 					>
 						<PopDown
@@ -319,13 +346,6 @@ function CreateFormContainer(props) {
 						/>
 					</Row>
 
-					{/*<Row className = "justify-content-md-center" >
-			<div style={{ 
-				    backgroundColor: '#e6e6e6',
-				    width:'85%',
-					border: 'solid lightgray 3px',
-					borderRadius: '8px'
-				 }}>*/}
 					{/* page 1 */}
 					{formState.questions
 						.slice(
@@ -339,17 +359,19 @@ function CreateFormContainer(props) {
 								style={{
 									paddingTop: '0px',
 									paddingBottom: '10px',
-									marginTop: '20px',
+									marginBottom: '5px',
 								}}
 							>
 								<Col
-									sm={9}
+									sm={7}
 									style={{
-										//marginRight: '5px',
 										padding: '10px 25px',
 										borderRadius: '8px',
-										backgroundColor: '#F0F0F0', //7866B2
-										border: 'solid black 1px',
+										boxShadow: '3px 3px 10px darkgray',
+										backgroundColor:
+											!question.isValid && triedToSave ? '#F8D7DA' : '#F0F0F0', //7866B2
+										border:
+											!question.isValid && triedToSave ? '2px solid #721c24' : 'none',
 										//#e6e6e6
 									}}
 								>
@@ -358,7 +380,6 @@ function CreateFormContainer(props) {
 										className='justify-content-end'
 										style={{
 											marginBottom: '0px',
-											//padding: '12px',
 										}}
 									>
 										<Col>
@@ -406,8 +427,10 @@ function CreateFormContainer(props) {
 					>
 						<SaveFormButton
 							formTitle={formState.title}
+							formDescription={formState.description}
 							questionList={formState.questions}
 							saveFormHandler={handleSaveForm}
+							triedToSaveHandler={handleTriedToSave}
 						/>
 					</Row>
 					<Row

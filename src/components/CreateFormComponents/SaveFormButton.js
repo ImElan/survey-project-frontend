@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 import { Button, Alert } from 'react-bootstrap';
 import PopUpModal from './PopUpModal';
-import 'tachyons';
 
 function SaveFormButton(props) {
-	const { formTitle, questionList, saveFormHandler } = props;
+	const {
+		formTitle,
+		formDescription,
+		questionList,
+		saveFormHandler,
+		triedToSaveHandler,
+	} = props;
 
 	const [show, popup] = useState(false);
 	const [err, setAlert] = useState(false);
+	const [alertBody, setAlertBody] = useState('');
 	const [popUpTitle] = useState('Confirm Submission');
+	// const [popUpBody] = useState(`Are you sure you want to save "${formTitle}" form?`);
 
 	const [loading, setLoading] = useState(false);
 	const changeLoading = () => {
@@ -32,24 +39,45 @@ function SaveFormButton(props) {
 		popup(false);
 	};
 
-	const showError = () => {
+	const showError = (msg) => {
+		setAlertBody(msg);
 		setAlert(true);
 	};
 
+	const hideError = () => {
+		setAlertBody('');
+		setAlert(false);
+	};
+
 	const errorCheck = () => {
-		let flag = true;
+		triedToSaveHandler();
+		let flag1 = true;
+		let questionArr = [];
+
 		questionList.forEach(function (question) {
-			if (question.isValid === false) {
-				flag = false;
+			if (question.isValid === false || question.options.isOptionsValid === false) {
+				flag1 = false;
 			}
+			questionArr.push(question.question);
 		});
 
-		if (flag) {
-			//no error
-			popUpOpen();
+		const questionSet = new Set(questionArr);
+		const duplicateArr = questionArr.filter((item) => {
+			if (questionSet.has(item)) questionSet.delete(item);
+			else return item;
+		});
+
+		if (!flag1) {
+			showError('Could not save form! Empty fields or Duplicate options found.');
+		} else if (duplicateArr.length) {
+			showError('Could not save form! Duplicate questions found.');
+		} else if (formTitle.trim().length === 0) {
+			showError('Could not save form! Form Title Cannot be empty.');
+		} else if (formDescription.trim().length === 0) {
+			showError('Could not save formr! Form Description Cannot be empty.');
 		} else {
-			//error found
-			showError();
+			hideError();
+			popUpOpen();
 		}
 	};
 
