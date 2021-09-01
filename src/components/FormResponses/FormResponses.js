@@ -32,9 +32,9 @@ function FormResponses(props) {
 						readOnly={true}
 						question={question.question}
 						numStars={parseInt(question.noOfStars)}
-						answer={parseInt(answer)}
+						answer={parseFloat(answer)}
 						imageData={question.imageData}
-						isHalfStarAllowed={props.halfStarAllowed}
+						isHalfStarAllowed={question.halfStarAllowed}
 					/>
 				);
 			case 'DESCRIPTIVE':

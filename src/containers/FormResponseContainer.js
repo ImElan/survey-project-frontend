@@ -62,7 +62,7 @@ function FormResponseContainer({ formId, responses }) {
                 paginationStartIndex,
                 (currentPage - 1) * responsesPerPage + responsesPerPage
             ).map((response, index) => (
-                <FormResponses key={index} response={response} questions={questions}></FormResponses>
+                <FormResponses key={index} response={response} questions={questions} ></FormResponses>
             ))}
 
             <Paging
