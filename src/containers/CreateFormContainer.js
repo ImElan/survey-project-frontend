@@ -27,12 +27,13 @@ function CreateFormContainer(props) {
 		isEditable: false,
 		questions: [],
 	});
-	const idToken = localStorage.getItem('accessToken')
+	const idToken = localStorage.getItem('accessToken');
 	console.log(idToken);
 	// State holding maximum question allowed (will get from backend later)
 	const [minQuestionAllowed, setMinQuestionAllowed] = useState(1);
 	const [maxQuestionAllowed, setMaxQuestionAllowed] = useState(10);
-	const history = useHistory(); const [currentPage, setCurrentPage] = useState(1);
+	const history = useHistory();
+	const [currentPage, setCurrentPage] = useState(1);
 	const [questionsPerPage, setquestionsPerPage] = useState(5);
 
 	const [triedToSave, setTriedToSave] = useState(false);
@@ -119,7 +120,6 @@ function CreateFormContainer(props) {
 		dispatch({ type: 'STAR_THRESHOLD_CHANGE', questionId, value });
 	};
 
-
 	// Method to handle question option change in single and multiple choice quesitons.
 	const handleQuestionOptionChange = (
 		questionId,
@@ -176,7 +176,7 @@ function CreateFormContainer(props) {
 	// Method to add a image to a question
 	const handleAddImageToQuestion = (questionId, image) => {
 		dispatch({ type: 'QUESTION_IMAGE_ADD', questionId, image });
-	}
+	};
 	const handleTriedToSave = () => {
 		setTriedToSave(true);
 	};
@@ -198,7 +198,7 @@ function CreateFormContainer(props) {
 				noOfStars: question.numStars,
 				isHalfStarAllowed: question.isHalfStarAllowed,
 				isRequired: question.required,
-				imageData: question.image
+				imageData: question.image,
 			};
 		});
 
@@ -212,14 +212,18 @@ function CreateFormContainer(props) {
 		console.log(requestBody);
 
 		try {
-			const response = await axios.post('http://localhost:8080/api/addform', requestBody, {
-
-				headers: {
-					"Authorization": `Bearer ${idToken}`,
-					"Content-type": "application/json; charset=UTF-8"
-				}
-			}, requestBody);
-			history.push('/loginSuccess')
+			const response = await axios.post(
+				'http://localhost:8080/api/addform',
+				requestBody,
+				{
+					headers: {
+						Authorization: `Bearer ${idToken}`,
+						'Content-type': 'application/json; charset=UTF-8',
+					},
+				},
+				requestBody
+			);
+			history.push('/loginSuccess');
 			console.log(response.data);
 		} catch (error) {
 			console.log(error);
@@ -242,7 +246,6 @@ function CreateFormContainer(props) {
 						starNumChangeHandler={handleStarNumberChange}
 						starThresholdHandler={handleThresholdChange}
 						threshold={question.threshold}
-
 					/>
 				);
 			case 'DESCRIPTIVE':
@@ -333,7 +336,7 @@ function CreateFormContainer(props) {
 						}}
 					>
 						<PopDown
-							title=""
+							title='Questions Per Page'
 							totalQuestions={formState.questions.length}
 							questionsPerPageHandler={questionsPerPageHandler}
 						/>

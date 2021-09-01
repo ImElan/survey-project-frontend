@@ -1,53 +1,52 @@
 import { useState } from 'react';
 import React from 'react';
-import ReactStars from "react-rating-stars-component";
+import ReactStars from 'react-rating-stars-component';
 import { Form } from 'react-bootstrap';
 function StarComponent(props) {
-    const [initialfb, finalfb] = useState('');
-    
-    const handleChangefb = (e) => {
-        finalfb(e.target.value);
-        console.log(e.target.value);
-        const isValid = e.target.value === '' ? false : true;
-        // props.answerFeedbackHandler(props.questionId, e.target.value, isValid);
-    };
+	const [initialfb, finalfb] = useState('');
 
-    const handleClick = (value) => {
-        if (props.answerStarSelectHandler) {
+	const handleChangefb = (e) => {
+		finalfb(e.target.value);
+		console.log(e.target.value);
+		const isValid = e.target.value === '' ? false : true;
+		// props.answerFeedbackHandler(props.questionId, e.target.value, isValid);
+	};
 
-            props.answerStarSelectHandler(props.questionId, value);
-        }
+	const handleClick = (value) => {
+		if (props.answerStarSelectHandler) {
+			props.answerStarSelectHandler(props.questionId, value);
+		}
 
-        // var userFeedback = document.getElementById('userFeedback');
-        // if (value >= props.threshold) {
-        //     userFeedback.style = "display:none";
-        // } else {
-        //     userFeedback.style = "display:block";
-        // }
-        // console.log(userFeedback.innerText);
-        // props.setRequiredd(-1);
-    };
-    return (
-        <div className='mt-5'>
-            <label>	{props.question}</label>
-            <br />
-            <br />
-            {props.imageData && <img src={props.imageData} alt='' id='img' className='img' />}
-            <br />
+		// var userFeedback = document.getElementById('userFeedback');
+		// if (value >= props.threshold) {
+		//     userFeedback.style = "display:none";
+		// } else {
+		//     userFeedback.style = "display:block";
+		// }
+		// console.log(userFeedback.innerText);
+		// props.setRequiredd(-1);
+	};
+	return (
+		<div className='mt-5'>
+			<label> {props.question}</label>
+			<br />
+			<br />
+			{props.imageData && <img src={props.imageData} alt='' id='img' className='img' />}
+			<br />
 
-            <ReactStars
-                count={props.numStars}
-                onChange={(value) => handleClick(value)}
-                size={48}
-                isHalf={props.isHalfStarAllowed}
-                emptyIcon={<i className="far fa-star"></i>}
-                halfIcon={<i className="fa fa-star-half-alt"></i>}
-                fullIcon={<i className="fa fa-star"></i>}
-                activeColor="#ffc107"
-                value={props.answer ? props.answer : 0}
-                disabled={(props.readOnly) ? props.readOnly : false}
-            />
-            {/* <Form.Control
+			<ReactStars
+				count={props.numStars}
+				onChange={(value) => handleClick(value)}
+				size={48}
+				isHalf={props.isHalfStarAllowed}
+				emptyIcon={<i className='far fa-star'></i>}
+				halfIcon={<i className='fa fa-star-half-alt'></i>}
+				fullIcon={<i className='fa fa-star'></i>}
+				activeColor='#ffc107'
+				value={props.answer ? props.answer : 0}
+				disabled={props.readOnly ? props.readOnly : false}
+			/>
+			{/* <Form.Control
                 id='userFeedback'
                 style={{ display: 'none' }}
                 as='textarea'
@@ -58,18 +57,15 @@ function StarComponent(props) {
                 disabled={props.readOnly ? props.readOnly : false}
 
             /> */}
-        </div>
-    );
+		</div>
+	);
 }
 
-
 export default StarComponent;
-
 
 // import { useState } from 'react';
 // import React from 'react';
 // import Rating from '@material-ui/lab/Rating';
-
 
 // function StarComponent(props) {
 //     const [currentValue, setCurrentValue] = useState(props.answer ? parseInt(props.answer) : 0);

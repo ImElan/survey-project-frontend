@@ -15,10 +15,8 @@ const PopDown = ({ title, totalQuestions, questionsPerPageHandler }) => {
 				title='Questions Per Page'
 				style={{ float: 'right', display: 'flex', alignItems: 'center' }}
 			>
-				<h5 style={{ marginRight: '20px' }}>Questions Per Page:</h5>
-				<Dropdown.Toggle variant='primary'>
-					{quesPerPageVal}
-				</Dropdown.Toggle>
+				<h5 style={{ marginRight: '20px' }}>{title}:</h5>
+				<Dropdown.Toggle variant='primary'>{quesPerPageVal}</Dropdown.Toggle>
 				<Dropdown.Menu>
 					{options.map((option) => {
 						return (

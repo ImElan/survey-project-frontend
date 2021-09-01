@@ -1,6 +1,6 @@
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
-
+import { v4 as uuidv4 } from 'uuid';
 
 import DescComponentt from '../../components/ResponseSurveyComponents/DescComponentt';
 import RadioComponentt from '../../components/ResponseSurveyComponents/RadioComponentt';
@@ -15,8 +15,9 @@ function FormResponses(props) {
 		getData();
 		async function getData() {
 			// console.log(props.response.userId);
-			const result = await fetch(`http://localhost:8080/api/user/${props.response.userId}`)
-				.then(data => data);
+			const result = await fetch(
+				`http://localhost:8080/api/user/${props.response.userId}`
+			).then((data) => data);
 			const data = await result.json();
 			console.log(data);
 			setUser(data);
@@ -28,7 +29,7 @@ function FormResponses(props) {
 				console.log(answer);
 				return (
 					<StarComponent
-						key={index}
+						key={uuidv4()}
 						readOnly={true}
 						question={question.question}
 						numStars={parseInt(question.noOfStars)}
@@ -42,8 +43,7 @@ function FormResponses(props) {
 
 				return (
 					<DescComponentt
-						key={index}
-
+						key={uuidv4()}
 						readOnly={true}
 						question={question.question}
 						answer={answer}
@@ -53,12 +53,11 @@ function FormResponses(props) {
 			case 'MULTIPLE':
 				console.log(answer);
 
-				let answersArray = answer.split(",");
-				console.log("answers array", answersArray);
+				let answersArray = answer.split(',');
+				console.log('answers array', answersArray);
 				return (
 					<CheckBoxComponentt
-						key={index}
-
+						key={uuidv4()}
 						readOnly={true}
 						question={question.question}
 						options={question.options}
@@ -71,13 +70,11 @@ function FormResponses(props) {
 
 				let singleIndex = -1;
 				for (var i = 0; i < question.options.length; i++) {
-					if (answer === question.options[i])
-						singleIndex = i;
+					if (answer === question.options[i]) singleIndex = i;
 				}
 				return (
 					<RadioComponentt
-						key={index}
-
+						key={uuidv4()}
 						readOnly={true}
 						question={question.question}
 						options={question.options}
@@ -93,16 +90,13 @@ function FormResponses(props) {
 	return (
 		<Container fluid>
 			{console.log(questions)}
-			<Card style={{ width: "80%", margin: "0 auto", textAlign: "center" }}>
+			<Card style={{ width: '80%', margin: '0 auto', textAlign: 'center' }}>
 				<Card.Header>Employee</Card.Header>
 				<Card.Body>
-					<blockquote className="blockquote mb-0">
-						<p>
-							{' '}
-							{user.name}{' '}
-						</p>
-						<footer className="blockquote-footer">
-							<cite title="Source Title">{user.email}</cite>
+					<blockquote className='blockquote mb-0'>
+						<p> {user.name} </p>
+						<footer className='blockquote-footer'>
+							<cite title='Source Title'>{user.email}</cite>
 						</footer>
 					</blockquote>
 				</Card.Body>
@@ -130,15 +124,12 @@ function FormResponses(props) {
 						{renderQuestionComponent({
 							question: question,
 							answer: response.answers[index],
-							index: index
-						})
-						}
+							index: index,
+						})}
 					</Col>
 				</Row>
 			))}
 		</Container>
-
 	);
-
 }
 export default FormResponses;

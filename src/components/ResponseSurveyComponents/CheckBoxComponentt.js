@@ -6,7 +6,6 @@
 
 // 	const optionss = props.options;
 
-
 // 	const handlechange = (e) => {
 // 		// var optionid = e.target.value;
 // 		props.answeroptionadd(props.questionId, e.target.value);
@@ -49,66 +48,72 @@
 
 // export default CheckBoxComponentt;
 
-
 import React, { useState, useEffect } from 'react';
 import { FormControl, FormLabel } from 'react-bootstrap';
 // import { BsFillTrashFill } from 'react-icons/bs';
 
 function CheckBoxComponentt(props) {
-
 	const optionss = props.options;
-	console.log("in checkbox", props.answer ? props.answer.includes(optionss[2]) : false)
+	console.log('in checkbox', props.answer ? props.answer.includes(optionss[2]) : false);
 	// const [temp, setTemp] = useState(1);
 	const handlechange = (e) => {
 		// var optionid = e.target.value;
 		props.answeroptionadd(props.questionId, e.target.value);
-	}
+	};
 	// useEffect(() => {
 	// 	setTemp(temp + 1);
 	// }, [props.answer])
 	return (
 		<div className='App'>
 			<div className='mt-5'>
-				<label>	{props.question}</label>
+				<label> {props.question}</label>
 				<br />
 				<br />
 			</div>
 			{props.imageData && <img src={props.imageData} alt='' id='img' className='img' />}
 			<br></br>
-			{(props.readOnly) ? <div>
-				{optionss.map((option, i) => {
-					return (
-
-						<div className='row' key={i}>
-							<div className='col-md-8'>
-								<input
-									disabled={true}
-									type="checkbox"
-									checked={props.answer ? props.answer.includes(option) : false}
-									value={option}
-									onChange={handlechange} /> {option}
+			{props.readOnly ? (
+				<div>
+					{optionss.map((option, i) => {
+						return (
+							<div className='row' key={i}>
+								<div className='col-md-8'>
+									<input
+										disabled={true}
+										type='checkbox'
+										checked={props.answer ? props.answer.includes(option) : false}
+										value={option}
+										onChange={handlechange}
+									/>{' '}
+									{option}
+								</div>
+								<br></br>
+								{/* {i} */}
 							</div>
-							<br></br>
-							{/* {i} */}
-						</div>
-					);
-				})}</div>
-				: <div>{optionss.map((option, i) => {
-					return (
-						<div className='row' key={i}>
-							<div className='col-md-8'>
-								<input
-									type="checkbox"
-									defaultChecked={props.answer ? props.answer.includes(option) : false}
-									value={option}
-									onChange={handlechange} /> {option}
+						);
+					})}
+				</div>
+			) : (
+				<div>
+					{optionss.map((option, i) => {
+						return (
+							<div className='row' key={i}>
+								<div className='col-md-8'>
+									<input
+										type='checkbox'
+										defaultChecked={props.answer ? props.answer.includes(option) : false}
+										value={option}
+										onChange={handlechange}
+									/>{' '}
+									{option}
+								</div>
+								<br></br>
+								{/* {i} */}
 							</div>
-							<br></br>
-							{/* {i} */}
-						</div>
-					);
-				})}
-				</div>}
+						);
+					})}
+				</div>
+			)}
 
 			<br />
 			<br></br>
