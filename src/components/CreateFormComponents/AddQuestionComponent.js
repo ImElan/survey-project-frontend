@@ -19,7 +19,7 @@ function AddQuestionComponent(props) {
 				>
 					<div className='d-inline-block'>
 						<Dropdown.Toggle
-							size='lg'
+							// size='lg'
 							disabled={disabled}
 							variant={`${!disabled ? 'primary' : 'secondary'}`}
 						>

@@ -52,7 +52,7 @@ const ResponseSummary = (props) => {
         <Container>
             <Row>
                 <Col md={10} >
-                    <CenteredTabs  change={change}></CenteredTabs>
+                    <CenteredTabs change={change}></CenteredTabs>
                     {
                         display == "response" ?
                             <FormResponseContainer formId={formId} responses={responses}></FormResponseContainer>

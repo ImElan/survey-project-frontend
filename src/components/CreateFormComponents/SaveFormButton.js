@@ -99,7 +99,7 @@ function SaveFormButton(props) {
 			</Button> */}
 
 			<div style={{ marginTop: "60px" }}>
-				<Button variant="dark" className="bg-purple f3 fw5 bw1 grow pointer"
+				<Button variant="primary"
 					onClick={() => { errorCheck(); fetchData(); }}
 					disabled={loading}>
 					{loading && (
@@ -109,7 +109,7 @@ function SaveFormButton(props) {
 						/>
 					)}
 					{loading && <span>Loading...</span>}
-					{!loading && <span style={{ color: "#2080df" }} >Save Form</span>}
+					{!loading && <span   >Save Form</span>}
 				</Button>
 			</div>
 

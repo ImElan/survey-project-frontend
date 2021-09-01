@@ -49,8 +49,8 @@ function NameForm(props) {
 			/>
 			{show1 && (
 				<div>
-					<Form.Text style={{ color: 'red' }} id='passwordHelpBlock' muted>
-						Form title cannot exceed 80 characters
+					<Form.Text id='passwordHelpBlock' muted>
+						<p className="text-danger" >Form title cannot exceed 80 characters</p>
 					</Form.Text>
 					<br />
 				</div>
@@ -69,7 +69,7 @@ function NameForm(props) {
 			/>
 			{show2 && (
 				<Form.Text style={{ color: 'red' }} id='passwordHelpBlock' muted>
-					Form description cannot exceed 250 characters
+					<p className="text-danger"  >Form description cannot exceed 250 characters</p>
 				</Form.Text>
 			)}
 			<EditableSwitch
