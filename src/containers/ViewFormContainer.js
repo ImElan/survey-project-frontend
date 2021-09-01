@@ -3,31 +3,35 @@ import { Container, Row, Col } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
 import ResponseFormContainer from './ResponseFormContainer';
 import { useParams } from 'react-router-dom';
-import ResponseFormContainerDuplicate from './ResponseFormContainerDuplicate'
+import ResponseFormContainerDuplicate from './ResponseFormContainerDuplicate';
 import { useHistory } from 'react-router-dom';
 function ViewFormContainer(props) {
-	console.log("ok");
+	console.log('ok');
 	const history = useHistory();
 	const [questions, setQuestions] = useState([]);
 	const [formTitle, setFormTitle] = useState(null);
 	const [formDescription, setFormDescription] = useState(null);
 	const [sendCopy, setSendCopy] = useState(0);
-	const idToken = localStorage.getItem('accessToken')
+	const idToken = localStorage.getItem('accessToken');
 	const { id } = useParams();
 	console.log(id);
 	// const formid = useParams();
 	const [isFormEditable, setisFormEditable] = useState(true);
+
+	const handleSendCopy = (value) => {
+		setSendCopy(value);
+	};
+
 	const shouldShowForm = async () => {
 		const response = await fetch(`http://localhost:8080/accolite/showform/${id}`, {
 			headers: {
-				"Authorization": localStorage.getItem('accessToken')
-			}
+				Authorization: localStorage.getItem('accessToken'),
+			},
 		});
 		console.log(response);
-
-	}
+	};
 	useEffect(() => {
-		console.log("here");
+		console.log('here');
 		const token = localStorage.getItem('accessToken');
 		if (!token) {
 			history.push({
@@ -44,9 +48,9 @@ function ViewFormContainer(props) {
 		async function getData() {
 			const response = await fetch(`http://localhost:8080/api/form/${id}`, {
 				headers: {
-					"Authorization": `Bearer ${idToken}`,
-					"Content-type": "application/json; charset=UTF-8"
-				}
+					Authorization: `Bearer ${idToken}`,
+					'Content-type': 'application/json; charset=UTF-8',
+				},
 			});
 			const data = await response.json();
 			const q = data.surveyQuestions;
@@ -60,11 +64,22 @@ function ViewFormContainer(props) {
 	}, []);
 
 	console.log(questions);
-	console.log((typeof isEditable) + " view");
+	console.log(typeof isEditable + ' view');
 
-	const preview = "NOTPREVIEW";
+	const preview = 'NOTPREVIEW';
 	return (
-		<ResponseFormContainerDuplicate title={formTitle} formId={id} description={formDescription}  calledBy={preview} history={props.history} questions={questions} isFormEditable={isFormEditable} isEdit={false} sendCopy={sendCopy}/>
+		<ResponseFormContainerDuplicate
+			title={formTitle}
+			formId={id}
+			description={formDescription}
+			calledBy={preview}
+			history={props.history}
+			questions={questions}
+			isFormEditable={isFormEditable}
+			isEdit={false}
+			sendCopy={sendCopy}
+			handleSendCopy={handleSendCopy}
+		/>
 		// <h5>hello</h5>
 	);
 
