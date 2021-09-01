@@ -4,7 +4,7 @@ import ReactStars from "react-rating-stars-component";
 import { Form } from 'react-bootstrap';
 function StarComponent(props) {
     const [initialfb, finalfb] = useState('');
-
+    
     const handleChangefb = (e) => {
         finalfb(e.target.value);
         console.log(e.target.value);
@@ -13,7 +13,10 @@ function StarComponent(props) {
     };
 
     const handleClick = (value) => {
-        props.answerStarSelectHandler(props.questionId, value);
+        if (props.answerStarSelectHandler) {
+
+            props.answerStarSelectHandler(props.questionId, value);
+        }
 
         // var userFeedback = document.getElementById('userFeedback');
         // if (value >= props.threshold) {

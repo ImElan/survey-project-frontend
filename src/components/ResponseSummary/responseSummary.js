@@ -9,7 +9,7 @@ import SummaryContainer from './SummaryContainer';
 const ResponseSummary = (props) => {
     console.log("hiiiiiiiiiiiiiiii");
     const formId = props.location.state.id;
-    const [display, setdisplay] = useState("");
+    const [display, setdisplay] = useState("summary");
     const idToken = localStorage.getItem('accessToken');
     const change = (newVal) => {
         console.log(display);
@@ -52,7 +52,7 @@ const ResponseSummary = (props) => {
         <Container>
             <Row>
                 <Col md={10} >
-                    <CenteredTabs change={change}></CenteredTabs>
+                    <CenteredTabs  change={change}></CenteredTabs>
                     {
                         display == "response" ?
                             <FormResponseContainer formId={formId} responses={responses}></FormResponseContainer>

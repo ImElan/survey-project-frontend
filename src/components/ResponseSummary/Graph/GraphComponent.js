@@ -3,18 +3,12 @@ import './Graph.css';
 import { PieChart, Pie, Tooltip, BarChart, XAxis, YAxis, Legend, CartesianGrid, Bar, } from "recharts";
 
 const GraphComponent = (props) => {
-    //dummy data to see how it looks
-    //   const data = [
-    //     { name: "A", users: 20 },
-    //     { name: "B", users: 15 },
-    //     { name: "C", users: 10 },
-    //     { name: "D", users: 50 },
-    //   ];
+
 
     return (
         <div style={{ textAlign: "center" }}>
-            <h1>{props.question}</h1>
-            <div className="App">
+            <h3>{props.question}</h3>
+            <div className="GraphComponent">
                 <PieChart width={400} height={400}>
                     <Pie
                         dataKey="value"
@@ -24,7 +18,7 @@ const GraphComponent = (props) => {
                         cy={200}
                         outerRadius={150}
                         fill="#8884d8"
-                        label
+                    // label
                     />
                     <Tooltip />
                 </PieChart>

@@ -1,15 +1,110 @@
 import { Container, Row, Col } from 'react-bootstrap';
-import { useParams } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-// import ThankYouContainer from './ThankYouContainer';
 import GraphComponent from './Graph/GraphComponent';
 
 function SummaryContainer(props) {
+    /*
+        let submitform =
+        {
+            "id": 1,
+            "formTitle": "First Form",
+            "formDescription": "This is My first Form",
+            "isEditable": false,
+            "surveyQuestions": [
+                {
+                    "questionType": "SINGLE",
+                    "question": "Which is your City?",
+                    "options": ["Banglore", "Hyderabad", "Delhi", "Mumbai"],
+                    "noOfStars": 0,
+                    "isHalfStarAllowed": false,
+                    "isRequired": true
+                },
+                {
+                    "questionType": "SINGLE",
+                    "question": "Which is your Favourite Language?",
+                    "options": ["English", "Telgu", "Punjabi", "Hindi"],
+                    "noOfStars": 0,
+                    "isHalfStarAllowed": false,
+                    "isRequired": true
+                }
+            ],
+            "createdBy": 1
+        }
+            ;
+        //Temporary Response for Testing Only
+    
+        let replyies = [
+            {
+                "id": 1,
+                "formId": 1,
+                "userId": 1,
+                "questiontypes": ["SINGLE", "MULTIPLE"],
+                "questions": ["Which is your City?", "Which is your Favourite Language?"],
+                "answers": ["Banglore", "English"],
+                "sendCopy": 1
+            },
+            {
+                "id": 1,
+                "formId": 1,
+                "userId": 1,
+                "questiontypes": ["SINGLE", "MULTIPLE"],
+                "quesions": ["Which is your City?", "Which is your Favourite Language?"],
+                "answers": ["Hyderabad", "English"],
+                "sendCopy": 1
+            },
+            {
+                "id": 1,
+                "formId": 1,
+                "userId": 1,
+                "questiontypes": ["SINGLE", "MULTIPLE"],
+                "quesions": ["Which is your City?", "Which is your Favourite Language?"],
+                "answers": ["Mumbai", "Hindi"],
+                "sendCopy": 1
+            },
+            {
+                "id": 1,
+                "formId": 1,
+                "userId": 1,
+                "questiontypes": ["SINGLE", "MULTIPLE"],
+                "quesions": ["Which is your City?", "Which is your Favourite Language?"],
+                "answers": ["Banglore", "Telgu"],
+                "sendCopy": 1
+            },
+            {
+                "id": 1,
+                "formId": 1,
+                "userId": 1,
+                "questiontypes": ["SINGLE", "MULTIPLE"],
+                "quesions": ["Which is your City?", "Which is your Favourite Language?"],
+                "answers": ["Delhi", "Punjabi,English"],
+                "sendCopy": 1
+            },
+            {
+                "id": 1,
+                "formId": 1,
+                "userId": 1,
+                "questiontypes": ["SINGLE", "MULTIPLE"],
+                "quesions": ["Which is your City?", "Which is your Favourite Language?"],
+                "answers": ["Delhi", "English"],
+                "sendCopy": 1
+            },
+            {
+                "id": 1,
+                "formId": 1,
+                "userId": 1,
+                "questiontypes": ["SINGLE", "MULTIPLE"],
+                "quesions": ["Which is your City?", "Which is your Favourite Language?"],
+                "answers": ["Mumbai", "English,Hindi"],
+                "sendCopy": 1
+            }
+        ];
+        */
+
 
 
     //getting from Id from URL
-    console.log("it ran");
+    //console.log("it ran");
     const formid = props.formId;
     const idToken = localStorage.getItem('accessToken');
     const [response, setResponse] = useState([]);
@@ -20,21 +115,8 @@ function SummaryContainer(props) {
 
     //Form handler
     const [completeForm, setCompleteForm] = useState([]);
-    function completeFormHandler(form) {
-        console.log(form);
-        setCompleteForm(form);
-    }
 
-    //Response Handler
-    function responseHandler(res) {
-        setResponse(res);
-        console.log(res);
-    }
 
-    const [showMap, setShowMap] = useState();
-    function showMapHandler(m) {
-        setShowMap(m);
-    }
     let questionOptionMap = [];
 
     function countOption(answer, qno) {
@@ -59,61 +141,53 @@ function SummaryContainer(props) {
         }
     }
 
-    function createMap(questions) {
-        //console.log(questions);
-        let index = 0;
-        {
-            questions && questions.map((question) => {
-                if (question.questionType == "SINGLE" || question.questionType == "MULTIPLE") {
-                    let optionMap = [];
+    // function createMap() {
+    //console.log(questions);
+    let questions = completeForm?.surveyQuestions;
+    let index = 0;
+    {
+        questions && questions.map((question) => {
+            if (question.questionType == "SINGLE" || question.questionType == "MULTIPLE") {
+                let optionMap = [];
 
-                    //console.log(question.options);
-                    for (let i = 0; i < question.options.length; i++) {
-                        let temp = [];
-                        temp['name'] = question.options[i];
-                        temp['value'] = 0;
-                        optionMap[i] = temp;
+                //console.log(question.options);
+                for (let i = 0; i < question.options.length; i++) {
+                    let temp = [];
+                    temp['name'] = question.options[i];
+                    temp['value'] = 0;
+                    optionMap[i] = temp;
 
-                    }
-                    let inputFormat = [];
-                    inputFormat["question"] = question.question;
-                    inputFormat["optionValue"] = optionMap;
-                    questionOptionMap[index] = inputFormat;
-                } else {
-                    questionOptionMap[index] = [];
                 }
-                index++;
-            });
-        }
-        setQuestionOptionMapp(questionOptionMap);
-        console.log(questionOptionMap);
-    }
-
-    function fillMap(responses) {
-        console.log(responses);
-        responses.map((response) => {
-            for (let i = 0; i < response.questiontypes.length; i++) {
-                if (response.questiontypes[i] == "SINGLE") {
-                    countOption(response.answers[i], i);
-                }
-                if (response.questiontypes[i] == "MULTIPLE") {
-
-                    countOptionMul(response.answers[i], i);
-                }
-
+                let inputFormat = [];
+                inputFormat["question"] = question.question;
+                inputFormat["optionValue"] = optionMap;
+                questionOptionMap[index] = inputFormat;
             }
+            index++;
         });
-
     }
+    //questionOptionMap[0]=[];
+    // setQuestionOptionMapp(questionOptionMap);
+    console.log(questionOptionMap);
+    // }
 
-    //Fetch responses from the database for a particular Form ID
-    // const fetchData = async () => {
-    //     cosnt res1 = await axios.get(''url1', headers);
-    //     setState1();
-    //     const res2 = await axios.get('url2', headers);
-    //     setState2();
-    //     }
-    //     fetchData();
+    // function fillMap() {
+    // console.log(responses);
+    let responses = response;
+    responses && responses.map((response) => {
+        for (let i = 0; i < response.questiontypes.length; i++) {
+            if (response.questiontypes[i] == "SINGLE") {
+                countOption(response.answers[i], i);
+            }
+            if (response.questiontypes[i] == "MULTIPLE") {
+
+                countOptionMul(response.answers[i], i);
+            }
+
+        }
+    });
+
+    // }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -124,7 +198,7 @@ function SummaryContainer(props) {
                 }
             })
             setCompleteForm(res1.data);
-            createMap(res1.data.surveyQuestions);
+            // createMap();
             const res2 = await axios.get(`http://localhost:8080/response/${formid}`, {
                 headers: {
                     "Authorization": `Bearer ${idToken}`,
@@ -132,35 +206,16 @@ function SummaryContainer(props) {
                 }
             });
             setResponse(res2.data);
-            fillMap(res2.data);
-            console.log(res1);
-            console.log(res2);
-        }
+            // fillMap();
 
+            // console.log(submitform);
+            // console.log(replyies);
+            // createMap(submitform.surveyQuestions);
+            // fillMap(replyies);
+        }
+        console.log("useffect running")
         fetchData();
         console.log(questionOptionMapp);
-        // fetch(`http://localhost:8080/response/${formid}`, {
-        //     headers: {
-        //         "Authorization": `Bearer ${idToken}`,
-        //         "Content-type": "application/json; charset=UTF-8"
-        //     }
-        // })
-        //     .then(res => res.json())
-        //     .then((result) => { console.log(result); setResponse(result);  fillMap(result); });
-
-        // fetch("http://localhost:8080/api/form/" + formid, {
-        //     headers: {
-        //         "Authorization": `Bearer ${idToken}`,
-        //         "Content-type": "application/json; charset=UTF-8"
-        //     }
-        // })
-        //     .then(res => res.json())
-        //     .then((result) => {createMap(result.surveyQuestions); completeFormHandler(result);  });
-        //console.log(m);
-        // console.log(form[0].surveyQuestions);
-
-
-        //console.log(questionOptionMap[0].[0].name);
     }, [])
 
 
@@ -170,19 +225,15 @@ function SummaryContainer(props) {
         <Container fluid>
             <Row
                 className='justify-content-md-center'
-                style={{
-                    backgroundColor: '#CCC', //4B0082
-                    paddingTop: '0px',
-                    paddingBottom: '5px',
-                    textAlign: "center"
-                }}
+
             >
-                <h1>{completeForm.formTitle}</h1>
-                <h2>{completeForm.formDescription}</h2>
+                <div >
+                    <h2>{completeForm.formTitle}</h2>
+                </div>
 
             </Row>
             {
-                questionOptionMapp.map((questionOpt) =>
+                questionOptionMap.map((questionOpt) =>
                     <GraphComponent
                         data={questionOpt.optionValue}
                         question={questionOpt.question}

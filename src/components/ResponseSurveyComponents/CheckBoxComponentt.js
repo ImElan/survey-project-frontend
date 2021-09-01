@@ -50,7 +50,7 @@
 // export default CheckBoxComponentt;
 
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FormControl, FormLabel } from 'react-bootstrap';
 // import { BsFillTrashFill } from 'react-icons/bs';
 
@@ -58,12 +58,14 @@ function CheckBoxComponentt(props) {
 
 	const optionss = props.options;
 	console.log("in checkbox", props.answer ? props.answer.includes(optionss[2]) : false)
-
+	// const [temp, setTemp] = useState(1);
 	const handlechange = (e) => {
 		// var optionid = e.target.value;
 		props.answeroptionadd(props.questionId, e.target.value);
 	}
-
+	// useEffect(() => {
+	// 	setTemp(temp + 1);
+	// }, [props.answer])
 	return (
 		<div className='App'>
 			<div className='mt-5'>
@@ -76,6 +78,7 @@ function CheckBoxComponentt(props) {
 			{(props.readOnly) ? <div>
 				{optionss.map((option, i) => {
 					return (
+
 						<div className='row' key={i}>
 							<div className='col-md-8'>
 								<input

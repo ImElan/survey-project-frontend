@@ -22,12 +22,13 @@ function FormResponses(props) {
 			setUser(data);
 		}
 	}, [props.response]);
-	const renderQuestionComponent = ({ question, answer }) => {
+	const renderQuestionComponent = ({ question, answer, index }) => {
 		switch (question.questionType) {
 			case 'STAR':
 				console.log(answer);
 				return (
 					<StarComponent
+						key={index}
 						readOnly={true}
 						question={question.question}
 						numStars={parseInt(question.noOfStars)}
@@ -37,8 +38,12 @@ function FormResponses(props) {
 					/>
 				);
 			case 'DESCRIPTIVE':
+				console.log(answer);
+
 				return (
 					<DescComponentt
+						key={index}
+
 						readOnly={true}
 						question={question.question}
 						answer={answer}
@@ -46,10 +51,14 @@ function FormResponses(props) {
 					/>
 				);
 			case 'MULTIPLE':
+				console.log(answer);
+
 				let answersArray = answer.split(",");
 				console.log("answers array", answersArray);
 				return (
 					<CheckBoxComponentt
+						key={index}
+
 						readOnly={true}
 						question={question.question}
 						options={question.options}
@@ -58,6 +67,8 @@ function FormResponses(props) {
 					/>
 				);
 			case 'SINGLE':
+				console.log(answer);
+
 				let singleIndex = -1;
 				for (var i = 0; i < question.options.length; i++) {
 					if (answer === question.options[i])
@@ -65,6 +76,8 @@ function FormResponses(props) {
 				}
 				return (
 					<RadioComponentt
+						key={index}
+
 						readOnly={true}
 						question={question.question}
 						options={question.options}
@@ -116,7 +129,8 @@ function FormResponses(props) {
 					>
 						{renderQuestionComponent({
 							question: question,
-							answer: response.answers[index]
+							answer: response.answers[index],
+							index: index
 						})
 						}
 					</Col>

@@ -24,6 +24,7 @@ function FormResponseContainer({ formId, responses }) {
     //     }
     // ]);
     useEffect(() => {
+
         getData();
         async function getData() {
             const result1 = await fetch(`http://localhost:8080/api/form/${formId}`, {
@@ -35,20 +36,21 @@ function FormResponseContainer({ formId, responses }) {
                 .then(data => data);
             const form = await result1.json();
             console.log(form);
+            console.log(responses);
             setQuestions(form.surveyQuestions);
         }
 
     }, [])
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [responsesPerPage, setresponsesPerPage] = useState(1);
+    const [responsesPerPage, setresponsesPerPage] = useState(2);
 
     const pagechangerequesthandler = (number) => {
         setCurrentPage(number);
     };
-    const questionsPerPageHandler = (option) => {
-        setresponsesPerPage(option);
-    };
+    // const questionsPerPageHandler = (option) => {
+    //     setresponsesPerPage(option);
+    // };
     let paginationStartIndex;
     paginationStartIndex = (currentPage - 1) * responsesPerPage;
     if (paginationStartIndex > responses.length) {
@@ -59,9 +61,10 @@ function FormResponseContainer({ formId, responses }) {
             {responses.slice(
                 paginationStartIndex,
                 (currentPage - 1) * responsesPerPage + responsesPerPage
-            ).map((response) => (
-                <FormResponses response={response} questions={questions}></FormResponses>
+            ).map((response, index) => (
+                <FormResponses key={index} response={response} questions={questions}></FormResponses>
             ))}
+
             <Paging
                 totalQuestions={responses.length}
                 questionsPerPage={responsesPerPage}
