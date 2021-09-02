@@ -94,7 +94,7 @@ function RadioComponentt(props) {
 										checked={props.answer === i}
 										type='radio'
 										value={option}
-										name='allselect'
+										name={props.question}
 									/>{' '}
 									{option}
 								</div>
@@ -113,7 +113,7 @@ function RadioComponentt(props) {
 										defaultChecked={props.answer ? props.answer === option : false}
 										type='radio'
 										value={option}
-										name='allselect'
+										name={props.question}
 									/>{' '}
 									{option}
 								</div>
