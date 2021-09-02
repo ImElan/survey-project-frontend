@@ -8,11 +8,15 @@ function Preview(props) {
 		title: '',
 		description: '',
 		questions: [],
+		totalQuestions:'',
+		questionsPerPage:'',
 	});
 
 	useEffect(() => {
 		show.title = props.formTitle;
 		show.description = props.formDescription;
+		show.totalQuestions=props.totalQuestions;
+		show.questionsPerPage=props.questionsPerPage;
 		// show.questions = props.questionList;
 		show.questions = props.questionList.map((question) => {
 			return {

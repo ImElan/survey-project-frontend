@@ -65,7 +65,7 @@ function NameForm(props) {
 				maxLength='250'
 				value={props.description}
 				onChange={handleChange2}
-				rows='5'
+				rows='2'
 			/>
 			{show2 && (
 				<Form.Text style={{ color: 'red' }} id='passwordHelpBlock' muted>

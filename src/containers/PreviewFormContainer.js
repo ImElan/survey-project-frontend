@@ -18,10 +18,13 @@ function PreviewFormContainer(props) {
     })
     const preview = "PREVIEW";
     return (
-        <ResponseFormContainerDuplicate preview={true} title={formstate.title} description={formstate.description} calledBy={preview} questions={newQuestions} >
+      <div>
+        <ResponseFormContainerDuplicate preview={true} title={formstate.title} description={formstate.description} calledBy={preview}
+        questions={newQuestions} totalQuestions={formstate.totalQuestions} questionsPerPage={formstate.questionsPerPage} >
             console.log(formstate);
 
         </ResponseFormContainerDuplicate>
+        </div>
     )
 }
 export default PreviewFormContainer;

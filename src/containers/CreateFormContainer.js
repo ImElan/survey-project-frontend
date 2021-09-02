@@ -448,6 +448,10 @@ function CreateFormContainer(props) {
 							formTitle={formState.title}
 							formDescription={formState.description}
 							questionList={formState.questions}
+							totalQuestions={formState.questions.length}
+							questionsPerPage={questionsPerPage}
+							pageChangeRequestHandler={pagechangerequesthandler}
+							currentPage={currentPage}
 						/>
 					</Row>
 				</div>

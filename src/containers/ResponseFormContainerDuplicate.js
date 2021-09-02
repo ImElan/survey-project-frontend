@@ -2,7 +2,7 @@ import { useEffect, useReducer, useRef, useState } from 'react';
 import React from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router';
-
+import { Form, InputGroup, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 import { Container, Row, Col } from 'react-bootstrap';
 import { responseFormReducer } from './reducers/responseFormReducer';
@@ -13,13 +13,43 @@ import RadioComponentt from '../components/ResponseSurveyComponents/RadioCompone
 import CheckBoxComponentt from '../components/ResponseSurveyComponents/CheckBoxComponentt';
 import StarComponent from '../components/ResponseSurveyComponents/StarComponent';
 import SubmitFormButton from '../components/ResponseSurveyComponents/SubmitFormButton';
+import Paging from '../components/CreateFormComponents/Paging';
 function ResponseFormContainerDuplicate(props) {
+	const formstate = JSON.parse(window.localStorage.getItem('formstate'));
+	console.log(formstate);
 	console.log(props.isEditable + ' at top');
 	const [isEdit, setIsEdit] = useState(false);
 	// const formstate = JSON.parse(window.localStorage.getItem('formstate'));
 	// console.log(props)
 	// var questions = props.questions;
 	let { sendCopy } = props;
+
+
+	const [currentPage, setCurrentPage] = useState(1);
+	const [questionsPerPage, setquestionsPerPage] = useState(props.questionsPerPage);
+	const pagechangerequesthandler = (number) => {
+		setCurrentPage(number);
+	};
+	const questionsPerPageHandler = (option) => {
+		setquestionsPerPage(option);
+	};
+
+
+
+console.log(props.totalQuestions);
+console.log(props.questionsPerPage);
+console.log(currentPage);
+console.log(questionsPerPage);
+	// useEffect(() => {
+	// 	setCurrentPage(Math.ceil(props.totalQuestions / props.questionsPerPage));
+	// }, [props.totalQuestions, props.questionsPerPage]);
+
+	let paginationStartIndex;
+	paginationStartIndex = (currentPage - 1) * questionsPerPage;
+	if (paginationStartIndex > props.totalQuestions) {
+		paginationStartIndex = 0;
+	}
+
 
 	function checkHandler() {
 		if (sendCopy === 0) sendCopy = 1;
@@ -215,42 +245,62 @@ function ResponseFormContainerDuplicate(props) {
 	};
 
 	return (
+
 		<Container fluid>
 			<Row
 				className='justify-content-md-center'
 				style={{
 					backgroundColor: '#4B0082', //4B0082
 					paddingTop: '0px',
-					paddingBottom: '35px',
+					paddingBottom: '15px',
 				}}
-			></Row>
+			>
+			<Col sm={6}>
+				<Form.Label style={{ marginTop: '15px', color: 'white' }}>Form Name</Form.Label>
+			<FormControl
+				aria-label='Default'
+				aria-describedby='inputGroup-sizing-default'
+				placeholder='Enter form name'
+				maxLength='80'
+				value={props.title}
+				disabled={props.preview ? true : false}
+			/>
+				<Form.Label style={{ marginTop: '15px', color: 'white' }}>Form Description</Form.Label>
+			<FormControl
+				as='textarea'
+				aria-label='With textarea'
+				placeholder='Enter form description'
+				maxLength='250'
+				value={props.description}
+				rows='2'
+				disabled={props.preview ? true : false}
+			/>
+			</Col>
+			</Row>
 			<Row
 				className='justify-content-md-center'
 				style={{
 					paddingTop: '0px',
-					paddingBottom: '35px',
+					paddingBottom: '25px',
 				}}
-				// {
-				// 	<h5></h5>
-				// }
+
 			>
-				<h5 style={{ 'text-align': 'center' }}>{props.title}</h5>
-				<h5 style={{ 'text-align': 'center' }}>{props.description}</h5>
+
 			</Row>
 
 			{props.questions &&
 				props.questions
-					// .slice(
-					// 	paginationStartIndex,
-					// 	(currentPage - 1) * questionsPerPage + questionsPerPage
-					// )
+					.slice(
+						paginationStartIndex,
+						(currentPage - 1) * questionsPerPage + questionsPerPage
+					)
 					.map((question, i) => (
 						<Row
 							className='justify-content-md-center'
 							key={question.questionId}
 							style={{
 								paddingTop: '0px',
-								paddingBottom: '10px',
+								paddingBottom: '20px',
 								marginTop: '20px',
 							}}
 						>
@@ -303,12 +353,18 @@ function ResponseFormContainerDuplicate(props) {
 					))}
 			<Row
 				style={{
-					paddingTop: '0px',
-					paddingBottom: '10px',
-					marginTop: '20px',
-					marginLeft: '125px',
+
+					marginTop: '70px',
+					marginLeft: '15px',
 				}}
 			>
+			<Paging
+				totalQuestions={props.totalQuestions}
+				questionsPerPage={questionsPerPage}
+				pageChangeRequestHandler={pagechangerequesthandler}
+				currentPage={currentPage}
+			/>
+
 				{/* <Col md={4} style={{ margin: '10px' }}>
 					<input
 						type='checkbox'
@@ -318,15 +374,19 @@ function ResponseFormContainerDuplicate(props) {
 					<label>Do you want a copy of your response?</label>
 				</Col> */}
 			</Row>
-			<SubmitFormButton
+		{	!props.preview && <SubmitFormButton
 				answerList={responseState.answerss}
 				sendCopy={sendCopy}
 				submitFormHandler={handleSubmitForm}
 				setRequiredd={setRequiredd}
 				disabled={props.preview ? true : false}
-			/>
-		</Container>
-	);
-}
+			/>}
 
-export default ResponseFormContainerDuplicate;
+		</Container>
+
+
+
+	 );
+ }
+
+ export default ResponseFormContainerDuplicate;
