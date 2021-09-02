@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import ReactExport from 'react-data-export';
+// import ReactExport from 'react-data-export';
 import { Row, Col, Container, Dropdown, DropdownButton } from 'react-bootstrap';
 import { getResponsesByFormId } from './data/responseData';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import * as FileSaver from 'file-saver';
+import * as XLSX from 'xlsx';
 
-const ExcelFile = ReactExport.ExcelFile;
-const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+// const ExcelFile = ReactExport.ExcelFile;
+// const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 
 const ExportResponse = (props) => {
 	const { formId } = props;
 	let fname = 'Form-' + formId + '_Responses';
 	const [exportData, setExportData] = useState([]);
 	const [render, setRender] = useState(true);
+	const fileType =
+		'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+	const fileExtension = '.xlsx';
+
 	useEffect(async () => {
 		await loadData();
 	}, []);
@@ -116,6 +122,35 @@ const ExportResponse = (props) => {
 		doc.save(`${fname}.pdf`);
 	}
 
+	const exportExcel = (csvData, fileName) => {
+		const ws = XLSX.utils.json_to_sheet(csvData);
+
+		ws['!cols'] = [];
+		Object.keys(csvData[0]).forEach((cell) => {
+			ws['!cols'].push({
+				wch: 80,
+			});
+		});
+
+		var range = XLSX.utils.decode_range(ws['!ref']);
+		console.log(range);
+		for (var C = range.s.r; C <= range.e.r; ++C) {
+			var address = XLSX.utils.encode_col(C) + '1';
+			if (!ws[address]) continue;
+			ws[address].v = ws[address].v.toUpperCase();
+		}
+		console.log(ws);
+
+		const wb = { Sheets: { data: ws }, SheetNames: ['data'] };
+		const excelBuffer = XLSX.write(
+			wb,
+			{ bookType: 'xlsx', type: 'array' },
+			{ cellStyles: true }
+		);
+		const data = new Blob([excelBuffer], { type: fileType });
+		FileSaver.saveAs(data, fileName + fileExtension);
+	};
+
 	return (
 		<Container>
 			<Row className='justify-content-md-center'>
@@ -127,9 +162,12 @@ const ExportResponse = (props) => {
 						style={{ borderRadius: '4px', margin: '3px' }}
 					>
 						<Dropdown.Item onClick={exportPdf}>PDF</Dropdown.Item>
-						{/* <ExcelFile filename={fname} element={<Dropdown.Item>Excel</Dropdown.Item>}> */}
-						{/* <ExcelSheet dataSet={DataSet} name="Survey Responses" /> */}
-						{/* </ExcelFile> */}
+						<Dropdown.Item onClick={(e) => exportExcel(exportData, fname)}>
+							Excel
+						</Dropdown.Item>
+						{/* <ExcelFile filename={fname} element={<Dropdown.Item>Excel</Dropdown.Item>}>
+                        <ExcelSheet dataSet={DataSet} name="Survey Responses" />
+                        </ExcelFile> */}
 					</DropdownButton>
 				</Col>
 			</Row>
