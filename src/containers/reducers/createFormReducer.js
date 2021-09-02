@@ -241,6 +241,9 @@ const createFormReducer = (state, action) => {
 		case 'SET_INITIAL_QUESTIONS':
 			return {
 				...state,
+				title: action.initialTitle ? action.initialTitle : '',
+				description: action.initialDescription ? action.initialDescription : '',
+				isEditable: action.initialEditable ? action.initialEditable : false,
 				questions: action.initialQuestions,
 			};
 
@@ -261,7 +264,7 @@ const createFormReducer = (state, action) => {
 			};
 		case 'STAR_THRESHOLD_CHANGE':
 			const newQuestionsAfterStarThresholdChange = state.questions.map((question) => {
-				console.log("hua");
+				console.log('hua');
 				if (question.questionId !== action.questionId) {
 					return question;
 				}
