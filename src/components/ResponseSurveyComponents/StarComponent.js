@@ -27,12 +27,18 @@ function StarComponent(props) {
 		// props.setRequiredd(-1);
 	};
 	return (
-		<div className='mt-5'>
-			<label> {props.question}</label>
+		<div className='mt-3'>
+			<label style={{  fontSize:18 }}> {props.question}</label>
 			<br />
-			<br />
-			{props.imageData && <img src={props.imageData} alt='' id='img' className='img' />}
-			<br />
+			
+			{props.imageData && 
+            <div>
+                <br />
+                <img src={props.imageData} alt='' id='img' className='img' />
+                <br />
+            </div>
+            }
+			
 
 			<ReactStars
 				count={props.numStars}

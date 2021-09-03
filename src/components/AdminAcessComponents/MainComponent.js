@@ -18,7 +18,7 @@ import AdminDataService from './services/adminservice';
 
 function RenderEmployee({ emp, toggleMod }) {
 	return (
-		<div className='col-12 col-md-6 m-1 '>
+		<div className='col-12 col-md-8 m-1 '>
 			<Card>
 				<CardBody>
 					<CardTitle>
@@ -35,7 +35,7 @@ function RenderEmployee({ emp, toggleMod }) {
 					</CardText>
 				</CardBody>
 				<br />
-				<Button onClick={toggleMod} className='btn bg-primary ml-auto'>
+				<Button onClick={toggleMod} className='btn btn-md bg-primary ml-auto ' >
 					Edit
 				</Button>
 			</Card>
@@ -85,14 +85,14 @@ function RenderModal(props) {
 					</div>
 
 					{/* <div style={{ flexDirection: 'row', flexWrap: 'wrap' }}> */}
-					<div className="ml-auto" style={{display: 'inline-flex',padding:2}}>
-						<div style={{padding:2}}>
+					<div className="ml-auto mt-2" style={{display: 'inline-flex',padding:2}}>
+						<div style={{padding:4}}>
 							<button className='btn btn-secondary' type='button' onClick={toggleModal}>
 								Cancel
 							</button>
 						</div>
 
-						<div style = {{padding:2}}>
+						<div style = {{padding:4}}>
 							<button
 								className='btn btn-primary'
 								type='button'
