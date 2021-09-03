@@ -35,7 +35,7 @@ function RenderEmployee({ emp, toggleMod }) {
 					</CardText>
 				</CardBody>
 				<br />
-				<Button onClick={toggleMod} className='btn bg-success ml-auto'>
+				<Button onClick={toggleMod} className='btn bg-primary ml-auto'>
 					Edit
 				</Button>
 			</Card>
@@ -84,16 +84,17 @@ function RenderModal(props) {
 						/>
 					</div>
 
-					<div style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-						<div className='ml-auto'>
-							<button className='btn btn-info' type='button' onClick={toggleModal}>
+					{/* <div style={{ flexDirection: 'row', flexWrap: 'wrap' }}> */}
+					<div className="ml-auto" style={{display: 'inline-flex',padding:2}}>
+						<div style={{padding:2}}>
+							<button className='btn btn-secondary' type='button' onClick={toggleModal}>
 								Cancel
 							</button>
 						</div>
 
-						<div className='ml-auto'>
+						<div style = {{padding:2}}>
 							<button
-								className='btn btn-success'
+								className='btn btn-primary'
 								type='button'
 								onClick={() => handleLogin(emprole, empname, empid)}
 							>
@@ -158,6 +159,7 @@ export default class MainComponent extends Component {
 	}
 
 	handleLogin(emprole, empid) {
+		this.toggleModal();
 		AdminDataService.doUpdate(this.state.searchId, emprole)
 			.then((response) => {
 				console.log(response.data);

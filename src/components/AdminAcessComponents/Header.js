@@ -32,9 +32,9 @@ const Header = () => {
                 </Toolbar>
             </AppBar> */}
             <Navbar dark color="primary">
-                <div className="container" >
-                    <div>
-                        <NavbarBrand href="/">Admin</NavbarBrand>
+                <div className="container d-flex justify-content-center" >
+                    <div style={{margin:10}}>
+                        <NavbarBrand href="/">Welcome To Accolite Admin Portal</NavbarBrand>
                     </div>
                     
                 </div>
