@@ -64,7 +64,7 @@ function CheckBoxComponentt(props) {
 	// 	setTemp(temp + 1);
 	// }, [props.answer])
 	return (
-		<div className='App'>
+		<div className='App mb-2'>
 			<div className='mt-3'>
 				<label style={{  fontSize:18 }}> {props.question}</label>
 			</div>
@@ -125,8 +125,7 @@ function CheckBoxComponentt(props) {
 				</div>
 			)}
 
-			<br />
-			<br></br>
+			{/* <br /> */}
 		</div>
 	);
 }

@@ -75,7 +75,7 @@ function RadioComponentt(props) {
 	};
 
 	return (
-		<div className='App'>
+		<div className='App mb-2'>
 			<div className='mt-3'>
 				<label style={{  fontSize:18 }}> {props.question}</label>
 			</div>
@@ -132,8 +132,7 @@ function RadioComponentt(props) {
 					})}
 				</div>
 			)}
-			<br />
-			<br></br>
+			{/* <br /> */}
 		</div>
 	);
 }
