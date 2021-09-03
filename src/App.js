@@ -23,6 +23,7 @@ function App() {
 	let routes;
 	const role = localStorage.getItem('role');
 	console.log(role);
+	if (role === 'HR') {
 		routes = (
 			<Switch>
 				<Route exact strict path='/form/adminacess' component={AdminAcessContainer} />
@@ -33,6 +34,25 @@ function App() {
 				<Redirect to='/loginSuccess' />
 			</Switch>
 		);
+	} else if (role === 'EMPLOYEE') {
+		routes = (
+			<Switch>
+				<Route exact strict path='/forms/:id' component={ViewFormContainer} />
+				<Route exact strict path='/form/thankyou' component={ThankYouContainer} />
+				<Route exact strict path='/editresponse/:formId/:userId' component={EditResponse}></Route>
+
+
+
+			</Switch>
+		);
+	} else if (!role) {
+		routes = (
+			<Switch>
+				<Route exact path='/' component={LoginPage} />
+				<Redirect to='/' />
+			</Switch>
+		);
+	}
 
 	return (
 		<div>
