@@ -254,29 +254,10 @@ console.log(questionsPerPage);
 					paddingTop: '0px',
 					paddingBottom: '15px',
 				}}
-			>
-			<Col sm={6}>
-				<Form.Label style={{ marginTop: '15px', color: 'white' }}>Form Name</Form.Label>
-			<FormControl
-				aria-label='Default'
-				aria-describedby='inputGroup-sizing-default'
-				placeholder='Enter form name'
-				maxLength='80'
-				value={props.title}
-				disabled={props.preview ? true : false}
-			/>
-				<Form.Label style={{ marginTop: '15px', color: 'white' }}>Form Description</Form.Label>
-			<FormControl
-				as='textarea'
-				aria-label='With textarea'
-				placeholder='Enter form description'
-				maxLength='250'
-				value={props.description}
-				rows='2'
-				disabled={props.preview ? true : false}
-			/>
-			</Col>
-			</Row>
+			>	<h5 class="display-5" style={{color: 'white' }}>{props.title}</h5>
+			<p style={{color: 'white' }}>{props.description}</p>	</Row>
+
+
 			<Row
 				className='justify-content-md-center'
 				style={{
@@ -354,7 +335,7 @@ console.log(questionsPerPage);
 			<Row
 				style={{
 
-					marginTop: '70px',
+					marginTop: '100px',
 					marginLeft: '15px',
 				}}
 			>
