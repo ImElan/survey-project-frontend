@@ -355,7 +355,7 @@ function CreateFormContainer(props) {
 							paginationStartIndex,
 							(currentPage - 1) * questionsPerPage + questionsPerPage
 						)
-						.map((question) => (
+						.map((question,idx) => (
 							<Row
 								className='justify-content-md-center'
 								key={question.questionId}
@@ -378,29 +378,38 @@ function CreateFormContainer(props) {
 										//#e6e6e6
 									}}
 								>
-									<Row
+
+
+
+
+
+								<Row
 										sm='auto'
-										className='justify-content-end'
+										//className='justify-content-end'
 										style={{
-											marginBottom: '0px',
+											marginTop: '15px',
 										}}
 									>
-										<Col>
+										<Col md='6'>
+											<p style={{fontSize:'25px', fontWeight:'bold'}}>Question {((currentPage - 1) * questionsPerPage)+ idx+1}</p>
+									    </Col>
+										<Col style={{display:'flex', flexDirection:'row'}}>
 											<QuestionImageComponent
 												key={question.questionId}
 												questionId={question.questionId}
 												profileImg={question.image}
 												addImageHandler={handleAddImageToQuestion}
 											/>
-										</Col>
-										<Col>
+										{/* </Col>
+
+										<Col> */}
 											<Dropdown
 												questionId={question.questionId}
 												questionType={question.questionType}
 												questionTypeChangeHandler={handleQuestionTypeChange}
 											/>
 										</Col>
-										<Col style={{ marginTop: '10px' }}>
+										<Col style={{ marginTop:'4px', marginLeft:'-4px'}}>
 											<DeleteButton
 												questionId={question.questionId}
 												disabled={formState.questions.length <= minQuestionAllowed}
@@ -409,6 +418,17 @@ function CreateFormContainer(props) {
 											/>
 										</Col>
 									</Row>
+
+
+
+
+
+
+
+
+
+
+
 
 									{/* BASED ON QUESTION TYPE RENDER APPROPRIATE COMPONENT AND PASS IN THE PROPS */}
 									{renderQuestionComponent(question)}
@@ -466,3 +486,41 @@ function CreateFormContainer(props) {
 	);
 }
 export default CreateFormContainer;
+
+
+
+
+
+
+
+									// <Row
+									// 	sm='auto'
+									// 	className='justify-content-end'
+									// 	style={{
+									// 		marginBottom: '0px',
+									// 	}}
+									// >
+									// 	<Col>
+									// 		<QuestionImageComponent
+									// 			key={question.questionId}
+									// 			questionId={question.questionId}
+									// 			profileImg={question.image}
+									// 			addImageHandler={handleAddImageToQuestion}
+									// 		/>
+									// 	</Col>
+									// 	<Col>
+									// 		<Dropdown
+									// 			questionId={question.questionId}
+									// 			questionType={question.questionType}
+									// 			questionTypeChangeHandler={handleQuestionTypeChange}
+									// 		/>
+									// 	</Col>
+									// 	<Col style={{ marginTop: '10px' }}>
+									// 		<DeleteButton
+									// 			questionId={question.questionId}
+									// 			disabled={formState.questions.length <= minQuestionAllowed}
+									// 			minQuestions={minQuestionAllowed}
+									// 			deleteQuestionHandler={handleRemoveQuestion}
+									// 		/>
+									// 	</Col>
+									// </Row>

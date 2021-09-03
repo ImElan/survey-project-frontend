@@ -296,6 +296,16 @@ console.log(questionsPerPage);
 									//#e6e6e6
 								}}
 							>
+							<Row sm='auto'
+								//className='justify-content-end'
+								style={{
+									marginTop: '10px',
+								}}
+							>
+								<Col md='6'>
+									<p style={{fontSize:'25px', fontWeight:'bold'}}>Question {((currentPage - 1) * questionsPerPage)+ i+1}</p>
+								</Col>
+							</Row>
 								{/* <Row
 										sm='auto'
 										className='justify-content-end'
