@@ -11,7 +11,7 @@ import {
 	Spinner,
 } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 import { responseFormReducer } from './reducers/responseFormReducer';
 import isDeepEqual from 'fast-deep-equal/react';
 // import { useCallback } from 'react';
@@ -21,6 +21,7 @@ import CheckBoxComponentt from '../components/ResponseSurveyComponents/CheckBoxC
 import StarComponent from '../components/ResponseSurveyComponents/StarComponent';
 import SubmitFormButton from '../components/ResponseSurveyComponents/SubmitFormButton';
 import Paging from '../components/CreateFormComponents/Paging';
+
 function ResponseFormContainerDuplicate(props) {
 	const formstate = JSON.parse(window.localStorage.getItem('formstate'));
 	console.log(formstate);
@@ -180,6 +181,7 @@ function ResponseFormContainerDuplicate(props) {
 			console.log(props.isEditable + ' dup');
 			props.history.push('/form/thankyou', {
 				title: props.title,
+				description: props.description,
 				isFormEditable: props.isFormEditable,
 				formId: props.formId,
 				userId: userId,
@@ -258,16 +260,26 @@ function ResponseFormContainerDuplicate(props) {
 			<Row
 				className='justify-content-md-center'
 				style={{
-					backgroundColor: '#4B0082',
 					paddingTop: '0px',
 					paddingBottom: '15px',
 				}}
 			>
-				{' '}
-				<h5 class='display-5' style={{ color: 'white' }}>
-					{props.title}
-				</h5>
-				<p style={{ color: 'white' }}>{props.description}</p>{' '}
+				<Card
+					style={{
+						backgroundColor: '#4B0082',
+						color: '#FFFFFF',
+						padding: '10px',
+						borderRadius: '0',
+						display: 'flex',
+						flexDirection: 'column',
+						alignItems: 'center',
+					}}
+				>
+					<Card.Body>
+						<h3 className='text-center'>{props.title}</h3>
+						<Card.Text className='text-center'>{props.description}</Card.Text>
+					</Card.Body>
+				</Card>
 			</Row>
 
 			<Row

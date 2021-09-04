@@ -17,6 +17,7 @@ function EditResponse(props) {
 	const [questions, setQuestions] = useState([]);
 	const [sendCopy, setSendCopy] = useState(0);
 	const title = props.location.state.title;
+	const description = props.location.state.description;
 	const isFormEditable = props.location.state.isFormEditable;
 
 	const handleSendCopy = (value) => {
@@ -56,6 +57,7 @@ function EditResponse(props) {
 			formId={formId}
 			answers={answers}
 			title={title}
+			description={description}
 			sendCopy={sendCopy}
 			isFormEditable={isFormEditable}
 			isEdit={true}

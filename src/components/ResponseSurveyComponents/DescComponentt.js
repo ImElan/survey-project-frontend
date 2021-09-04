@@ -92,11 +92,11 @@ function DescComponentt(props) {
 
 	const handleKeyDown = (e) => {
 		e.target.style.height = 'inherit';
-		e.target.style.height = `${e.target.scrollHeight}px`; 
+		e.target.style.height = `${e.target.scrollHeight}px`;
 		// In case you have a limitation
 		// var limitt = 20
 		// e.target.style.height = `${Math.min(e.target.scrollHeight, limitt)}px`;
-	  }
+	};
 
 	return (
 		<div>
@@ -104,9 +104,11 @@ function DescComponentt(props) {
 			{/* <TextField id="outlined-basic" label="Question" multiline={false}  onChange={handleChange} InputProps={{style:{width:'43ch'}}} /><br></br><br></br> */}
 			<Form>
 				<Form.Group className='mt-3 mb-3' controlId='formBasicEmail'>
-					<Form.Label className='mb-3' style={{  fontSize:18 }}>{props.question}</Form.Label>
+					<Form.Label className='mb-3' style={{ fontSize: 18 }}>
+						{props.question}
+					</Form.Label>
 					<br />
-					
+
 					{props.imageData && (
 						<div>
 							<br></br>
@@ -114,12 +116,12 @@ function DescComponentt(props) {
 							<br></br>
 						</div>
 					)}
-					
+
 					<Form.Control
 						disabled={props.readOnly ? true : false}
 						as='textarea'
-						rows={4}
-						style={{  fontSize:18 }}
+						rows={3}
+						style={{ fontSize: 18 }}
 						placeholder='Paragraph - Maximum 500 Characters'
 						onChange={handleChange2}
 						onKeyDown={handleKeyDown}

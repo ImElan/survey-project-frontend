@@ -17,6 +17,7 @@ function Header(props) {
 				onClick={() => {
 					props.history.push(`/editresponse/${props.formId}/${props.userId}`, {
 						title: props.title,
+						description: props.description,
 						isFormEditable: props.isFormEditable,
 					});
 				}}

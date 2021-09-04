@@ -2,6 +2,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Header from '../components/ThankYoupageComponents/Header';
 function ThankYouContainer(props) {
 	const title = props.location.state.title;
+	const description = props.location.state.description;
 	const isFormEditable = props.location.state.isFormEditable;
 	console.log(isFormEditable);
 	console.log(title + ' urray');
@@ -24,6 +25,7 @@ function ThankYouContainer(props) {
 					<Col xs={12} sm={6}>
 						<Header
 							title={title}
+							description={description}
 							isFormEditable={isFormEditable}
 							formId={formId}
 							userId={userId}

@@ -74,6 +74,7 @@ function ViewFormContainer(props) {
 				console.log('are you inside');
 				history.push('/form/thankyou', {
 					title: data.formTitle,
+					description: data.formDescription,
 					isFormEditable: data.formEditable,
 					formId: id,
 					userId: userId,
