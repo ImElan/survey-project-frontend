@@ -12,6 +12,7 @@ import DescComponentt from '../components/ResponseSurveyComponents/DescComponent
 import RadioComponentt from '../components/ResponseSurveyComponents/RadioComponentt';
 import CheckBoxComponentt from '../components/ResponseSurveyComponents/CheckBoxComponentt';
 import StarComponent from '../components/ResponseSurveyComponents/StarComponent';
+import { Card } from 'react-bootstrap';
 import SubmitFormButton from '../components/ResponseSurveyComponents/SubmitFormButton';
 function ResponseFormContainerDuplicate(props) {
 	console.log(props.isEditable + ' at top');
@@ -223,7 +224,19 @@ function ResponseFormContainerDuplicate(props) {
 					paddingTop: '0px',
 					paddingBottom: '35px',
 				}}
-			></Row>
+				
+			>
+			<Card>
+				<Card.Header>Accolite Form</Card.Header>
+				<Card.Body>
+					<Card.Title>{props.title}</Card.Title>
+					<Card.Text>
+					{props.description}
+					</Card.Text>
+				</Card.Body>
+			</Card>
+
+			</Row>
 			<Row
 				className='justify-content-md-center'
 				style={{

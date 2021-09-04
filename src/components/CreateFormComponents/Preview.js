@@ -4,6 +4,9 @@ import 'tachyons';
 import { BrowserRouter as Router, Redirect, Route, Link } from 'react-router-dom';
 
 function Preview(props) {
+	<div>
+		<h1>My header component</h1>
+	</div>
 	const [show, setShow] = React.useState({
 		title: '',
 		description: '',
