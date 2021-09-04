@@ -68,7 +68,7 @@
 
 // export default DescComponentt;
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import React from 'react';
 // import { makeStyles } from '@material-ui/core/styles';
 import { Form } from 'react-bootstrap';
@@ -90,6 +90,7 @@ function DescComponentt(props) {
 		props.answerParagraphHandler(props.questionId, e.target.value, isValid);
 	};
 
+
 	const handleKeyDown = (e) => {
 		e.target.style.height = 'inherit';
 		e.target.style.height = `${e.target.scrollHeight}px`; 
@@ -97,6 +98,10 @@ function DescComponentt(props) {
 		// var limitt = 20
 		// e.target.style.height = `${Math.min(e.target.scrollHeight, limitt)}px`;
 	  }
+
+	// console.log(props.answer);
+	// console.log(props.answer.length);
+	// console.log(props.answer.split('\n').length);
 
 	return (
 		<div>
@@ -118,7 +123,7 @@ function DescComponentt(props) {
 					<Form.Control
 						disabled={props.readOnly ? true : false}
 						as='textarea'
-						rows={4}
+						rows={props.readOnly ? props.answer.split('\n').length:4}
 						style={{  fontSize:18 }}
 						placeholder='Paragraph - Maximum 500 Characters'
 						onChange={handleChange2}
