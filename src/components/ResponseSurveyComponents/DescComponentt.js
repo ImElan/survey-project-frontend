@@ -115,19 +115,26 @@ function DescComponentt(props) {
 					)}
 					<br></br>
 					<br />
-					<Form.Control
-						disabled={props.readOnly ? true : false}
-						as='textarea'
-						rows={props.readOnly ? props.answer.split('\n').length : 4}
-						style={{ fontSize: 20 }}
-						placeholder='Paragraph - Maximum 500 Characters'
-						onChange={handleChange2}
-						onKeyDown={handleKeyDown}
-						defaultValue={props.answer ? props.answer : initial2}
-						// validators = {{
-						// 	required, minLength: minLength(3), maxLength: maxLength(15)
-						// }}
-					/>
+					{props.readOnly ? (
+						<div className='card'>
+							<div className='card-header'>
+								<div className='card-body text-muted'>{props.answer}</div>
+							</div>
+						</div>
+					) : (
+						<Form.Control
+							as='textarea'
+							rows={4}
+							style={{ fontSize: 20 }}
+							placeholder='Paragraph - Maximum 500 Characters'
+							onChange={handleChange2}
+							onKeyDown={handleKeyDown}
+							defaultValue={props.answer ? props.answer : initial2}
+							// validators = {{
+							// 	required, minLength: minLength(3), maxLength: maxLength(15)
+							// }}
+						/>
+					)}
 
 					{/* <br /> */}
 				</Form.Group>

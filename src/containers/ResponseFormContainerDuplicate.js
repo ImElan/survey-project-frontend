@@ -23,8 +23,8 @@ import SubmitFormButton from '../components/ResponseSurveyComponents/SubmitFormB
 import Paging from '../components/CreateFormComponents/Paging';
 
 function ResponseFormContainerDuplicate(props) {
-	const formstate = JSON.parse(window.localStorage.getItem('formstate'));
-	console.log(formstate);
+	// const formstate = JSON.parse(window.localStorage.getItem('formstate'));
+	// console.log(formstate);
 	console.log(props.isEditable + ' at top');
 	const [isEdit, setIsEdit] = useState(false);
 
