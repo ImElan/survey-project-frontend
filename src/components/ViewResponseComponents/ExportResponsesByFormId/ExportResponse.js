@@ -15,7 +15,8 @@ import { BsConeStriped } from 'react-icons/bs';
 
 const ExportResponse = (props) => {
 	const { formId, formTitle } = props;
-	let fname = 'Form-' + formId + '_Responses';
+	let fname = formTitle + '_Responses';
+
 	//const [userData, setUserData] = useState(null);
 	const [exportData, setExportData] = useState([]);
 	const [render, setRender] = useState(true);

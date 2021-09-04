@@ -56,7 +56,7 @@ function SubmitFormButton(props) {
 
 	let popUpBody = `Are you sure you want to submit the form?`;
 	return (
-		<div className='text-center'>
+		<div className='text-center my-4'>
 			<Alert show={err} variant='danger'>
 				<h5>Could not submit! Some empty fields found in your form.</h5>
 				<Button onClick={() => setAlert(false)} variant='outline-danger'>

@@ -18,6 +18,11 @@ function EditResponse(props) {
 	const [sendCopy, setSendCopy] = useState(0);
 	const title = props.location.state.title;
 	const isFormEditable = props.location.state.isFormEditable;
+
+	const handleSendCopy = (value) => {
+		setSendCopy(value);
+	};
+
 	useEffect(() => {
 		console.log();
 		getData();
@@ -40,7 +45,7 @@ function EditResponse(props) {
 			console.log(form);
 			console.log(response.answers);
 			setAnswers(response.answers);
-			setSendCopy(response.sendCopy);
+			// setSendCopy(response.sendCopy);
 			setQuestions(form.surveyQuestions);
 		}
 	}, []);
@@ -55,6 +60,7 @@ function EditResponse(props) {
 			isFormEditable={isFormEditable}
 			isEdit={true}
 			history={props.history}
+			handleSendCopy={handleSendCopy}
 			totalQuestions={questions.length}
 			questionsPerPage={5}
 		></ResponseFormContainerDuplicate>

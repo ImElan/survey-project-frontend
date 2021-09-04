@@ -131,6 +131,7 @@ function Table({ columns, data, handleModalClose, handleAlertState }) {
 		<>
 			{loading && (
 				<div className='d-flex justify-content-center my-3'>
+					<h4 style={{ marginRight: '15px' }}>Sending mail. Please wait...</h4>
 					<Spinner animation='border' variant='primary' />
 				</div>
 			)}

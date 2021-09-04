@@ -2,7 +2,14 @@ import { useEffect, useReducer, useRef, useState } from 'react';
 import React from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router';
-import { Form, InputGroup, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
+import {
+	Form,
+	InputGroup,
+	FormGroup,
+	FormControl,
+	ControlLabel,
+	Spinner,
+} from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 import { Container, Row, Col } from 'react-bootstrap';
 import { responseFormReducer } from './reducers/responseFormReducer';
@@ -19,6 +26,9 @@ function ResponseFormContainerDuplicate(props) {
 	console.log(formstate);
 	console.log(props.isEditable + ' at top');
 	const [isEdit, setIsEdit] = useState(false);
+
+	const [loading, setLoading] = useState(false);
+
 	// const formstate = JSON.parse(window.localStorage.getItem('formstate'));
 	// console.log(props)
 	// var questions = props.questions;
@@ -122,7 +132,7 @@ function ResponseFormContainerDuplicate(props) {
 
 		try {
 			let response;
-
+			setLoading(true);
 			if (props.isEdit) {
 				// response = await axios.put('http://localhost:8080/response/updateresponse',
 				//     {
@@ -147,9 +157,9 @@ function ResponseFormContainerDuplicate(props) {
 				// 	},
 				//     requestBody
 				// });
-				console.log(response.data);
+				console.log('edit here....', response.data);
+				setLoading(false);
 			} else {
-				console.log('isedit running');
 				try {
 					response = await fetch('http://localhost:8080/response', {
 						method: 'POST',
@@ -160,8 +170,11 @@ function ResponseFormContainerDuplicate(props) {
 						body: JSON.stringify(requestBody),
 					});
 					console.log(requestBody);
+					console.log('save here....', response.data);
+					setLoading(false);
 				} catch (error) {
 					console.log(error.response);
+					setLoading(false);
 				}
 			}
 			console.log(props.isEditable + ' dup');
@@ -359,17 +372,10 @@ function ResponseFormContainerDuplicate(props) {
 				</Col>
 			</Row>
 
-			<SubmitFormButton
-				answerList={responseState.answerss}
-				sendCopy={sendCopy}
-				submitFormHandler={handleSubmitForm}
-				setRequiredd={setRequiredd}
-				disabled={props.preview ? true : false}
-			/>
-
 			<Row
 				style={{
-					marginTop: '100px',
+					marginTop: '10px',
+					marginBottom: '10px',
 					marginLeft: '15px',
 				}}
 			>
@@ -380,6 +386,19 @@ function ResponseFormContainerDuplicate(props) {
 					currentPage={currentPage}
 				/>
 			</Row>
+			{loading && (
+				<div className='d-flex justify-content-center my-3'>
+					<h4 style={{ marginRight: '15px' }}>Submitting the form. Please wait...</h4>
+					<Spinner animation='border' variant='primary' />
+				</div>
+			)}
+			<SubmitFormButton
+				answerList={responseState.answerss}
+				sendCopy={sendCopy}
+				submitFormHandler={handleSubmitForm}
+				setRequiredd={setRequiredd}
+				disabled={props.preview ? true : false}
+			/>
 		</Container>
 	);
 }
