@@ -35,9 +35,11 @@ function RenderEmployee({ emp, toggleMod }) {
 					</CardText>
 				</CardBody>
 				<br />
-				<Button onClick={toggleMod} className='btn btn-md bg-primary ml-auto ' >
-					Edit
-				</Button>
+				<div className='ml-auto'>
+					<Button onClick={toggleMod} className='btn btn-md bg-primary m-3'>
+						Edit
+					</Button>
+				</div>
 			</Card>
 		</div>
 	);
@@ -85,14 +87,14 @@ function RenderModal(props) {
 					</div>
 
 					{/* <div style={{ flexDirection: 'row', flexWrap: 'wrap' }}> */}
-					<div className="ml-auto mt-2" style={{display: 'inline-flex',padding:2}}>
-						<div style={{padding:4}}>
+					<div className='ml-auto mt-2' style={{ display: 'inline-flex', padding: 2 }}>
+						<div style={{ padding: 4 }}>
 							<button className='btn btn-secondary' type='button' onClick={toggleModal}>
 								Cancel
 							</button>
 						</div>
 
-						<div style = {{padding:4}}>
+						<div style={{ padding: 4 }}>
 							<button
 								className='btn btn-primary'
 								type='button'
@@ -163,6 +165,14 @@ export default class MainComponent extends Component {
 		AdminDataService.doUpdate(this.state.searchId, emprole)
 			.then((response) => {
 				console.log(response.data);
+				console.log(this.state.tutorials);
+
+				this.setState({
+					tutorials: {
+						...this.state.tutorials,
+						role: emprole,
+					},
+				});
 			})
 			.catch((e) => {
 				console.log(e.response);
