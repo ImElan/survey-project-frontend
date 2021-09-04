@@ -118,7 +118,14 @@ function DescComponentt(props) {
 					{props.readOnly ? (
 						<div className='card'>
 							<div className='card-header'>
-								<div className='card-body text-muted'>{props.answer}</div>
+								<div
+									className='card-body text-muted'
+									style={{
+										fontSize: 18,
+									}}
+								>
+									{props.answer}
+								</div>
 							</div>
 						</div>
 					) : (
