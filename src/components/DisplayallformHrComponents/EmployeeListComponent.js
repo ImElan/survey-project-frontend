@@ -5,6 +5,40 @@ import { useTable, useRowSelect } from 'react-table';
 import axios from 'axios';
 //import SendEmailComponent from '../components/SendEmailComponents/SendEmailComponent';
 
+// import $ from 'jquery';
+
+// var $table = $('table'),
+// 	$bodyCells = $table.find('tbody tr:first').children(),
+// 	colWidth,
+// 	$headerCells = $table.find('thead tr:first').children();
+// // Get the tbody columns width array
+// colWidth = $bodyCells
+// 	.map(function () {
+// 		return $(this).width();
+// 	})
+// 	.get();
+
+// // Set the width of thead columns
+// $table
+// 	.find('thead tr')
+// 	.children()
+// 	.each(function (i, v) {
+// 		$(v).width(colWidth[i]);
+// 	});
+
+// var headerWidth = $headerCells
+// 	.map(function () {
+// 		return $(this).width();
+// 	})
+// 	.get();
+
+// $table
+// 	.find('tbody tr')
+// 	.children()
+// 	.each(function (i, v) {
+// 		$(v).width(headerWidth[i]);
+// 	});
+
 const Styles = styled.div`
 	padding: 1rem;
 	table {
