@@ -66,6 +66,7 @@ function ResponseFormContainerDuplicate(props) {
 	}
 	console.log(props.questions);
 	const [requiredd, setRequiredd] = useState(-1);
+
 	const [responseState, dispatch] = useReducer(responseFormReducer, {
 		userid: '',
 		answerss: [],
@@ -83,7 +84,7 @@ function ResponseFormContainerDuplicate(props) {
 		}
 		console.log('initial answerss', initialAnswers);
 		dispatch({ type: 'SET_INITIAL_ANSWERS', initialAnswers });
-	}, [props.questions]);
+	}, [props.answers, props.questions]);
 	console.log('After update', responseState.answerss);
 
 	const handleoptionchange = (questionId, option) => {
@@ -196,9 +197,11 @@ function ResponseFormContainerDuplicate(props) {
 	const renderQuestionComponent = (question, i) => {
 		switch (question.questionType) {
 			case 'STAR':
+				console.log('Star', responseState.answerss[i]?.answer);
 				return (
 					<StarComponent
-						answer={props.answers ? props.answers[i] : null}
+						key={uuidv4()}
+						answer={responseState.answerss[i]?.answer}
 						question={question.question}
 						questionId={question.questionId}
 						numStars={question.numStars}
@@ -212,35 +215,40 @@ function ResponseFormContainerDuplicate(props) {
 					/>
 				);
 			case 'DESCRIPTIVE':
+				console.log('Descriptive', responseState.answerss[i]?.answer);
 				return (
 					<DescComponentt
 						question={question.question}
 						questionId={question.questionId}
 						answerParagraphHandler={handleAnswerParaChange}
-						answer={props.answers ? props.answers[i] : null}
+						answer={responseState.answerss[i]?.answer}
 						imageData={question.imageData}
 						setRequiredd={setRequiredd}
 						//preview={props.readOnly}
 					/>
 				);
 			case 'MULTIPLE':
+				console.log('multiple', responseState.answerss[i]?.answer);
 				return (
 					<CheckBoxComponentt
+						key={uuidv4()}
 						question={question.question}
 						questionId={question.questionId}
 						options={question.options}
 						answeroptionadd={handleaddremoveoption}
-						answer={props.answers ? props.answers[i].split(',') : null}
+						answer={responseState.answerss[i]?.answer}
 						imageData={question.imageData}
 						setRequiredd={setRequiredd}
 						// preview={props.readOnly}
 					/>
 				);
 			case 'SINGLE':
+				console.log('Single...', responseState.answerss[i]?.answer);
 				console.log(question.questionId);
 				return (
 					<RadioComponentt
-						answer={props.answers ? props.answers[i] : null}
+						key={uuidv4()}
+						answer={responseState.answerss[i]?.answer}
 						question={question.question}
 						questionId={question.questionId}
 						options={question.options}
@@ -324,7 +332,7 @@ function ResponseFormContainerDuplicate(props) {
 								>
 									<Col md='6'>
 										<p style={{ fontSize: '25px', fontWeight: 'bold' }}>
-											Question {i + 1}
+											Question {(currentPage - 1) * questionsPerPage + i + 1}
 										</p>
 									</Col>
 								</Row>
@@ -355,7 +363,10 @@ function ResponseFormContainerDuplicate(props) {
 									</Row> */}
 
 								{/* BASED ON QUESTION TYPE RENDER APPROPRIATE COMPONENT AND PASS IN THE PROPS */}
-								{renderQuestionComponent(question, i)}
+								{renderQuestionComponent(
+									question,
+									(currentPage - 1) * questionsPerPage + i
+								)}
 								{/* <RequiredButton
 										rounded={true}
 										questionId={answer.questions.questionId}

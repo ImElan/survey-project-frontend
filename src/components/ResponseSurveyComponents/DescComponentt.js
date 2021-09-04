@@ -118,7 +118,7 @@ function DescComponentt(props) {
 					<Form.Control
 						disabled={props.readOnly ? true : false}
 						as='textarea'
-						rows={3}
+						rows={props.readOnly ? props.answer.split('\n').length : 4}
 						style={{ fontSize: 20 }}
 						placeholder='Paragraph - Maximum 500 Characters'
 						onChange={handleChange2}
