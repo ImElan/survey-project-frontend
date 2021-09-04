@@ -1,9 +1,8 @@
 import React, { Component, useEffect, useState } from 'react';
-import { Spinner } from 'react-bootstrap';
+import { Spinner, Button } from 'react-bootstrap';
 import styled from 'styled-components';
 import { useTable, useRowSelect } from 'react-table';
 import axios from 'axios';
-// import SendEmailComponent from '../components/SendEmailComponents/SendEmailComponent';
 
 const Styles = styled.div`
 	padding: 1rem;
@@ -48,11 +47,13 @@ const IndeterminateCheckbox = React.forwardRef(({ indeterminate, ...rest }, ref)
 function Table({ columns, data, handleModalClose, handleAlertState }) {
 	const [loading, setIsLoading] = useState(false);
 
+	const [error, setError] = useState(false);
+
+
 	const setLoadingState = (value) => {
 		setIsLoading(value);
 	};
 
-	// Use the state and functions returned from useTable to build your UI
 	const {
 		getTableProps,
 		getTableBodyProps,
@@ -92,14 +93,9 @@ function Table({ columns, data, handleModalClose, handleAlertState }) {
 		}
 	);
 
-	// Render the UI for your table
 	return (
 		<>
-			{loading && (
-				<div className='d-flex justify-content-center my-3'>
-					<Spinner animation='border' variant='primary' />
-				</div>
-			)}
+
 			<table {...getTableProps()}>
 				<thead>
 					{headerGroups.map((headerGroup) => (
@@ -111,7 +107,7 @@ function Table({ columns, data, handleModalClose, handleAlertState }) {
 					))}
 				</thead>
 				<tbody {...getTableBodyProps()}>
-					{rows.slice(0, 10).map((row, i) => {
+					{rows.map((row, i) => {
 						prepareRow(row);
 						return (
 							<tr {...row.getRowProps()}>
@@ -123,54 +119,43 @@ function Table({ columns, data, handleModalClose, handleAlertState }) {
 					})}
 				</tbody>
 			</table>
-			{/* <p>Selected Rows: {Object.keys(selectedRowIds).length}</p>
-            <pre>
-                <code>
-                    {JSON.stringify(
-                        {
-                            selectedRowIds: selectedRowIds,
-                            'selectedFlatRows[].original': selectedFlatRows.map(
-                                d => d.original["Email Mail ID"]
-                            ),
-                        },
-                        null,
-                        2
-                    )}
-                </code>
-            </pre> */}
 			<br></br>
-			<input
+			<Button
 				className='btn btn-primary'
-				type='button'
+				type='submit'
 				value='Send Mail'
-				onClick={() => {
+				onClick={(event) => {
+					event.preventDefault();
 					console.log('send formbutton clicked');
-					// sendemail(selectedFlatRows.map(
-					//     d => d.original["Email Mail ID"]
-					// ));
 					sendemail(
 						selectedFlatRows.map((d) => d.original['Email Mail ID']),
-						handleModalClose,
 						setLoadingState,
-						handleAlertState
+						setError
 					);
 				}}
-			/>
+			>
+				Send Mail
+				{loading && (
+					<Spinner animation='border' variant='light' size="sm" />
+				)}
+	
+			</Button>
+			{error && (
+					<p className="text-danger">Something went wrong</p>
+				)}
 		</>
 	);
 }
 
-// const sendmail = (emailList) => {
-
-// }
-async function sendemail(data, handleModalClose, setLoadingState, handleAlertState) {
+async function sendemail(data, setLoadingState, setError) {
 	console.log(data);
 	const idToken = localStorage.getItem('accessToken');
 
 	try {
 		setLoadingState(true);
+		setError(false);
 		const response = await axios.post(
-			'http://localhost:8080/accolite/send_email',
+			'http://localhost:8080/accolite/send_email_with_no_of_days',
 			{ tomailid: data },
 			{
 				headers: {
@@ -180,18 +165,16 @@ async function sendemail(data, handleModalClose, setLoadingState, handleAlertSta
 			}
 		);
 		setLoadingState(false);
-		handleModalClose();
-		handleAlertState('SUCCESS');
 		console.log(response);
 	} catch (error) {
 		setLoadingState(false);
-		handleAlertState('FAILED');
+		setError(true);
 		console.log(error.response);
 	}
 }
 
 function EmployeeListComponent(props) {
-	const [employees, setEmployees] = useState([]);
+	console.log(props);
 	const columns = React.useMemo(
 		() => [
 			{
@@ -211,54 +194,20 @@ function EmployeeListComponent(props) {
 				Header: 'Date of Joining',
 				accessor: 'Employee DOJ',
 			},
+			{
+				Header: 'BU',
+				accessor: 'Employee BU'
+			}
 		],
 
 		[]
 	);
 
-	const emp = async () => {
-		const idToken = localStorage.getItem('accessToken');
-
-		const response = await fetch('http://localhost:8080/accolite/filter_employees', {
-			headers: {
-				Authorization: `Bearer ${idToken}`,
-				'Content-type': 'application/json; charset=UTF-8',
-			},
-			method: 'POST',
-			body: JSON.stringify({
-				formid: props.formId, //props.formid
-				from_date: props.from_date,
-				to_date: props.to_date,
-				no_of_days_after_mail: props.no_of_days_after_mail,
-			}),
-		});
-		console.log('here in response');
-		console.log(response);
-		const dataemp = await response.json();
-		setEmployees(dataemp);
-
-		const employees2 = [
-			{
-				'Employee Name': 'Bhagyashree Kiran Vaidya',
-				'Employee DOJ': '13/01/2021',
-				'Employee Code': 'CNT0434',
-				'Email Mail ID': 'bhagyashree.vaidya@accolitedigital.com',
-			},
-		];
-
-		console.log(employees);
-	};
-	useEffect(() => {
-		emp();
-	}, []);
-
 	return (
 		<Styles>
 			<Table
 				columns={columns}
-				data={employees}
-				handleModalClose={props.handleModalClose}
-				handleAlertState={props.handleAlertState}
+				data={props.employees}
 			/>
 		</Styles>
 	);
