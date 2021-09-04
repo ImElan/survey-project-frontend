@@ -83,6 +83,7 @@ function RadioComponentt(props) {
 			</div>
 			{props.imageData && <img src={props.imageData} alt='' id='img' className='img' />}
 			<br></br>
+			<br/>
 			{props.readOnly ? (
 				<div>
 					{optionss.map((option, i) => {
