@@ -158,9 +158,17 @@ function CheckboxComponent(props) {
 	};
 
 	return (
-		<div className='App'>
+		<div
+			className='App'
+			style={{
+				fontSize: '20px',
+			}}
+		>
 			<div className='mt-4'>
 				<textarea
+					style={{
+						fontSize: '20px',
+					}}
 					className='form-control'
 					value={props.question}
 					type='text'
@@ -197,6 +205,9 @@ function CheckboxComponent(props) {
 								) : (
 									<div style={{ display: 'inline', marginLeft: '15px' }}>
 										<textarea
+											style={{
+												fontSize: '20px',
+											}}
 											type='text'
 											value={options.optionsArray[i].option}
 											className='form-control'

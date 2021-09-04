@@ -28,17 +28,16 @@ function StarComponent(props) {
 	};
 	return (
 		<div className='mt-3'>
-			<label style={{  fontSize:18 }}> {props.question}</label>
+			<label style={{ fontSize: 20 }}> {props.question}</label>
 			<br />
-			
-			{props.imageData && 
-            <div>
-                <br />
-                <img src={props.imageData} alt='' id='img' className='img' />
-                <br />
-            </div>
-            }
-			
+
+			{props.imageData && (
+				<div>
+					<br />
+					<img src={props.imageData} alt='' id='img' className='img' />
+					<br />
+				</div>
+			)}
 
 			<ReactStars
 				count={props.numStars}

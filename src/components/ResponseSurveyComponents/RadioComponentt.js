@@ -77,7 +77,7 @@ function RadioComponentt(props) {
 	return (
 		<div className='App mb-2'>
 			<div className='mt-3'>
-				<label style={{ fontSize: 18 }}> {props.question}</label>
+				<label style={{ fontSize: 20 }}> {props.question}</label>
 			</div>
 			<br></br>
 			{props.imageData && <img src={props.imageData} alt='' id='img' className='img' />}
@@ -96,7 +96,7 @@ function RadioComponentt(props) {
 										value={option}
 										name={props.question}
 									/>{' '}
-									<span style={{ fontSize: 18 }}>{option}</span>
+									<span style={{ fontSize: 20 }}>{option}</span>
 								</div>
 								<br></br>
 							</div>
@@ -115,7 +115,7 @@ function RadioComponentt(props) {
 										value={option}
 										name={props.question}
 									/>{' '}
-									<span style={{ fontSize: 18 }}>{option}</span>
+									<span style={{ fontSize: 20 }}>{option}</span>
 								</div>
 								<br></br>
 							</div>

@@ -104,7 +104,7 @@ function DescComponentt(props) {
 			{/* <TextField id="outlined-basic" label="Question" multiline={false}  onChange={handleChange} InputProps={{style:{width:'43ch'}}} /><br></br><br></br> */}
 			<Form>
 				<Form.Group className='mt-3 mb-3' controlId='formBasicEmail'>
-					<Form.Label className='mb-3' style={{ fontSize: 18 }}>
+					<Form.Label className='mb-3' style={{ fontSize: 20 }}>
 						{props.question}
 					</Form.Label>
 					{props.imageData && (
@@ -119,7 +119,7 @@ function DescComponentt(props) {
 						disabled={props.readOnly ? true : false}
 						as='textarea'
 						rows={3}
-						style={{ fontSize: 18 }}
+						style={{ fontSize: 20 }}
 						placeholder='Paragraph - Maximum 500 Characters'
 						onChange={handleChange2}
 						onKeyDown={handleKeyDown}

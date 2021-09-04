@@ -36,6 +36,7 @@ function DescComponent(props) {
 						<br />
 
 						<Form.Control
+							style={{ fontSize: '20px' }}
 							as='textarea'
 							multiline={true}
 							onChange={handleChange}
@@ -47,7 +48,11 @@ function DescComponent(props) {
 						/>
 						{show1 && (
 							<div>
-								<Form.Text style={{ color: 'white' }} id='passwordHelpBlock' muted>
+								<Form.Text
+									style={{ color: 'white', fontSize: '20px' }}
+									id='passwordHelpBlock'
+									muted
+								>
 									<br></br>
 									Question cannot exceed 250 characters
 								</Form.Text>

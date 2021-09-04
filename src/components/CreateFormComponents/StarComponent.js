@@ -97,6 +97,7 @@ function StarComponent(props) {
 					<Form.Group className='mb-3' controlId='formBasicEmail'>
 						<Form.Label></Form.Label>
 						<Form.Control
+							style={{ fontSize: '20px' }}
 							as='textarea'
 							onChange={questionChange}
 							title={props.question}
@@ -112,8 +113,7 @@ function StarComponent(props) {
 							</Form.Text>
 						)}
 						<br></br>
-						<br></br>
-						<div>Number of stars to be displayed : </div>
+						<div style={{ fontSize: '18px' }}>Number of stars to be displayed : </div>
 						<br></br>
 						<DropdownButton
 							alignRight
@@ -129,11 +129,10 @@ function StarComponent(props) {
 							))}
 						</DropdownButton>
 						<br></br>
-						<br></br>
 
 						{/* <div>{printQuestion(value)}</div> */}
 
-						<ButtonGroup>
+						<ButtonGroup className='mt-2'>
 							<ToggleButton
 								type='radio'
 								variant={'outline-primary'}
@@ -175,8 +174,7 @@ function StarComponent(props) {
 					</Form.Group>
 				</Form>
 			</form>
-
-		</div >
+		</div>
 	);
 }
 

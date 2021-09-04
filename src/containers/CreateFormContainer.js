@@ -201,6 +201,19 @@ function CreateFormContainer(props) {
 	const handleAddImageToQuestion = (questionId, image) => {
 		dispatch({ type: 'QUESTION_IMAGE_ADD', questionId, image });
 	};
+
+	const imageHandler = (e, questionId) => {
+		console.log('event', e);
+		console.log('question id', questionId);
+		const reader = new FileReader();
+		reader.onload = () => {
+			if (reader.readyState === 2) {
+				handleAddImageToQuestion(questionId, reader.result);
+			}
+		};
+		reader.readAsDataURL(e.target.files[0]);
+	};
+
 	const handleTriedToSave = () => {
 		setTriedToSave(true);
 	};
@@ -414,7 +427,6 @@ function CreateFormContainer(props) {
 											!question.isValid && triedToSave ? '2px solid #721c24' : 'none',
 									}}
 								>
-									
 									<Row
 										sm='auto'
 										//className='justify-content-end'
@@ -427,16 +439,27 @@ function CreateFormContainer(props) {
 												Question {(currentPage - 1) * questionsPerPage + idx + 1}
 											</p>
 										</Col>
-										<Col style={{ display: 'flex', flexDirection: 'row' }}>
-											<QuestionImageComponent
-												key={question.questionId}
-												questionId={question.questionId}
-												profileImg={question.image}
-												addImageHandler={handleAddImageToQuestion}
+										<Col>
+											<input
+												class='image-input'
+												type='file'
+												accept='image/*'
+												name='image-upload'
+												id={`input-${question.questionId}`}
+												onChange={(e) => {
+													imageHandler(e, question.questionId);
+												}}
 											/>
-											{/* </Col>
-										
-										<Col> */}
+											<div className='label'>
+												<label
+													className='image-upload'
+													htmlFor={`input-${question.questionId}`}
+												>
+													Add Image
+												</label>
+											</div>
+										</Col>
+										<Col style={{ display: 'flex', flexDirection: 'row' }}>
 											<Dropdown
 												questionId={question.questionId}
 												questionType={question.questionType}
@@ -451,6 +474,14 @@ function CreateFormContainer(props) {
 												deleteQuestionHandler={handleRemoveQuestion}
 											/>
 										</Col>
+									</Row>
+									<Row>
+										<QuestionImageComponent
+											// key={question.questionId}
+											// questionId={question.questionId}
+											profileImg={question.image}
+											// addImageHandler={handleAddImageToQuestion}
+										/>
 									</Row>
 
 									{/* BASED ON QUESTION TYPE RENDER APPROPRIATE COMPONENT AND PASS IN THE PROPS */}
