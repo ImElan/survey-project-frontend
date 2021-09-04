@@ -27,7 +27,7 @@ function QuestionImageComponent(props) {
 			/>
 			<div className='label'>
 				<label className='image-upload' htmlFor={`input-${questionId}`}>
-					Click to add Image
+					Add Image
 				</label>
 			</div>
 			{profileImg && (
