@@ -3,12 +3,13 @@ import React, { useState, useEffect } from 'react';
 import CenteredTabs from './centeredTabs';
 import responseservice from './services/responseservice';
 import ExportResponse from '../ViewResponseComponents/ExportResponsesByFormId/ExportResponse';
-import { Row, Col, Container } from 'react-bootstrap';
+import { Row, Col, Container, Button } from 'react-bootstrap';
 import FormResponseContainer from '../../containers/FormResponseContainer';
 import SummaryContainer from './SummaryContainer';
 const ResponseSummary = (props) => {
-    console.log("hiiiiiiiiiiiiiiii");
+    //console.log("hiiiiiiiiiiiiiiii");
     const formId = props.location.state.id;
+    //const formTitle = props.location.state.title;
     const [display, setdisplay] = useState("summary");
     const idToken = localStorage.getItem('accessToken');
     const change = (newVal) => {
@@ -23,6 +24,7 @@ const ResponseSummary = (props) => {
     }
     const [responses, setResponses] = useState([]);
     console.log(formId);
+    //console.log(formTitle);
     useEffect(() => {
 
         getData();
@@ -64,8 +66,19 @@ const ResponseSummary = (props) => {
                             : <div></div>
                     }
                 </Col>
+                
                 <Col md={2} style={{ float: "right", marginTop: "5px" }}>
-                    <ExportResponse formId={formId} />
+                   { (responses.length === 0)  
+                       ? (<Row className='justify-content-md-center'>
+                            <Col md={2}>
+                                <Button disabled
+                                    variant='success'
+                                    style={{ borderRadius: '4px', margin: '3px', width:'130px' }}
+                                >Export Data</Button>
+                            </Col>
+                          </Row>)
+                       :<ExportResponse formId={formId}/>
+                   }
                 </Col>
             </Row>
         </Container>

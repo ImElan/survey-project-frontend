@@ -19,14 +19,8 @@ function ResponseFormContainerDuplicate(props) {
 	// const formstate = JSON.parse(window.localStorage.getItem('formstate'));
 	// console.log(props)
 	// var questions = props.questions;
-	let { sendCopy } = props;
+	var { sendCopy } = props;
 
-	function checkHandler() {
-		if (sendCopy === 0) sendCopy = 1;
-		else sendCopy = 0;
-		//console.log(sendCopy);
-		props.handleSendCopy(sendCopy);
-	}
 	console.log(props.questions);
 	const [requiredd, setRequiredd] = useState(-1);
 	const [responseState, dispatch] = useReducer(responseFormReducer, {
@@ -48,6 +42,15 @@ function ResponseFormContainerDuplicate(props) {
 		dispatch({ type: 'SET_INITIAL_ANSWERS', initialAnswers });
 	}, [props.questions]);
 	console.log('After update', responseState.answerss);
+
+	const checkHandler = () => {
+		if (sendCopy === 0) 
+		    sendCopy = 1;
+		else 
+		    sendCopy = 0;
+		//console.log(sendCopy);
+		props.handleSendCopy(sendCopy);
+	}
 
 	const handleoptionchange = (questionId, option) => {
 		dispatch({ type: 'OPTION_SINGLE_SELECT', questionId, option });
@@ -89,7 +92,7 @@ function ResponseFormContainerDuplicate(props) {
 			questiontypes: questionType,
 			questions: questionText,
 			answers: answerText,
-			sendCopy: props.sendCopy,
+			sendCopy: sendCopy,
 		};
 
 		console.log(requestBody);
@@ -179,7 +182,7 @@ function ResponseFormContainerDuplicate(props) {
 						answer={props.answers ? props.answers[i] : null}
 						imageData={question.imageData}
 						setRequiredd={setRequiredd}
-						// preview={props.readOnly}
+						//preview={props.readOnly}
 					/>
 				);
 			case 'MULTIPLE':
@@ -206,7 +209,7 @@ function ResponseFormContainerDuplicate(props) {
 						answerOptionChange={handleoptionchange}
 						imageData={question.imageData}
 						setRequiredd={setRequiredd}
-						// preview={props.readOnly}
+						//preview={props.readOnly}
 					/>
 				);
 			default:
@@ -219,7 +222,7 @@ function ResponseFormContainerDuplicate(props) {
 			<Row
 				className='justify-content-md-center'
 				style={{
-					backgroundColor: '#4B0082', //4B0082
+					backgroundColor: '#4B0082',
 					paddingTop: '0px',
 					paddingBottom: '35px',
 				}}
@@ -257,7 +260,6 @@ function ResponseFormContainerDuplicate(props) {
 							<Col
 								sm={9}
 								style={{
-									//marginRight: '5px',
 									padding: '10px 25px',
 									borderRadius: '8px',
 									backgroundColor: '#F0F0F0', //7866B2
@@ -265,6 +267,16 @@ function ResponseFormContainerDuplicate(props) {
 									//#e6e6e6
 								}}
 							>
+							<Row sm='auto'
+								style={{
+									marginTop: '10px',
+								}}
+							>
+								<Col md='6'> 
+									<p style={{fontSize:'25px', fontWeight:'bold'}}>Question {i+1}</p>
+								</Col>
+							</Row>
+								
 								{/* <Row
 										sm='auto'
 										className='justify-content-end'
@@ -306,18 +318,20 @@ function ResponseFormContainerDuplicate(props) {
 					paddingTop: '0px',
 					paddingBottom: '10px',
 					marginTop: '20px',
-					marginLeft: '125px',
+					marginLeft: '150px',
 				}}
 			>
-				{/* <Col md={4} style={{ margin: '10px' }}>
+				<Col md={4} style={{ margin: '10px' }}>
 					<input
 						type='checkbox'
 						onChange={checkHandler}
 						style={{ marginRight: '6px', width: '15px', height: '15px' }}
+						disabled={props.preview ? true : false}
 					/>
 					<label>Do you want a copy of your response?</label>
-				</Col> */}
+				</Col>
 			</Row>
+
 			<SubmitFormButton
 				answerList={responseState.answerss}
 				sendCopy={sendCopy}

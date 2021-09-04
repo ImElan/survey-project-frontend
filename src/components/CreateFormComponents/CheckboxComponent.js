@@ -156,7 +156,7 @@ function CheckboxComponent(props) {
 
 	return (
 		<div className='App'>
-			<div className='mt-5'>
+			<div className='mt-4'>
 				<textarea
 					className='form-control'
 					value={props.question}

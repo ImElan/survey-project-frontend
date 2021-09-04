@@ -304,7 +304,7 @@ function CreateFormContainer(props) {
 			<Row
 				className='justify-content-md-center'
 				style={{
-					backgroundColor: '#33006F', //#33006F#4B0082
+					backgroundColor: '#33006F', //#4B0082
 					paddingBottom: '25px',
 				}}
 			>
@@ -355,7 +355,7 @@ function CreateFormContainer(props) {
 							paginationStartIndex,
 							(currentPage - 1) * questionsPerPage + questionsPerPage
 						)
-						.map((question) => (
+						.map((question, idx) => (
 							<Row
 								className='justify-content-md-center'
 								key={question.questionId}
@@ -372,35 +372,38 @@ function CreateFormContainer(props) {
 										borderRadius: '8px',
 										boxShadow: '3px 3px 10px darkgray',
 										backgroundColor:
-											!question.isValid && triedToSave ? '#F8D7DA' : '#F0F0F0', //7866B2
+											!question.isValid && triedToSave ? '#F8D7DA' : '#F0F0F0',
 										border:
 											!question.isValid && triedToSave ? '2px solid #721c24' : 'none',
-										//#e6e6e6
 									}}
 								>
 									<Row
 										sm='auto'
-										className='justify-content-end'
+										//className='justify-content-end'
 										style={{
-											marginBottom: '0px',
+											marginTop: '15px',
 										}}
 									>
-										<Col>
+										<Col md='6'> 
+											<p style={{fontSize:'25px', fontWeight:'bold'}}>Question {((currentPage - 1) * questionsPerPage)+ idx+1}</p>
+									    </Col>
+										<Col style={{display:'flex', flexDirection:'row'}}>
 											<QuestionImageComponent
 												key={question.questionId}
 												questionId={question.questionId}
 												profileImg={question.image}
 												addImageHandler={handleAddImageToQuestion}
 											/>
-										</Col>
-										<Col>
+										{/* </Col>
+										
+										<Col> */}
 											<Dropdown
 												questionId={question.questionId}
 												questionType={question.questionType}
 												questionTypeChangeHandler={handleQuestionTypeChange}
 											/>
 										</Col>
-										<Col style={{ marginTop: '10px' }}>
+										<Col style={{ marginTop:'4px', marginLeft:'-4px'}}> 
 											<DeleteButton
 												questionId={question.questionId}
 												disabled={formState.questions.length <= minQuestionAllowed}
@@ -424,7 +427,7 @@ function CreateFormContainer(props) {
 					<Row
 						className='text-center'
 						style={{
-							paddingTop: '20px',
+							//paddingTop: '20px',
 							paddingBottom: '30px',
 						}}
 					>
