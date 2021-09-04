@@ -66,17 +66,14 @@ function CheckBoxComponentt(props) {
 	return (
 		<div className='App mb-2'>
 			<div className='mt-3'>
-				<label style={{  fontSize:18 }}> {props.question}</label>
+				<label style={{ fontSize: 18 }}> {props.question}</label>
 			</div>
-			<br />
-			{props.imageData && 
 			<div>
 				<br />
 				<img src={props.imageData} alt='' id='img' className='img' />
 				<br></br>
 			</div>
-			}
-			
+			<br></br>
 			{props.readOnly ? (
 				<div>
 					{optionss.map((option, i) => {
@@ -89,11 +86,8 @@ function CheckBoxComponentt(props) {
 										checked={props.answer ? props.answer.includes(option) : false}
 										value={option}
 										onChange={handlechange}
-										
 									/>{' '}
-									<span style={{  fontSize:18 }}>
-										{option}
-									</span>
+									<span style={{ fontSize: 18 }}>{option}</span>
 								</div>
 								<br></br>
 								{/* {i} */}
@@ -113,9 +107,7 @@ function CheckBoxComponentt(props) {
 										value={option}
 										onChange={handlechange}
 									/>{' '}
-									<span style={{  fontSize:18 }}>
-										{option}
-									</span>
+									<span style={{ fontSize: 18 }}>{option}</span>
 								</div>
 								<br></br>
 								{/* {i} */}
@@ -124,7 +116,6 @@ function CheckBoxComponentt(props) {
 					})}
 				</div>
 			)}
-
 			{/* <br /> */}
 		</div>
 	);

@@ -107,16 +107,14 @@ function DescComponentt(props) {
 					<Form.Label className='mb-3' style={{ fontSize: 18 }}>
 						{props.question}
 					</Form.Label>
-					<br />
-
 					{props.imageData && (
 						<div>
-							<br></br>
 							<img src={props.imageData} alt='' id='img' className='img' />
 							<br></br>
 						</div>
 					)}
-
+					<br></br>
+					<br />
 					<Form.Control
 						disabled={props.readOnly ? true : false}
 						as='textarea'
