@@ -58,13 +58,13 @@ function RadioComponent(props) {
 		}
 	};
 
+	function checkIfDuplicateExists(w) {
+		return new Set(w).size !== w.length;
+	}
+
 	// Remove Option
 	const handleRemove = (index) => {
 		isOptionArr(false);
-
-		function checkIfDuplicateExists(w) {
-			return new Set(w).size !== w.length;
-		}
 
 		const isValid = !checkIfDuplicateExists(options.optionsArray);
 
@@ -104,14 +104,17 @@ function RadioComponent(props) {
 		} else isOptionMax(false);
 
 		let isSame;
+		let valid = false;
 
 		props.options.optionsArray.map((value) => {
 			if (x === value.option) {
 				setShow(false);
 				isSame = true;
+				valid = true;
 				// return;
 			}
 		});
+
 		if (isSame) {
 			setShow(true);
 			isSameOption(true);
@@ -120,15 +123,16 @@ function RadioComponent(props) {
 			isOptionMax(false);
 		}
 
-		let valid = false;
+		// props.options.optionsArray.map((value) => {
+		// 	props.options.optionsArray.map((value1) => {
+		// 		if (value.option === value1.option && value.optionId !== value1.optionId) {
+		// 			valid = true;
+		// 		}
+		// 	});
+		// });
 
-		props.options.optionsArray.map((value) => {
-			props.options.optionsArray.map((value1) => {
-				if (value.option === value1.option && value.optionId != value1.optionId) {
-					valid = true;
-				}
-			});
-		});
+		// valid = !checkIfDuplicateExists(options.optionsArray);
+
 		props.options.optionsArray.map((value) => {
 			if (x === value.option || x === '' || value.option === '') {
 				valid = true;
