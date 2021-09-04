@@ -27,8 +27,10 @@ function SubmitFormButton(props) {
 		console.log(answerList);
 		answerList.forEach(function (answer, index) {
 			if (answer.questions.required === true) {
-				if (answer.questions.questionType == 'SINGLE'
-					|| answer.questions.questionType == 'MULTIPLE') {
+				if (
+					answer.questions.questionType == 'SINGLE' ||
+					answer.questions.questionType == 'MULTIPLE'
+				) {
 					if (answer.answer.length == 0) {
 						flag = false;
 						if (idx == -1) idx = index;
@@ -61,11 +63,7 @@ function SubmitFormButton(props) {
 					Close!
 				</Button>
 			</Alert>
-			<Button
-				className='bg-purple f3 fw5 bw1 grow pointer'
-				onClick={errorCheck}
-				disabled={props.disabled}
-			>
+			<Button onClick={errorCheck} disabled={props.disabled} className='my-4'>
 				Submit Form
 			</Button>
 

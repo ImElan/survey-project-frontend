@@ -5,26 +5,32 @@ import ResponseFormContainer from './ResponseFormContainer';
 import FormResponses from '../components/FormResponses/FormResponses';
 import ResponseFormContainerDuplicate from './ResponseFormContainerDuplicate';
 function PreviewFormContainer(props) {
-    const formstate = JSON.parse(window.localStorage.getItem('formstate'));
-    const newQuestions = formstate.questions.map((question) => {
-        let optionsArr = null;
-        if (question.questionType === 'SINGLE' || question.questionType === 'MULTIPLE') {
-            optionsArr = question.options.optionsArray.map((option) => option.option);
-        }
-        return {
-            ...question,
-            options: optionsArr
-        }
-    })
-    const preview = "PREVIEW";
-    return (
-      <div>
-        <ResponseFormContainerDuplicate preview={true} title={formstate.title} description={formstate.description} calledBy={preview}
-        questions={newQuestions} totalQuestions={formstate.totalQuestions} questionsPerPage={formstate.questionsPerPage} >
-            console.log(formstate);
-
-        </ResponseFormContainerDuplicate>
-        </div>
-    )
+	const formstate = JSON.parse(window.localStorage.getItem('formstate'));
+	const newQuestions = formstate.questions.map((question) => {
+		let optionsArr = null;
+		if (question.questionType === 'SINGLE' || question.questionType === 'MULTIPLE') {
+			optionsArr = question.options.optionsArray.map((option) => option.option);
+		}
+		return {
+			...question,
+			options: optionsArr,
+		};
+	});
+	const preview = 'PREVIEW';
+	return (
+		<div>
+			<ResponseFormContainerDuplicate
+				preview={true}
+				title={formstate.title}
+				description={formstate.description}
+				calledBy={preview}
+				questions={newQuestions}
+				totalQuestions={formstate.totalQuestions}
+				questionsPerPage={5}
+			>
+				console.log(formstate);
+			</ResponseFormContainerDuplicate>
+		</div>
+	);
 }
 export default PreviewFormContainer;

@@ -24,7 +24,6 @@ function ResponseFormContainerDuplicate(props) {
 	// var questions = props.questions;
 	let { sendCopy } = props;
 
-
 	const [currentPage, setCurrentPage] = useState(1);
 	const [questionsPerPage, setquestionsPerPage] = useState(props.questionsPerPage);
 	const pagechangerequesthandler = (number) => {
@@ -34,12 +33,10 @@ function ResponseFormContainerDuplicate(props) {
 		setquestionsPerPage(option);
 	};
 
-
-
-console.log(props.totalQuestions);
-console.log(props.questionsPerPage);
-console.log(currentPage);
-console.log(questionsPerPage);
+	console.log(props.totalQuestions);
+	console.log(props.questionsPerPage);
+	console.log(currentPage);
+	console.log(questionsPerPage);
 	// useEffect(() => {
 	// 	setCurrentPage(Math.ceil(props.totalQuestions / props.questionsPerPage));
 	// }, [props.totalQuestions, props.questionsPerPage]);
@@ -49,7 +46,6 @@ console.log(questionsPerPage);
 	if (paginationStartIndex > props.totalQuestions) {
 		paginationStartIndex = 0;
 	}
-
 
 	function checkHandler() {
 		if (sendCopy === 0) sendCopy = 1;
@@ -245,7 +241,6 @@ console.log(questionsPerPage);
 	};
 
 	return (
-
 		<Container fluid>
 			<Row
 				className='justify-content-md-center'
@@ -254,9 +249,13 @@ console.log(questionsPerPage);
 					paddingTop: '0px',
 					paddingBottom: '15px',
 				}}
-			>	<h5 class="display-5" style={{color: 'white' }}>{props.title}</h5>
-			<p style={{color: 'white' }}>{props.description}</p>	</Row>
-
+			>
+				{' '}
+				<h5 class='display-5' style={{ color: 'white' }}>
+					{props.title}
+				</h5>
+				<p style={{ color: 'white' }}>{props.description}</p>{' '}
+			</Row>
 
 			<Row
 				className='justify-content-md-center'
@@ -264,10 +263,7 @@ console.log(questionsPerPage);
 					paddingTop: '0px',
 					paddingBottom: '25px',
 				}}
-
-			>
-
-			</Row>
+			></Row>
 
 			{props.questions &&
 				props.questions
@@ -334,17 +330,16 @@ console.log(questionsPerPage);
 					))}
 			<Row
 				style={{
-
 					marginTop: '100px',
 					marginLeft: '15px',
 				}}
 			>
-			<Paging
-				totalQuestions={props.totalQuestions}
-				questionsPerPage={questionsPerPage}
-				pageChangeRequestHandler={pagechangerequesthandler}
-				currentPage={currentPage}
-			/>
+				<Paging
+					totalQuestions={props.totalQuestions}
+					questionsPerPage={questionsPerPage}
+					pageChangeRequestHandler={pagechangerequesthandler}
+					currentPage={currentPage}
+				/>
 
 				{/* <Col md={4} style={{ margin: '10px' }}>
 					<input
@@ -355,19 +350,17 @@ console.log(questionsPerPage);
 					<label>Do you want a copy of your response?</label>
 				</Col> */}
 			</Row>
-		{	!props.preview && <SubmitFormButton
-				answerList={responseState.answerss}
-				sendCopy={sendCopy}
-				submitFormHandler={handleSubmitForm}
-				setRequiredd={setRequiredd}
-				disabled={props.preview ? true : false}
-			/>}
-
+			{!props.preview && (
+				<SubmitFormButton
+					answerList={responseState.answerss}
+					sendCopy={sendCopy}
+					submitFormHandler={handleSubmitForm}
+					setRequiredd={setRequiredd}
+					disabled={props.preview ? true : false}
+				/>
+			)}
 		</Container>
+	);
+}
 
-
-
-	 );
- }
-
- export default ResponseFormContainerDuplicate;
+export default ResponseFormContainerDuplicate;

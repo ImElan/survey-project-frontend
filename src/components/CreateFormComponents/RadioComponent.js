@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { BsFillTrashFill } from 'react-icons/bs';
 import { Form, Alert } from 'react-bootstrap';
 function RadioComponent(props) {
-	const [isEdit, setIsEdit] = useState([false, false]); //Options state
+	const editInitialState = props.options.optionsArray.map(() => false);
+	// const [isEdit, setIsEdit] = useState([false, false]); //Options state
+	const [isEdit, setIsEdit] = useState(editInitialState); //Options state
 	const { options } = props;
 	const [optionMax, isOptionMax] = useState(false); // Options Char Length
 	const [questionMax, isQuestionMax] = useState(false); // Question Max Length

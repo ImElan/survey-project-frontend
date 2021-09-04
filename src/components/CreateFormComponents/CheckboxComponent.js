@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { BsFillTrashFill } from 'react-icons/bs';
 import { Form, Alert } from 'react-bootstrap';
 function CheckboxComponent(props) {
-	const [isEdit, setIsEdit] = useState([false, false]); //Toggle
+	const editInitialState = props.options.optionsArray.map(() => false);
+	const [isEdit, setIsEdit] = useState(editInitialState); //Toggle
+	// const [isEdit, setIsEdit] = useState([false, false]); //Toggle
 	const { options } = props;
 	const [optionMax, isOptionMax] = useState(false); // Options Char Length
 	const [questionMax, isQuestionMax] = useState(false); // Question Max Length
