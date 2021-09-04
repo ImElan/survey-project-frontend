@@ -124,13 +124,14 @@ function CheckboxComponent(props) {
 
 		let valid = false;
 
-		props.options.optionsArray.map((value) => {
-			props.options.optionsArray.map((value1) => {
-				if (value.option === value1.option && value.optionId != value1.optionId) {
-					valid = true;
-				}
-			});
-		});
+		// props.options.optionsArray.map((value) => {
+		// 	props.options.optionsArray.map((value1) => {
+		// 		if (value.option === value1.option && value.optionId != value1.optionId) {
+		// 			valid = true;
+		// 		}
+		// 	});
+		// });
+
 		props.options.optionsArray.map((value) => {
 			if (x === value.option || x === '' || value.option === '') {
 				valid = true;
