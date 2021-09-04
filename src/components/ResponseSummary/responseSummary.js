@@ -10,6 +10,7 @@ import SummaryContainer from './SummaryContainer';
 const ResponseSummary = (props) => {
 	console.log('hiiiiiiiiiiiiiiii');
 	const formId = props.location.state.id;
+	const formTitle = props.location.state.title;
 	const [display, setdisplay] = useState('summary');
 	const [responses, setResponses] = useState([]);
 	const [alertState, setAlertClose] = useState(false);
@@ -70,7 +71,7 @@ const ResponseSummary = (props) => {
 						)}
 					</Col>
 					<Col md={2} style={{ float: 'right', marginTop: '5px' }}>
-						<ExportResponse formId={formId} />
+						<ExportResponse formId={formId} formTitle={formTitle} />
 					</Col>
 				</Row>
 			) : (

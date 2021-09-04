@@ -20,7 +20,7 @@ function SaveFormButton(props) {
 
 	const [loading, setLoading] = useState(false);
 	const changeLoading = () => {
-		console.log('call hua');
+		//console.log("call hua")
 		setLoading(false);
 	};
 
@@ -68,14 +68,19 @@ function SaveFormButton(props) {
 			else return item;
 		});
 
-		if (!flag1) {
+		console.log(duplicateArr.length);
+		console.log(flag1);
+
+		if (flag1 === false) {
+			console.log('empty fields');
 			showError('Could not save form! Empty fields or Duplicate options found.');
 		} else if (duplicateArr.length) {
+			console.log('duplicate');
 			showError('Could not save form! Duplicate questions found.');
 		} else if (formTitle.trim().length === 0) {
-			showError('Could not save form! Form Title Cannot be empty.');
+			showError('Could not save form! Form Title cannot be empty.');
 		} else if (formDescription.trim().length === 0) {
-			showError('Could not save formr! Form Description Cannot be empty.');
+			showError('Could not save form! Form Description cannot be empty.');
 		} else {
 			hideError();
 			popUpOpen();
@@ -86,7 +91,7 @@ function SaveFormButton(props) {
 	return (
 		<div className='text-center'>
 			<Alert show={err} variant='danger'>
-				<h5>Could not save! Some empty fields found in your form.</h5>
+				<h5>{alertBody}</h5>
 				<Button
 					onClick={() => {
 						changeLoading();
@@ -97,17 +102,10 @@ function SaveFormButton(props) {
 					Close!
 				</Button>
 			</Alert>
-			{/* <Button
-				variant='dark'
-				className='bg-purple f3 fw5 bw1 grow pointer'
-				onClick={errorCheck}
-			>
-				Save Form
-			</Button> */}
-
 			<div style={{ marginTop: '60px' }}>
 				<Button
 					variant='primary'
+					size='lg'
 					onClick={() => {
 						errorCheck();
 						fetchData();

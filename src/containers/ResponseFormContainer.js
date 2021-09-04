@@ -32,9 +32,7 @@ function ResponseFormContainer(props) {
 	});
 
 
-
-
-
+	
 	const [requiredd, setRequiredd] = useState(-1);
 	const handleoptionchange = (questionId, optionId) => {
 		dispatch({ type: 'OPTION_SINGLE_SELECT', questionId, optionId });
@@ -183,10 +181,9 @@ function ResponseFormContainer(props) {
 
 			</Row>
 
-
 			{
 				props.questions && props.questions
-					.map((question) => (
+					.map((question,idx) => (
 
 						< Row
 							className='justify-content-md-center'
@@ -209,6 +206,17 @@ function ResponseFormContainer(props) {
 									//#e6e6e6
 								}}
 							>
+							<Row sm='auto'
+								//className='justify-content-end'
+								style={{
+									marginTop: '10px',
+								}}
+							>
+								<Col md='6'> 
+									<p style={{fontSize:'25px', fontWeight:'bold'}}>Question {idx+1}</p>
+								</Col>
+							</Row>
+
 								{/* <Row
 										sm='auto'
 										className='justify-content-end'

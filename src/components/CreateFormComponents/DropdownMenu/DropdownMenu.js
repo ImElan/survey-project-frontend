@@ -35,7 +35,7 @@ function DropdownMenu(props) {
 	return (
 		<div>
 			<DropdownButton
-				// size='lg'
+				//size='lg'
 				onSelect={onSelect}
 				variant='primary'
 				title={options[props.questionType]}

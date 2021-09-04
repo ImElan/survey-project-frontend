@@ -92,7 +92,12 @@ function FormData(props) {
 					<div className='flex-left'>
 						<button
 							className='btn btn-primary'
-							onClick={() => props.history.push('/viewresponses', { id: props.form.id })}
+							onClick={() =>
+								props.history.push('/viewresponses', {
+									id: props.form.id,
+									title: props.form.formTitle,
+								})
+							}
 						>
 							Responses
 						</button>

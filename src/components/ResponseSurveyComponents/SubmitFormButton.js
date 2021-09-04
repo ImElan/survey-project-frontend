@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Alert } from 'react-bootstrap';
 import PopUpModal from '../CreateFormComponents/PopUpModal';
-import 'tachyons';
+//import 'tachyons';
 
 function SubmitFormButton(props) {
 	const { answerList, submitFormHandler, setRequiredd } = props;
@@ -63,7 +63,7 @@ function SubmitFormButton(props) {
 					Close!
 				</Button>
 			</Alert>
-			<Button onClick={errorCheck} disabled={props.disabled} className='my-4'>
+			<Button variant='primary' size='lg' onClick={errorCheck} disabled={props.disabled}>
 				Submit Form
 			</Button>
 
