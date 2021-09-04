@@ -21,6 +21,7 @@ function Preview(props) {
 		show.questions = props.questionList.map((question) => {
 			return {
 				...question,
+				image: null,
 				imageData: question.image,
 			};
 		});

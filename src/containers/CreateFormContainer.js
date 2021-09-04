@@ -20,6 +20,14 @@ import { useHistory } from 'react-router';
 import axios from 'axios';
 
 function CreateFormContainer(props) {
+	const {
+		isEditing,
+		formId,
+		initialTitle,
+		initialDescription,
+		initialEditable,
+		initialQuestionsFromEdit,
+	} = props;
 	// Form State
 	const [formState, dispatch] = useReducer(createFormReducer, {
 		title: '',
@@ -27,6 +35,7 @@ function CreateFormContainer(props) {
 		isEditable: false,
 		questions: [],
 	});
+	console.log(formState);
 	const idToken = localStorage.getItem('accessToken');
 	console.log(idToken);
 	// State holding maximum question allowed (will get from backend later)
@@ -68,29 +77,44 @@ function CreateFormContainer(props) {
 
 	// RENDER THE INITIAL NUMBER OF QUESTIONS ON THE SCREEN BASED ON MIN QUESTIONS ALLOWED VALUE
 	useEffect(() => {
-		const initialQuestions = [];
-		for (let i = 0; i < minQuestionAllowed; i++) {
-			initialQuestions.push({
-				questionId: uuidv4(),
-				question: '',
-				options: {
-					optionsArray: [
-						{ optionId: uuidv4(), option: 'Option 1' },
-						{ optionId: uuidv4(), option: 'Option 2' },
-					],
-					isOptionsValid: true,
-				},
-				questionType: 'SINGLE',
-				required: false,
-				isValid: false,
-				numStars: null,
-				threshold: null,
-				isHalfStarAllowed: null,
-				image: null,
-			});
+		const initialQuestions = initialQuestionsFromEdit ? initialQuestionsFromEdit : [];
+		if (!isEditing) {
+			for (let i = 0; i < minQuestionAllowed; i++) {
+				initialQuestions.push({
+					questionId: uuidv4(),
+					question: '',
+					options: {
+						optionsArray: [
+							{ optionId: uuidv4(), option: 'Option 1' },
+							{ optionId: uuidv4(), option: 'Option 2' },
+						],
+						isOptionsValid: true,
+					},
+					questionType: 'SINGLE',
+					required: false,
+					isValid: false,
+					numStars: null,
+					threshold: null,
+					isHalfStarAllowed: null,
+					image: null,
+				});
+			}
 		}
-		dispatch({ type: 'SET_INITIAL_QUESTIONS', initialQuestions });
-	}, [minQuestionAllowed]);
+		dispatch({
+			type: 'SET_INITIAL_QUESTIONS',
+			initialQuestions,
+			initialTitle,
+			initialDescription,
+			initialEditable,
+		});
+	}, [
+		minQuestionAllowed,
+		initialQuestionsFromEdit,
+		isEditing,
+		initialTitle,
+		initialDescription,
+		initialEditable,
+	]);
 
 	// Method to handle title change in form header
 	const handleTitleChange = (newTitle) => {
@@ -212,17 +236,30 @@ function CreateFormContainer(props) {
 		console.log(requestBody);
 
 		try {
-			const response = await axios.post(
-				'http://localhost:8080/api/addform',
-				requestBody,
-				{
+			let query;
+			let response;
+			if (isEditing) {
+				query = 'http://localhost:8080/api/updateform';
+				response = await axios.put(
+					query,
+					{ id: formId, ...requestBody },
+					{
+						headers: {
+							Authorization: `Bearer ${idToken}`,
+							'Content-type': 'application/json; charset=UTF-8',
+						},
+					}
+				);
+			} else {
+				query = 'http://localhost:8080/api/addform';
+
+				response = await axios.post(query, requestBody, {
 					headers: {
 						Authorization: `Bearer ${idToken}`,
 						'Content-type': 'application/json; charset=UTF-8',
 					},
-				},
-				requestBody
-			);
+				});
+			}
 			history.push('/loginSuccess');
 			console.log(response.data);
 		} catch (error) {
@@ -429,6 +466,7 @@ function CreateFormContainer(props) {
 						}}
 					>
 						<SaveFormButton
+							isEditing={isEditing}
 							formTitle={formState.title}
 							formDescription={formState.description}
 							questionList={formState.questions}

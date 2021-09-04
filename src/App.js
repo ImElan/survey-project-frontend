@@ -11,13 +11,8 @@ import AdminAcessContainer from './containers/AdminAcessContainer';
 
 import EditResponse from './components/EditResponse/EditResponse';
 import Displayforms from './components/DisplayallformHrComponents/Displayforms';
-import {
-	BrowserRouter as Router,
-	Redirect,
-	Route,
-	Link,
-	Switch
-} from 'react-router-dom'
+import { BrowserRouter as Router, Redirect, Route, Link, Switch } from 'react-router-dom';
+import EditHrFormContainer from './containers/EditHrFormContainer';
 
 function App() {
 	let routes;
@@ -31,6 +26,7 @@ function App() {
 				<Route exact strict path='/preview' component={PreviewFormContainer} />
 				<Route exact strict path='/viewresponses' component={ResponseSummary}></Route>
 				<Route exact strict path='/loginSuccess' component={Displayforms} />
+				<Route exact path='/forms/:formId/edit' component={EditHrFormContainer} />
 				<Redirect to='/loginSuccess' />
 			</Switch>
 		);
@@ -39,10 +35,12 @@ function App() {
 			<Switch>
 				<Route exact strict path='/forms/:id' component={ViewFormContainer} />
 				<Route exact strict path='/form/thankyou' component={ThankYouContainer} />
-				<Route exact strict path='/editresponse/:formId/:userId' component={EditResponse}></Route>
-
-
-
+				<Route
+					exact
+					strict
+					path='/editresponse/:formId/:userId'
+					component={EditResponse}
+				></Route>
 			</Switch>
 		);
 	} else if (!role) {

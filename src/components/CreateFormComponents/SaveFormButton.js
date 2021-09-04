@@ -4,6 +4,7 @@ import PopUpModal from './PopUpModal';
 
 function SaveFormButton(props) {
 	const {
+		isEditing,
 		formTitle,
 		formDescription,
 		questionList,
@@ -19,9 +20,9 @@ function SaveFormButton(props) {
 
 	const [loading, setLoading] = useState(false);
 	const changeLoading = () => {
-		console.log("call hua")
+		console.log('call hua');
 		setLoading(false);
-	}
+	};
 
 	const fetchData = () => {
 		setLoading(true);
@@ -86,7 +87,13 @@ function SaveFormButton(props) {
 		<div className='text-center'>
 			<Alert show={err} variant='danger'>
 				<h5>Could not save! Some empty fields found in your form.</h5>
-				<Button onClick={() => { changeLoading(); setAlert(false); }} variant='outline-danger'>
+				<Button
+					onClick={() => {
+						changeLoading();
+						setAlert(false);
+					}}
+					variant='outline-danger'
+				>
 					Close!
 				</Button>
 			</Alert>
@@ -98,18 +105,20 @@ function SaveFormButton(props) {
 				Save Form
 			</Button> */}
 
-			<div style={{ marginTop: "60px" }}>
-				<Button variant="primary"
-					onClick={() => { errorCheck(); fetchData(); }}
-					disabled={loading}>
+			<div style={{ marginTop: '60px' }}>
+				<Button
+					variant='primary'
+					onClick={() => {
+						errorCheck();
+						fetchData();
+					}}
+					disabled={loading}
+				>
 					{loading && (
-						<i
-							className="fa fa-refresh fa-spin"
-							style={{ marginRight: "5px" }}
-						/>
+						<i className='fa fa-refresh fa-spin' style={{ marginRight: '5px' }} />
 					)}
 					{loading && <span>Loading...</span>}
-					{!loading && <span   >Save Form</span>}
+					{!loading && <span>{isEditing ? 'Update Form' : 'Save Form'}</span>}
 				</Button>
 			</div>
 
