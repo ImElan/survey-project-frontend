@@ -7,40 +7,50 @@ import axios from 'axios';
 import $ from 'jquery';
 
 var $table = $('table'),
-    $bodyCells = $table.find('tbody tr:first').children(),
-    colWidth,
-	$headerCells = $table.find('thead tr:first').children()
-	;
-
+	$bodyCells = $table.find('tbody tr:first').children(),
+	colWidth,
+	$headerCells = $table.find('thead tr:first').children();
 // Get the tbody columns width array
-colWidth = $bodyCells.map(function() {
-    return $(this).width();
-}).get();
+colWidth = $bodyCells
+	.map(function () {
+		return $(this).width();
+	})
+	.get();
 
 // Set the width of thead columns
-$table.find('thead tr').children().each(function(i, v) {
-    $(v).width(colWidth[i]);
-});
+$table
+	.find('thead tr')
+	.children()
+	.each(function (i, v) {
+		$(v).width(colWidth[i]);
+	});
 
-var headerWidth = $headerCells.map(function() {
-	return $(this).width();
-}).get();
+var headerWidth = $headerCells
+	.map(function () {
+		return $(this).width();
+	})
+	.get();
 
-$table.find('tbody tr').children().each(function(i,v) {
-	$(v).width(headerWidth[i]);
-});
-
+$table
+	.find('tbody tr')
+	.children()
+	.each(function (i, v) {
+		$(v).width(headerWidth[i]);
+	});
 
 const Styles = styled.div`
 	padding: 1rem;
 	table {
 		border-spacing: 0;
 		border: 1px solid black;
-        thead, tbody { display: block; }
+		thead,
+		tbody {
+			display: block;
+		}
 
 		tbody {
-			height: 400px;       
-			overflow-y: auto;    
+			height: 400px;
+			overflow-y: auto;
 			overflow-x: hidden;
 		}
 		tr {
@@ -78,7 +88,7 @@ const IndeterminateCheckbox = React.forwardRef(({ indeterminate, ...rest }, ref)
 	);
 });
 
-function Table({ columns, data, handleModalClose, handleAlertState, formId}) {
+function Table({ columns, data, handleModalClose, handleAlertState, formId }) {
 	const [loading, setIsLoading] = useState(false);
 
 	const setLoadingState = (value) => {
@@ -156,7 +166,7 @@ function Table({ columns, data, handleModalClose, handleAlertState, formId}) {
 					})}
 				</tbody>
 			</table>
-			
+
 			<br></br>
 			<input
 				className='btn btn-primary'
@@ -169,7 +179,7 @@ function Table({ columns, data, handleModalClose, handleAlertState, formId}) {
 						handleModalClose,
 						setLoadingState,
 						handleAlertState,
-                        formId
+						formId
 					);
 				}}
 			/>
@@ -177,11 +187,17 @@ function Table({ columns, data, handleModalClose, handleAlertState, formId}) {
 	);
 }
 
-async function sendemail(data, handleModalClose, setLoadingState, handleAlertState,formId) {
+async function sendemail(
+	data,
+	handleModalClose,
+	setLoadingState,
+	handleAlertState,
+	formId
+) {
 	const sendData = {
-        formid : formId,
-        toemails : data
-    }
+		formid: formId,
+		toemails: data,
+	};
 	const idToken = localStorage.getItem('accessToken');
 	try {
 		setLoadingState(true);
@@ -226,15 +242,14 @@ function ReminderListComponent(props) {
 				Header: 'Date of Joining',
 				accessor: 'Employee DOJ',
 			},
-            {
-                Header : 'Business Unit',
-                accessor : 'Employee BU',
-            }
+			{
+				Header: 'Business Unit',
+				accessor: 'Employee BU',
+			},
 		],
 
 		[]
 	);
-
 
 	return (
 		<Styles>
@@ -243,7 +258,7 @@ function ReminderListComponent(props) {
 				data={props.employees}
 				handleModalClose={props.handleModalClose}
 				handleAlertState={props.handleAlertState}
-                formId = {props.formId}
+				formId={props.formId}
 			/>
 		</Styles>
 	);
