@@ -46,13 +46,41 @@ function ViewFormContainer(props) {
 		getData();
 		// }
 		async function getData() {
+			const userId = localStorage.getItem('userId')
+			let isFound = false;
+			try {
+				const result = await fetch(
+					`http://localhost:8080/response/${id}/${userId}`
+				).then((data) => data);
+				const response_1 = await result.json();
+				isFound = true;
+				if(response_1.statusCode == "NOT_FOUND" )
+					isFound = false;
+			} catch(err){
+				isFound = false
+				console.log(err);
+			}
+			console.log("is Found", isFound)
+
 			const response = await fetch(`http://localhost:8080/api/form/${id}`, {
 				headers: {
 					Authorization: `Bearer ${idToken}`,
 					'Content-type': 'application/json; charset=UTF-8',
 				},
 			});
+			
 			const data = await response.json();
+
+			if(isFound){
+				console.log("are you inside");
+				history.push('/form/thankyou', {
+					title: data.formTitle,
+					isFormEditable: data.formEditable,
+					formId: id,
+					userId: userId,
+				})
+				
+			}
 			const q = data.surveyQuestions;
 			console.log(q);
 			setQuestions(q);
