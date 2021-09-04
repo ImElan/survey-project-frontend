@@ -8,15 +8,15 @@ function Preview(props) {
 		title: '',
 		description: '',
 		questions: [],
-		totalQuestions:'',
-		questionsPerPage:'',
+		totalQuestions: '',
+		questionsPerPage: '',
 	});
 
 	useEffect(() => {
 		show.title = props.formTitle;
 		show.description = props.formDescription;
-		show.totalQuestions=props.totalQuestions;
-		show.questionsPerPage=props.questionsPerPage;
+		show.totalQuestions = props.totalQuestions;
+		show.questionsPerPage = props.questionsPerPage;
 		// show.questions = props.questionList;
 		show.questions = props.questionList.map((question) => {
 			return {
@@ -25,6 +25,7 @@ function Preview(props) {
 				imageData: question.image,
 			};
 		});
+		console.log(show);
 		window.localStorage.setItem('formstate', JSON.stringify(show));
 	});
 	const [view, showview] = useState(true);

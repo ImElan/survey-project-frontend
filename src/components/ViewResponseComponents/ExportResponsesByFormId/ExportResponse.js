@@ -39,6 +39,10 @@ const ExportResponse = (props) => {
 		let data = await getResponsesByFormId(formId);
 		console.log(data);
 
+		if (data.length === 0) {
+			return;
+		}
+
 		data[0].questions.forEach(function (ques) {
 			question.push(ques);
 		});

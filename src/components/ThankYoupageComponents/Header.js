@@ -29,17 +29,17 @@ function Header(props) {
 		<div
 			style={{
 				width: '100%',
-				border: '1px',
-				boxShadow: '0px 0px 2px 2px #cfd1e3',
+				border: '1px solid black',
+				// boxShadow: '0px 0px 2px 2px #cfd1e3',
 				borderRadius: '15px',
 				margin: '15px auto auto auto',
-				backgroundColor: 'white',
+				backgroundColor: 'rgb(225,225,225)',
 			}}
 		>
 			<div
 				style={{
 					height: '10px',
-					backgroundColor: '#4B0082',
+					backgroundColor: 'rgb(75, 0, 130)',
 					borderRadius: '15px 15px 0px 0px',
 				}}
 			></div>

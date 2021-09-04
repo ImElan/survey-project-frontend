@@ -3,7 +3,7 @@ import { Spinner } from 'react-bootstrap';
 import styled from 'styled-components';
 import { useTable, useRowSelect } from 'react-table';
 import axios from 'axios';
-//import SendEmailComponent from '../components/SendEmailComponents/SendEmailComponent';
+// import SendEmailComponent from '../components/SendEmailComponents/SendEmailComponent';
 
 const Styles = styled.div`
 	padding: 1rem;
@@ -45,7 +45,7 @@ const IndeterminateCheckbox = React.forwardRef(({ indeterminate, ...rest }, ref)
 	);
 });
 
-function Table({ columns, data, handleModalClose, handleAlertState }) {
+function Table({ columns, data, handleModalClose, handleAlertState, formId }) {
 	const [loading, setIsLoading] = useState(false);
 
 	const setLoadingState = (value) => {
@@ -111,7 +111,7 @@ function Table({ columns, data, handleModalClose, handleAlertState }) {
 					))}
 				</thead>
 				<tbody {...getTableBodyProps()}>
-					{rows.map((row, i) => {
+					{rows.slice(0, 10).map((row, i) => {
 						prepareRow(row);
 						return (
 							<tr {...row.getRowProps()}>
@@ -123,36 +123,20 @@ function Table({ columns, data, handleModalClose, handleAlertState }) {
 					})}
 				</tbody>
 			</table>
-			{/* <p>Selected Rows: {Object.keys(selectedRowIds).length}</p>
-            <pre>
-                <code>
-                    {JSON.stringify(
-                        {
-                            selectedRowIds: selectedRowIds,
-                            'selectedFlatRows[].original': selectedFlatRows.map(
-                                d => d.original["Email Mail ID"]
-                            ),
-                        },
-                        null,
-                        2
-                    )}
-                </code>
-            </pre> */}
+
 			<br></br>
 			<input
 				className='btn btn-primary'
 				type='button'
-				value='Send Mail'
+				value='Send Reminder'
 				onClick={() => {
 					console.log('send formbutton clicked');
-					// sendemail(selectedFlatRows.map(
-					//     d => d.original["Email Mail ID"]
-					// ));
 					sendemail(
 						selectedFlatRows.map((d) => d.original['Email Mail ID']),
 						handleModalClose,
 						setLoadingState,
-						handleAlertState
+						handleAlertState,
+						formId
 					);
 				}}
 			/>
@@ -160,18 +144,23 @@ function Table({ columns, data, handleModalClose, handleAlertState }) {
 	);
 }
 
-// const sendmail = (emailList) => {
-
-// }
-async function sendemail(data, handleModalClose, setLoadingState, handleAlertState) {
-	console.log(data);
+async function sendemail(
+	data,
+	handleModalClose,
+	setLoadingState,
+	handleAlertState,
+	formId
+) {
+	const sendData = {
+		formid: formId,
+		toemails: data,
+	};
 	const idToken = localStorage.getItem('accessToken');
-
 	try {
 		setLoadingState(true);
 		const response = await axios.post(
-			'http://localhost:8080/accolite/send_email',
-			{ tomailid: data },
+			'http://localhost:8080/accolite/send_reminder',
+			sendData,
 			{
 				headers: {
 					Authorization: `Bearer ${idToken}`,
@@ -190,12 +179,11 @@ async function sendemail(data, handleModalClose, setLoadingState, handleAlertSta
 	}
 }
 
-function EmployeeListComponent(props) {
-	const [employees, setEmployees] = useState([]);
+function ReminderListComponent(props) {
 	const columns = React.useMemo(
 		() => [
 			{
-				Header: 'Employeee Code',
+				Header: 'Employee Code',
 				accessor: 'Employee Code',
 			},
 			{
@@ -211,57 +199,30 @@ function EmployeeListComponent(props) {
 				Header: 'Date of Joining',
 				accessor: 'Employee DOJ',
 			},
+			{
+				Header: 'Business Unit',
+				accessor: 'Employee BU',
+			},
+			{
+				Header: 'Employee Account',
+				accessor: 'Employee Account',
+			},
 		],
 
 		[]
 	);
 
-	const emp = async () => {
-		const idToken = localStorage.getItem('accessToken');
-
-		const response = await fetch('http://localhost:8080/accolite/filter_employees', {
-			headers: {
-				Authorization: `Bearer ${idToken}`,
-				'Content-type': 'application/json; charset=UTF-8',
-			},
-			method: 'POST',
-			body: JSON.stringify({
-				formid: props.formId, //props.formid
-				from_date: props.from_date,
-				to_date: props.to_date,
-				no_of_days_after_mail: props.no_of_days_after_mail,
-			}),
-		});
-		console.log('here in response');
-		console.log(response);
-		const dataemp = await response.json();
-		setEmployees(dataemp);
-
-		const employees2 = [
-			{
-				'Employee Name': 'Bhagyashree Kiran Vaidya',
-				'Employee DOJ': '13/01/2021',
-				'Employee Code': 'CNT0434',
-				'Email Mail ID': 'bhagyashree.vaidya@accolitedigital.com',
-			},
-		];
-
-		console.log(employees);
-	};
-	useEffect(() => {
-		emp();
-	}, []);
-
 	return (
 		<Styles>
 			<Table
 				columns={columns}
-				data={employees}
+				data={props.employees}
 				handleModalClose={props.handleModalClose}
 				handleAlertState={props.handleAlertState}
+				formId={props.formId}
 			/>
 		</Styles>
 	);
 }
 
-export default EmployeeListComponent;
+export default ReminderListComponent;
