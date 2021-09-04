@@ -29,6 +29,16 @@ function ResponseFormContainerDuplicate(props) {
 	}
 	console.log(props.questions);
 	const [requiredd, setRequiredd] = useState(-1);
+	const scrollFeature = useRef(null);
+	var refArray = []
+	// for (var i = 0; i < props.questions.length; i++) {
+	// 	refArray.push(useRef(i));
+	// }
+
+	const refCallback = (ref) => {
+		refArray.push(ref);
+	};
+
 	const [responseState, dispatch] = useReducer(responseFormReducer, {
 		userid: '',
 		answerss: [],
@@ -167,6 +177,8 @@ function ResponseFormContainerDuplicate(props) {
 						threshold={question.threshold}
 						answerFeedbackHandler={handleAnswerParaChange}
 						setRequiredd={setRequiredd}
+						requiredd={requiredd}
+						refCallback={refCallback}
 						// preview={props.readOnly}
 					/>
 				);
@@ -179,6 +191,8 @@ function ResponseFormContainerDuplicate(props) {
 						answer={props.answers ? props.answers[i] : null}
 						imageData={question.imageData}
 						setRequiredd={setRequiredd}
+						requiredd={requiredd}
+						refCallback={refCallback}
 						// preview={props.readOnly}
 					/>
 				);
@@ -192,6 +206,8 @@ function ResponseFormContainerDuplicate(props) {
 						answer={props.answers ? props.answers[i].split(',') : null}
 						imageData={question.imageData}
 						setRequiredd={setRequiredd}
+						requiredd={requiredd}
+						refCallback={refCallback}
 						// preview={props.readOnly}
 					/>
 				);
@@ -206,6 +222,8 @@ function ResponseFormContainerDuplicate(props) {
 						answerOptionChange={handleoptionchange}
 						imageData={question.imageData}
 						setRequiredd={setRequiredd}
+						requiredd={requiredd}
+						refCallback={refCallback}
 						// preview={props.readOnly}
 					/>
 				);
@@ -261,9 +279,10 @@ function ResponseFormContainerDuplicate(props) {
 									padding: '10px 25px',
 									borderRadius: '8px',
 									backgroundColor: '#F0F0F0', //7866B2
-									border: 'solid black 1px',
+									border: requiredd == i ? 'solid red 2px' : 'solid black 1px',
 									//#e6e6e6
 								}}
+								ref = {requiredd == i ? {scrollFeature} : null}
 							>
 								{/* <Row
 										sm='auto'
@@ -320,9 +339,10 @@ function ResponseFormContainerDuplicate(props) {
 			</Row>
 			<SubmitFormButton
 				answerList={responseState.answerss}
-				sendCopy={sendCopy}
 				submitFormHandler={handleSubmitForm}
 				setRequiredd={setRequiredd}
+				refArray={refArray}
+				sendCopy={sendCopy}
 				disabled={props.preview ? true : false}
 			/>
 		</Container>

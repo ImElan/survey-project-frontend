@@ -68,7 +68,7 @@
 
 // export default DescComponentt;
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import React from 'react';
 // import { makeStyles } from '@material-ui/core/styles';
 import { Form } from 'react-bootstrap';
@@ -83,15 +83,19 @@ function DescComponentt(props) {
 
 	const [initial2, final2] = useState('');
 
+	const ref = useRef(props.questionId);
+	props.refCallback(ref);
+
 	const handleChange2 = (e) => {
 		final2(e.target.value);
 		// console.log(e.target.value);
 		const isValid = e.target.value === '' ? false : true;
 		props.answerParagraphHandler(props.questionId, e.target.value, isValid);
+		props.setRequiredd(-1);
 	};
 
 	return (
-		<div>
+		<div ref = {ref}>
 			{/* <form> */}
 			{/* <TextField id="outlined-basic" label="Question" multiline={false}  onChange={handleChange} InputProps={{style:{width:'43ch'}}} /><br></br><br></br> */}
 			<Form>

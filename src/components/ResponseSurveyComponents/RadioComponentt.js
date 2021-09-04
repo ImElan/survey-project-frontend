@@ -61,21 +61,24 @@
 
 // export default RadioComponentt;
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { FormControl, FormLabel } from 'react-bootstrap';
 // import { BsFillTrashFill } from 'react-icons/bs';
 
 import { v4 as uuidv4 } from 'uuid';
 function RadioComponentt(props) {
 	const optionss = props.options;
+	const ref = useRef(props.questionId);
+	props.refCallback(ref);
 
 	const handlechange = (e) => {
 		console.log(e.target.value);
 		props.answerOptionChange(props.questionId, e.target.value);
+		props.setRequiredd(-1);
 	};
 
 	return (
-		<div className='App'>
+		<div ref = {ref} className='App'>
 			<div className='mt-5'>
 				<label> {props.question}</label>
 				<br />

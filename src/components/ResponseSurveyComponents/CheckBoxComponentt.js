@@ -48,23 +48,28 @@
 
 // export default CheckBoxComponentt;
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FormControl, FormLabel } from 'react-bootstrap';
 // import { BsFillTrashFill } from 'react-icons/bs';
 
 function CheckBoxComponentt(props) {
 	const optionss = props.options;
+
+	const ref = useRef(props.questionId);
+	props.refCallback(ref);
+
 	console.log('in checkbox', props.answer ? props.answer.includes(optionss[2]) : false);
 	// const [temp, setTemp] = useState(1);
 	const handlechange = (e) => {
 		// var optionid = e.target.value;
 		props.answeroptionadd(props.questionId, e.target.value);
+		props.setRequiredd(-1);
 	};
 	// useEffect(() => {
 	// 	setTemp(temp + 1);
 	// }, [props.answer])
 	return (
-		<div className='App'>
+		<div ref = {ref} className='App'>
 			<div className='mt-5'>
 				<label> {props.question}</label>
 				<br />

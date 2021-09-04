@@ -4,7 +4,7 @@ import PopUpModal from '../CreateFormComponents/PopUpModal';
 import 'tachyons';
 
 function SubmitFormButton(props) {
-	const { answerList, submitFormHandler, setRequiredd } = props;
+	const { answerList, submitFormHandler, setRequiredd, refArray } = props;
 
 	const [show, popup] = useState(false);
 	const [err, setAlert] = useState(false);
@@ -20,6 +20,11 @@ function SubmitFormButton(props) {
 	const showError = () => {
 		setAlert(true);
 	};
+
+	const scrollToQuestion = (index) => window.scrollTo({
+		top: refArray[2*index].current.offsetTop-100,
+		behavior: "smooth",
+	});
 
 	const errorCheck = async () => {
 		let flag = true;
@@ -49,6 +54,8 @@ function SubmitFormButton(props) {
 			//error found
 			showError();
 			setRequiredd(idx);
+			console.log(refArray);
+			scrollToQuestion(idx);
 		}
 	};
 

@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import React from 'react';
 import ReactStars from 'react-rating-stars-component';
 import { Form } from 'react-bootstrap';
 function StarComponent(props) {
 	const [initialfb, finalfb] = useState('');
+
+	const ref = useRef(props.questionId);
+	props.refCallback(ref);
 
 	const handleChangefb = (e) => {
 		finalfb(e.target.value);
@@ -15,6 +18,14 @@ function StarComponent(props) {
 	const handleClick = (value) => {
 		if (props.answerStarSelectHandler) {
 			props.answerStarSelectHandler(props.questionId, value);
+			var userFeedback = document.getElementById('userFeedback');
+			console.log(props);
+			if (value>=3) {
+				userFeedback.style = "display:none";
+			} else {
+				userFeedback.style = "display:block";
+			}
+			props.setRequiredd(-1);
 		}
 
 		// var userFeedback = document.getElementById('userFeedback');
@@ -27,7 +38,7 @@ function StarComponent(props) {
 		// props.setRequiredd(-1);
 	};
 	return (
-		<div className='mt-5'>
+		<div ref = {ref} className='mt-5'>
 			<label> {props.question}</label>
 			<br />
 			<br />
@@ -46,17 +57,15 @@ function StarComponent(props) {
 				value={props.answer ? props.answer : 0}
 				disabled={props.readOnly ? props.readOnly : false}
 			/>
-			{/* <Form.Control
+			<Form.Control
                 id='userFeedback'
-                style={{ display: 'none' }}
+                style = {{display:'none'}}
                 as='textarea'
                 rows={7}
                 placeholder='give feedback'
                 onChange={handleChangefb}
-                value={initialfb}
-                disabled={props.readOnly ? props.readOnly : false}
-
-            /> */}
+				value={initialfb}
+            />
 		</div>
 	);
 }
