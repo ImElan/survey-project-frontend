@@ -3,13 +3,46 @@ import { Spinner } from 'react-bootstrap';
 import styled from 'styled-components';
 import { useTable, useRowSelect } from 'react-table';
 import axios from 'axios';
-// import SendEmailComponent from '../components/SendEmailComponents/SendEmailComponent';
+//import SendEmailComponent from '../components/SendEmailComponents/SendEmailComponent';
+import $ from 'jquery';
+
+var $table = $('table'),
+    $bodyCells = $table.find('tbody tr:first').children(),
+    colWidth,
+	$headerCells = $table.find('thead tr:first').children()
+	;
+
+// Get the tbody columns width array
+colWidth = $bodyCells.map(function() {
+    return $(this).width();
+}).get();
+
+// Set the width of thead columns
+$table.find('thead tr').children().each(function(i, v) {
+    $(v).width(colWidth[i]);
+});
+
+var headerWidth = $headerCells.map(function() {
+	return $(this).width();
+}).get();
+
+$table.find('tbody tr').children().each(function(i,v) {
+	$(v).width(headerWidth[i]);
+});
+
 
 const Styles = styled.div`
 	padding: 1rem;
 	table {
 		border-spacing: 0;
 		border: 1px solid black;
+        thead, tbody { display: block; }
+
+		tbody {
+			height: 400px;       
+			overflow-y: auto;    
+			overflow-x: hidden;
+		}
 		tr {
 			:last-child {
 				td {
@@ -111,7 +144,7 @@ function Table({ columns, data, handleModalClose, handleAlertState, formId}) {
 					))}
 				</thead>
 				<tbody {...getTableBodyProps()}>
-					{rows.slice(0, 10).map((row, i) => {
+					{rows.map((row, i) => {
 						prepareRow(row);
 						return (
 							<tr {...row.getRowProps()}>
