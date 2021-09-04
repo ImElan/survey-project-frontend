@@ -1,19 +1,27 @@
 import Modal from 'react-bootstrap/Modal';
 import '../../styles/displayforms.css';
 import SendEmailComponent from './SendEmailComponent';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
+import Preview from '../CreateFormComponents/Preview';
 import { Button } from 'react-bootstrap';
-
+import {useHistory} from "react-router-dom"
+import SendReminderComponent from './SendReminderComponent';
+import axios from "axios";
 function FormData(props) {
+    const {push} = useHistory();
 	const [show, setShow] = useState({
 		title: '',
 		description: '',
 		questions: [],
 	});
+	const [reminderModalShow, setReminderModalShow] = useState(false);
+	const [modalShow, setModalShow] = useState(false);
+	const [employees,setEmployees] = useState([]);
 
-	// useEffect(() => {
-	// }, []);
+	useEffect(() => {
+	}, []);
 	const setFormData = () => {
+
 		show.title = props.form.formTitle;
 		show.description = props.form.formDescription;
 		// show.questions = props.questionList;
@@ -24,22 +32,60 @@ function FormData(props) {
 			};
 		});
 		window.localStorage.setItem('formstate', JSON.stringify(show));
+        push('/preview')
 	};
-	const [modalShow, setModalShow] = useState(false);
+    
+	const idToken = localStorage.getItem("accessToken");
+	const getAllUsersToRemind = async () => {
+		try{
+			// const response = await axios.get(
+			// 	`http://localhost:8080/accolite/senddetails/${props.formId}`,
+			// 	{
+			// 		headers: {
+			// 			Authorization: `Bearer ${idToken}`,
+			// 		},
+			// 	}
+			// );
+			const response = await fetch(`http://localhost:8080/accolite/senddetails/${props.formId}`, {
+				headers: {
+					Authorization: `Bearer ${idToken}`,
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+				method: 'GET'
+			});
+			const dataemp = await response.json();
+			// added by me below
+			console.log(dataemp);
+			dataemp.sort(function(a, b){
+				if(a["Employee Name"] < b["Employee Name"]) { return -1; }
+				if(a["Employee Name"] > b["Employee Name"]) { return 1; }
+				return 0;
+			})
+			setEmployees(dataemp);
+			setReminderModalShow(true);
+
+		} catch(error) {
+			console.log(error.data);
+		}
+		
+	}
 
 	const closeModal = () => {
 		setModalShow(false);
 	};
+	const closeReminderModal = () => {
+		setReminderModalShow(false);
+	}
 
-	console.log(props);
+	console.log(props.form);
 	return (
 		<div className='formdata-wrapper'>
 			<div className='row'>
-				<div className='col-md-8 col-sm-12 col-xs-12'>
+				<div className='col-md-7 col-sm-12 col-xs-12'>
 					<h2 style={{ padding: 0 }}>{props.form.formTitle}</h2>
 					<p>{props.form.formDescription}</p>
 				</div>
-				<div className='col-md-4 col-sm-12 col-xs-12 btns'>
+				<div className='col-md-5 col-sm-12 col-xs-12 btns'>
 					<div className='flex-left'>
 						<button
 							className='btn btn-primary'
@@ -48,12 +94,12 @@ function FormData(props) {
 							Responses
 						</button>
 					</div>
-					{/* <div className="flex-left">
-                        <button className="btn btn-primary" onClick={() => {
-                            setFormData();
-                            props.history.push('/preview')
-                        }}>View</button>
-                    </div> */}
+                    <div className = "flex-left">
+                        <button className = "btn btn-primary " onClick = {setFormData}>View</button>
+                    </div>
+                    <div className = "flex-left">
+                        <button className = "btn btn-primary btn-xs" onClick = {() => props.history.push(`/forms/${props.form.id}/edit`)}>Edit</button>
+                    </div>
 					<div className='flex-left'>
 						<Button variant='primary' onClick={() => setModalShow(true)}>
 							Send
@@ -65,6 +111,21 @@ function FormData(props) {
 							handleAlertState={props.handleAlertState}
 							formId={props.formId}
 							onHide={() => setModalShow(false)}
+						/>
+					</div>
+					<div className = "flex-left">
+						<button className = "btn btn-primary" 
+							onClick = {getAllUsersToRemind}>
+							Reminder
+						</button>
+						<SendReminderComponent
+							show = {reminderModalShow}
+							handleModalClose={closeReminderModal}
+							handleAlertState={props.handleAlertState}
+							formId={props.formId}
+							formTitle = {props.form.formTitle}
+							onHide={() => setReminderModalShow(false)}
+							employees = {employees}
 						/>
 					</div>
 				</div>

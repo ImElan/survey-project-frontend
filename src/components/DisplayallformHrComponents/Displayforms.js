@@ -1,11 +1,14 @@
 import '../../styles/displayforms.css';
-import { Container, Row, Col, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Alert, FormSelect } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
 import FormData from './FormData';
 import axios from 'axios';
 import PopDown from '../CreateFormComponents/PopDown';
 import Paging from '../CreateFormComponents/Paging';
+import {FaPlus} from "react-icons/fa"
+
 function Displayforms(props) {
+	
 	const [data, setData] = useState([]);
 	const [alertState, setAlertState] = useState('NOT_LOADED');
 
@@ -26,8 +29,35 @@ function Displayforms(props) {
 						},
 					}
 				);
+				
+				const dummyData = response.data;
+
+				response.data.map((form) => {
+					const {surveyQuestions} = form;
+					
+					const questions = surveyQuestions.map((surveyQuestion) => {
+						let surveyOptions = null;
+						if (surveyQuestion.questionType === 'SINGLE' || surveyQuestion.questionType === 'MULTIPLE') {
+							surveyOptions = surveyQuestion.options.map((surveyOption) => {
+								return {
+									option: surveyOption
+								};
+							});
+						}
+						return {
+							...surveyQuestion,
+							image : surveyQuestion.imageData,
+							options: {
+								optionsArray: surveyOptions,
+							}
+						}
+						})
+					form.surveyQuestions = questions;
+				})
 				console.log(response.data);
+				
 				setData(response.data);
+				
 			} catch (error) {
 				console.log(error.response);
 				console.log(error.data);
@@ -47,38 +77,6 @@ function Displayforms(props) {
 		setCurrentPage(number);
 	};
 
-	// const data = [
-	//     {
-	//         id: 1,
-	//         formTitle: "Survey Form1",
-	//         formDescription: "This is about to fill the survey form"
-	//     },
-	//     {
-	//         id: 2,
-	//         title: "Survey Form2",
-	//         desc: "This is about to fill the survey form"
-	//     },
-	//     {
-	//         id: 3,
-	//         title: "Survey Form3",
-	//         desc: "This is about to fill the survey form"
-	//     },
-	//     {
-	//         id: 4,
-	//         title: "Survey Form4",
-	//         desc: "This is about to fill the survey form"
-	//     },
-	//     {
-	//         id: 5,
-	//         title: "Survey Form5",
-	//         desc: "This is about to fill the survey form"
-	//     },
-	//     {
-	//         id: 6,
-	//         title: "Survey Form6",
-	//         desc: "This is about to fill the survey form"
-	//     },
-	// ]
 
 	let paginationStartIndex;
 	paginationStartIndex = (currentPage - 1) * questionsPerPage;
@@ -93,43 +91,45 @@ function Displayforms(props) {
 					<a className='navbar-brand' href='#'>
 						<img src='https://accolite.com/assets/jpg/logo.png' alt='' width='220em' />
 					</a>
-					<div className='d-flex justify-content-end'>
-						<button
-							type='button'
-							className='btn btn-outline-secondary create-form-btn'
-							onClick={() => {
-								props.history.push('/form/create');
-							}}
-						>
-							Create Form
-						</button>
-					</div>
+					
 				</div>
 			</nav>
 			<div className='clearfix'></div>
 			{alertState === 'SUCCESS' && (
-				<Alert variant='success' className='text-center'>
+				<Alert variant='success' className='text-center' onClose = {() => {setAlertState('NOT_LOADED')}} dismissible>
 					Email Sent Successfully
 				</Alert>
 			)}
 			{alertState === 'FAILED' && (
-				<Alert variant='danger' className='text-center'>
+				<Alert variant='danger' className='text-center' onClose = {() => {setAlertState('NOT_LOADED')}} dismissible>
 					Something went wrong in sending email...Please try again later
 				</Alert>
 			)}
+            
 			<div>
 				<div className='forms-wrapper'>
+                    <div className = "container-fluid header-fluid">
+                        <div className = "row justify-content-center">
+                            <div className = "col-md-12 col-sm-12 col-xs-12 header-flex-wrapper" >
+                                <div className = "header-left">
+                                    <button type="button" className="btn btn-primary"  onClick = {() => {props.history.push('/form/adminacess')}}>Admin Panel</button>
+                                </div>
+                                <div className = "header-left">
+                                    <button type="button" className="btn btn-primary"  onClick = {() => {props.history.push('/form/create')}}><FaPlus style = {{marginRight: "8px",verticalAlign: "middle"}}/>Create Form</button>
+                                </div>
+                                <div className = "header-left">
+                                <PopDown
+                                totalQuestions= {data.length}
+                                questionsPerPageHandler={questionsPerPageHandler}
+                                title = "Forms Per Page"
+                                />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 					<div className='container'>
 						<div className='row justify-content-center'>
-							<div className='col-md-10 col-sm-12 col-xs-12'>
-								<div className='popdown-wrapper'>
-									<PopDown
-										title='Forms Per Page'
-										totalQuestions={data.length}
-										questionsPerPageHandler={questionsPerPageHandler}
-									/>
-								</div>
-								<div className='clearfix'></div>
+							<div className='col-md-12 col-sm-12 col-xs-12'>
 								<div className='forms-wrapper-inside'>
 									{data
 										.slice(

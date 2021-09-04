@@ -11,7 +11,7 @@ function ThankYouContainer(props) {
 	return (
 		<div style={{
 			height: '100%',
-			backgroundColor: 'rgb(246 235 254)',
+			backgroundColor: 'white',
 			position: 'absolute',
 			width: '100%',
 			top: '0',

@@ -6,6 +6,7 @@ import FormResponses from '../components/FormResponses/FormResponses';
 import ResponseFormContainerDuplicate from './ResponseFormContainerDuplicate';
 function PreviewFormContainer(props) {
     const formstate = JSON.parse(window.localStorage.getItem('formstate'));
+    console.log(formstate);
     const newQuestions = formstate.questions.map((question) => {
         let optionsArr = null;
         if (question.questionType === 'SINGLE' || question.questionType === 'MULTIPLE') {

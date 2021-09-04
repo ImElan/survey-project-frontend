@@ -20,6 +20,7 @@ function Preview(props) {
 				imageData: question.image,
 			};
 		});
+		console.log(show);
 		window.localStorage.setItem('formstate', JSON.stringify(show));
 	});
 	const [view, showview] = useState(true);
