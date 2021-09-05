@@ -178,12 +178,14 @@ function Displayforms(props) {
 								</div>
 							</div>
 						</div>
-						<Paging
-							totalQuestions={data.length}
-							questionsPerPage={questionsPerPage}
-							pageChangeRequestHandler={pagechangerequesthandler}
-							currentPage={currentPage}
-						/>
+						{data.length > 0 && (
+							<Paging
+								totalQuestions={data.length}
+								questionsPerPage={questionsPerPage}
+								pageChangeRequestHandler={pagechangerequesthandler}
+								currentPage={currentPage}
+							/>
+						)}
 					</div>
 				</div>
 			</div>

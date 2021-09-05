@@ -37,6 +37,7 @@ function SaveFormButton(props) {
 		popup(true);
 	};
 	const popUpClose = () => {
+		setLoading(false);
 		popup(false);
 	};
 
@@ -73,7 +74,7 @@ function SaveFormButton(props) {
 
 		if (flag1 === false) {
 			console.log('empty fields');
-			showError('Could not save form! Empty fields or Duplicate options found.');
+			showError('Could not save form! Empty fields or Duplicate Options found.');
 		} else if (duplicateArr.length) {
 			console.log('duplicate');
 			showError('Could not save form! Duplicate questions found.');

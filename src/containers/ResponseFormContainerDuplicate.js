@@ -399,21 +399,24 @@ function ResponseFormContainerDuplicate(props) {
 						</Row>
 					))}
 			<Row
+				className='justify-content-start'
 				style={{
 					paddingTop: '0px',
-					paddingBottom: '10px',
+					paddingBottom: '20px',
 					marginTop: '20px',
-					marginLeft: '150px',
+					marginLeft: '210px',
 				}}
 			>
-				<Col md={4} style={{ margin: '10px' }}>
+				<Col md={4}>
 					<input
 						type='checkbox'
 						onChange={checkHandler}
 						style={{ marginRight: '6px', width: '15px', height: '15px' }}
 						disabled={props.preview ? true : false}
 					/>
-					<label>Do you want a copy of your response?</label>
+					<label style={{ fontSize: '20px', marginLeft: '10px' }}>
+						Do you want a copy of your response?
+					</label>
 				</Col>
 			</Row>
 

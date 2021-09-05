@@ -434,7 +434,7 @@ function CreateFormContainer(props) {
 											marginTop: '15px',
 										}}
 									>
-										<Col md='7'>
+										<Col md='8'>
 											<p style={{ fontSize: '25px', fontWeight: 'bold' }}>
 												Question {(currentPage - 1) * questionsPerPage + idx + 1}
 											</p>
