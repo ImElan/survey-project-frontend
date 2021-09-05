@@ -3,7 +3,7 @@ import '../../styles/displayforms.css';
 import SendEmailComponent from './SendEmailComponent';
 import { useState, useEffect } from 'react';
 import Preview from '../CreateFormComponents/Preview';
-import { Button } from 'react-bootstrap';
+import { Button, Spinner } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import SendReminderComponent from './SendReminderComponent';
 import axios from 'axios';
@@ -17,6 +17,7 @@ function FormData(props) {
 	const [reminderModalShow, setReminderModalShow] = useState(false);
 	const [modalShow, setModalShow] = useState(false);
 	const [employees, setEmployees] = useState([]);
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {}, []);
 	const setFormData = () => {
@@ -52,7 +53,7 @@ function FormData(props) {
 			totalQuestions: props.form.surveyQuestions.length,
 			questionsPerPage: 5,
 		};
-
+		setLoading(true);
 		try {
 			console.log('preview data body', show);
 			const response = axios.post('http://localhost:8080/post/preview', show, {
@@ -63,10 +64,13 @@ function FormData(props) {
 			});
 
 			response.then((res) => {
+				setLoading(false);
 				window.localStorage.setItem('objectid', JSON.stringify(res.data));
-				push('/preview');
+				window.open('/preview', '_blank');
+				// push('/preview');
 			});
 		} catch (error) {
+			setLoading(false);
 			console.log(error);
 			console.log(error.response);
 		}
@@ -124,6 +128,12 @@ function FormData(props) {
 	console.log(props.form);
 	return (
 		<div className='formdata-wrapper'>
+			{loading && (
+				<div className='d-flex justify-content-center my-3'>
+					<h4 style={{ marginRight: '15px' }}>Please wait...</h4>
+					<Spinner animation='border' variant='primary' />
+				</div>
+			)}
 			<div className='row'>
 				<div className='col-md-7 col-sm-12 col-xs-12'>
 					<h2 style={{ padding: 0 }}>{props.form.formTitle}</h2>
