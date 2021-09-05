@@ -44,7 +44,14 @@ const IndeterminateCheckbox = React.forwardRef(({ indeterminate, ...rest }, ref)
 	);
 });
 
-function Table({ columns, data, handleModalClose, handleAlertState }) {
+function Table({
+	columns,
+	data,
+	formId,
+	successStateHandler,
+	handleModalClose,
+	handleAlertState,
+}) {
 	const [loading, setIsLoading] = useState(false);
 
 	const [error, setError] = useState(false);
@@ -128,11 +135,14 @@ function Table({ columns, data, handleModalClose, handleAlertState }) {
 					sendemail(
 						selectedFlatRows.map((d) => d.original['Email Mail ID']),
 						setLoadingState,
-						setError
+						setError,
+						formId,
+						successStateHandler
 					);
 				}}
 			>
 				Send Mail
+				{'  '}
 				{loading && <Spinner animation='border' variant='light' size='sm' />}
 			</Button>
 			{error && <p className='text-danger'>Something went wrong</p>}
@@ -140,7 +150,7 @@ function Table({ columns, data, handleModalClose, handleAlertState }) {
 	);
 }
 
-async function sendemail(data, setLoadingState, setError) {
+async function sendemail(data, setLoadingState, setError, formId, successStateHandler) {
 	console.log(data);
 	const idToken = localStorage.getItem('accessToken');
 
@@ -149,7 +159,7 @@ async function sendemail(data, setLoadingState, setError) {
 		setError(false);
 		const response = await axios.post(
 			'http://localhost:8080/accolite/send_email_with_no_of_days',
-			{ tomailid: data },
+			{ tomailid: data, formid: formId },
 			{
 				headers: {
 					Authorization: `Bearer ${idToken}`,
@@ -158,9 +168,11 @@ async function sendemail(data, setLoadingState, setError) {
 			}
 		);
 		setLoadingState(false);
+		successStateHandler(true);
 		console.log(response);
 	} catch (error) {
 		setLoadingState(false);
+		successStateHandler(false);
 		setError(true);
 		console.log(error.response);
 	}
@@ -191,6 +203,10 @@ function EmployeeListComponent(props) {
 				Header: 'BU',
 				accessor: 'Employee BU',
 			},
+			{
+				Header: 'Employee Account',
+				accessor: 'Employee Account',
+			},
 		],
 
 		[]
@@ -198,7 +214,12 @@ function EmployeeListComponent(props) {
 
 	return (
 		<Styles>
-			<Table columns={columns} data={props.employees} />
+			<Table
+				successStateHandler={props.handleSuccessState}
+				formId={props.formId}
+				columns={columns}
+				data={props.employees}
+			/>
 		</Styles>
 	);
 }

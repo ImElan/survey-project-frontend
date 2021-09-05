@@ -2,7 +2,7 @@ import { Row, Col, Button } from 'react-bootstrap';
 import React, { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import { Spinner } from 'react-bootstrap';
+import { Spinner, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import EmployeeListComponent from './EmployeeListComponent';
 
@@ -27,6 +27,14 @@ function SendEmailComponent(props) {
 
 	const [showResults, setShowResults] = useState(false);
 
+	const [success1, setSuccess1] = useState(false);
+
+	const [success2, setSuccess2] = useState(false);
+
+	const setSuccess2State = (value) => {
+		setSuccess2(value);
+	};
+
 	// const setLoadingState = (value) => {
 	// 	setIsLoading(value);
 	// };
@@ -34,8 +42,6 @@ function SendEmailComponent(props) {
 	// const setError = (value) => {
 	// 	setsendemailerror(value);
 	// };
-
-
 
 	const handleInputChange1 = (event) => {
 		const target = event.target;
@@ -61,7 +67,6 @@ function SendEmailComponent(props) {
 		const target = event.target;
 		const value = target.type === 'checkbox' ? target.checked : target.value;
 		setEmails(value);
-
 	};
 
 	async function sendemail(data, setLoadingState, setError) {
@@ -71,7 +76,7 @@ function SendEmailComponent(props) {
 			setError1(false);
 			const response = await axios.post(
 				'http://localhost:8080/accolite/send_email_without_no_of_days',
-				{ tomailid: data },
+				{ tomailid: data, formid: props.formId },
 				{
 					headers: {
 						Authorization: `Bearer ${idToken}`,
@@ -80,9 +85,11 @@ function SendEmailComponent(props) {
 				}
 			);
 			setIsLoading1(false);
+			setSuccess1(true);
 			console.log(response);
 		} catch (error) {
 			setIsLoading1(false);
+			setSuccess1(false);
 			setError1(true);
 			console.log(error.response);
 		}
@@ -106,21 +113,21 @@ function SendEmailComponent(props) {
 					headers: {
 						Authorization: `Bearer ${idToken}`,
 						'Content-type': 'application/json; charset=UTF-8',
-					}
-				});
+					},
+				}
+			);
 			console.log('here in response');
 			console.log(response);
 			const dataemp = await response.data;
 			setEmployees(dataemp);
 			setIsLoading2(false);
-		}
-		catch (error) {
+		} catch (error) {
 			setError2(true);
 			setIsLoading2(false);
 			console.log(error);
 			console.log(error.response);
 		}
-	};
+	}
 
 	return (
 		<>
@@ -137,9 +144,33 @@ function SendEmailComponent(props) {
 				dialogClassName='main-modal'
 				aria-labelledby='contained-modal-title-vcenter'
 				centered
-				backdrop="static"
+				backdrop='static'
 				keyboard={false}
 			>
+				{success1 && (
+					<Alert
+						className='text-center'
+						variant='success'
+						dismissible
+						onClose={() => {
+							setSuccess1(false);
+						}}
+					>
+						Email Sent Successfully.
+					</Alert>
+				)}
+				{success2 && (
+					<Alert
+						className='text-center'
+						variant='success'
+						dismissible
+						onClose={() => {
+							setSuccess2(false);
+						}}
+					>
+						Email Sent Successfully.
+					</Alert>
+				)}
 				<Modal.Header>
 					<h4>Send Form</h4>
 				</Modal.Header>
@@ -152,15 +183,13 @@ function SendEmailComponent(props) {
 							</Form.Label>
 							<Col sm={10}>
 								<Form.Control
-								as="textarea"
+									as='textarea'
 									name='emailIds'
 									type='textarea'
 									placeholder='add more people...'
 									onChange={handleInputChange4}
-									
 									required
 								/>
-
 							</Col>
 						</Form.Group>
 						<Form.Group as={Row} className='mb-3'>
@@ -174,24 +203,19 @@ function SendEmailComponent(props) {
 										console.log(emails);
 										event.preventDefault();
 										if (emails.length > 0) {
-											const em = emails.split(",");
+											const em = emails.split(',');
 											console.log(em);
 											sendemail(em, setIsLoading1, setError1);
+										} else {
+											alert('enter email ids');
 										}
-										else {
-											alert("enter email ids");
-										}
-
 									}}
-								>Send Form
-									{loading1 && (
-										<Spinner animation='border' variant='light' size="sm" />
-									)}
+								>
+									Send Form
+									{'  '}
+									{loading1 && <Spinner animation='border' variant='light' size='sm' />}
 								</Button>
-								{error1 && (
-									<p className="text-danger">Something went wrong</p>
-								)}
-
+								{error1 && <p className='text-danger'>Something went wrong</p>}
 							</Col>
 						</Form.Group>
 					</Form>
@@ -253,8 +277,12 @@ function SendEmailComponent(props) {
 									value='Show Employees'
 									onClick={(event) => {
 										event.preventDefault();
-										if (from_date == null || to_date == null || no_of_days_after_mail == null)
-											alert("enter all the details");
+										if (
+											from_date == null ||
+											to_date == null ||
+											no_of_days_after_mail == null
+										)
+											alert('enter all the details');
 										else {
 											console.log('button clicked');
 											getEmployees();
@@ -262,18 +290,18 @@ function SendEmailComponent(props) {
 											setShowResults(true);
 										}
 									}}
-								> Show Employees
-									{loading2 && (
-										<Spinner animation='border' variant='light' size="sm" />
-									)}
+								>
+									Show Employees
+									{'  '}
+									{loading2 && <Spinner animation='border' variant='light' size='sm' />}
 								</Button>
 
-								{error2 && (
-									<p className="text-danger">Something went wrong</p>
-								)}
+								{error2 && <p className='text-danger'>Something went wrong</p>}
 
 								{showResults && employees.length > 0 ? (
 									<EmployeeListComponent
+										handleSuccessState={setSuccess2State}
+										formId={props.formId}
 										employees={employees}
 									/>
 								) : null}
@@ -282,25 +310,27 @@ function SendEmailComponent(props) {
 					</Form>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button onClick={() => {
-						props.onHide();
-						setIsLoading1(false);
-						setIsLoading2(false);
-						setError1(false);
-						setError2(false);
-						setEmployees([]);
-						setFromDate(null);
-						setToDate(null);
-						setDays(null);
-						setEmails([]);
-						setEmployees([]);
-
-					}}>Close</Button>
+					<Button
+						onClick={() => {
+							props.onHide();
+							setIsLoading1(false);
+							setIsLoading2(false);
+							setError1(false);
+							setError2(false);
+							setEmployees([]);
+							setFromDate(null);
+							setToDate(null);
+							setDays(null);
+							setEmails([]);
+							setEmployees([]);
+						}}
+					>
+						Close
+					</Button>
 				</Modal.Footer>
 			</Modal>
 		</>
 	);
 }
-
 
 export default SendEmailComponent;

@@ -86,7 +86,7 @@ function ResponseFormContainerDuplicate(props) {
 		for (var i = 0; i < props.questions.length; i++) {
 			initialAnswers.push({
 				questions: props.questions[i],
-				answerarr: props.answers ? props.answers[i].split(',') : [],
+				answerarr: props.answers ? props.answers[i].split('||') : [],
 				answer: props.answers ? props.answers[i] : '',
 				isvalid: false,
 			});

@@ -106,7 +106,7 @@ function Displayforms(props) {
 					Email Sent Successfully
 				</Alert>
 			)}
-			{alertState === 'FAILED' && (
+			{/* {alertState === 'FAILED' && (
 				<Alert
 					variant='danger'
 					className='text-center'
@@ -117,7 +117,7 @@ function Displayforms(props) {
 				>
 					Something went wrong in sending email...Please try again later
 				</Alert>
-			)}
+			)} */}
 
 			<div>
 				<div className='forms-wrapper'>

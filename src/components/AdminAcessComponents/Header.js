@@ -1,26 +1,23 @@
-
-
 import { AppBar, IconButton, Typography } from '@material-ui/core';
 import Toolbar from '@material-ui/core/Toolbar';
-import MenuIcon from '@material-ui/icons/Menu'
-import { createStyles, makeStyles } from "@material-ui/core/styles";
+import MenuIcon from '@material-ui/icons/Menu';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 
-import { Navbar,NavbarBrand } from 'reactstrap';
+import { Navbar, NavbarBrand } from 'reactstrap';
 
-const useStyles = makeStyles( () =>
-    createStyles({
-        footerStyle:{
-            align: 'center'
-        }
-    })
-)
-
+const useStyles = makeStyles(() =>
+	createStyles({
+		footerStyle: {
+			align: 'center',
+		},
+	})
+);
 
 const Header = () => {
-    const classes = useStyles();
-    return (
-        <div>
-            {/* <AppBar position = "fixed"  >
+	const classes = useStyles();
+	return (
+		<div>
+			{/* <AppBar position = "fixed"  >
                 <Toolbar>
                     <IconButton edge = "start" color = "inherit" aria-label = "menu">
                     style={{margin:100}}
@@ -31,20 +28,15 @@ const Header = () => {
                     </IconButton>
                 </Toolbar>
             </AppBar> */}
-            <Navbar dark color="primary">
-                <div className="container d-flex justify-content-center" >
-                    <div style={{margin:10}}>
-                        <NavbarBrand href="/">Welcome To Accolite Admin Portal</NavbarBrand>
-                    </div>
-                    
-                </div>
-            </Navbar>
-            
-        
-        </div>
-    )
-}
+			<Navbar dark color='dark'>
+				<div className='container d-flex justify-content-center'>
+					<div style={{ margin: 10 }}>
+						<NavbarBrand href='/'>Welcome To Accolite Admin Portal</NavbarBrand>
+					</div>
+				</div>
+			</Navbar>
+		</div>
+	);
+};
 
 export default Header;
-
-

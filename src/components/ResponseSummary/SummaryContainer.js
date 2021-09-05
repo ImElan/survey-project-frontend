@@ -127,7 +127,7 @@ function SummaryContainer(props) {
 	function countOptionMul(answer, qno) {
 		console.log('Yes I am working');
 		let options = questionOptionMap[qno].optionValue;
-		let ans = answer.split(',');
+		let ans = answer.split('||');
 		for (let i = 0; i < options.length; i++) {
 			for (let j = 0; j < ans.length; j++) {
 				if (options[i].name == ans[j]) {

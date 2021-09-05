@@ -3,6 +3,7 @@ import { Spinner } from 'react-bootstrap';
 import styled from 'styled-components';
 import { useTable, useRowSelect } from 'react-table';
 import axios from 'axios';
+import Button from '@restart/ui/esm/Button';
 //import SendEmailComponent from '../components/SendEmailComponents/SendEmailComponent';
 // import $ from 'jquery';
 
@@ -80,6 +81,11 @@ const IndeterminateCheckbox = React.forwardRef(({ indeterminate, ...rest }, ref)
 
 function Table({ columns, data, handleModalClose, handleAlertState, formId }) {
 	const [loading, setIsLoading] = useState(false);
+	const [error, setError] = useState(false);
+
+	const setErrorState = (value) => {
+		setError(value);
+	};
 
 	const setLoadingState = (value) => {
 		setIsLoading(value);
@@ -128,12 +134,6 @@ function Table({ columns, data, handleModalClose, handleAlertState, formId }) {
 	// Render the UI for your table
 	return (
 		<>
-			{loading && (
-				<div className='d-flex justify-content-center my-3'>
-					<h4 style={{ marginRight: '15px' }}>Sending mail. Please wait...</h4>
-					<Spinner animation='border' variant='primary' />
-				</div>
-			)}
 			<table {...getTableProps()}>
 				<thead>
 					{headerGroups.map((headerGroup) => (
@@ -159,21 +159,28 @@ function Table({ columns, data, handleModalClose, handleAlertState, formId }) {
 			</table>
 
 			<br></br>
-			<input
+			<Button
 				className='btn btn-primary'
 				type='button'
 				value='Send Reminder'
-				onClick={() => {
+				onClick={(event) => {
 					console.log('send formbutton clicked');
+					event.preventDefault();
 					sendemail(
 						selectedFlatRows.map((d) => d.original['Email Mail ID']),
 						handleModalClose,
 						setLoadingState,
 						handleAlertState,
-						formId
+						formId,
+						setErrorState
 					);
 				}}
-			/>
+			>
+				Send Reminder
+				{'  '}
+				{loading && <Spinner animation='border' variant='light' size='sm' />}
+			</Button>
+			{error && <p className='text-danger'>Something went wrong</p>}
 		</>
 	);
 }
@@ -183,7 +190,8 @@ async function sendemail(
 	handleModalClose,
 	setLoadingState,
 	handleAlertState,
-	formId
+	formId,
+	setErrorState
 ) {
 	const sendData = {
 		formid: formId,
@@ -192,6 +200,7 @@ async function sendemail(
 	const idToken = localStorage.getItem('accessToken');
 	try {
 		setLoadingState(true);
+		setErrorState(false);
 		const response = await axios.post(
 			'http://localhost:8080/accolite/send_reminder',
 			sendData,
@@ -209,6 +218,7 @@ async function sendemail(
 	} catch (error) {
 		setLoadingState(false);
 		handleAlertState('FAILED');
+		setErrorState(true);
 		console.log(error.response);
 	}
 }

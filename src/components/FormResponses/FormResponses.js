@@ -53,7 +53,7 @@ function FormResponses(props) {
 			case 'MULTIPLE':
 				console.log(answer);
 
-				let answersArray = answer.split(',');
+				let answersArray = answer.split('||');
 				console.log('answers array', answersArray);
 				return (
 					<CheckBoxComponentt

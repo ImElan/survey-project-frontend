@@ -1,4 +1,3 @@
-
 // const responseFormReducer = (state, action) => {
 
 // 	switch (action.type) {
@@ -61,7 +60,7 @@
 // 				console.log(action.option);
 // 				var removequestion = [...answers.answerarr];
 // 				removequestion = removequestion.filter((ans) => ans != action.option);
-// 				// console.log(removequestion);      
+// 				// console.log(removequestion);
 
 // 				var tempans = [...answers.answerarr]
 // 				if (removequestion.length == tempans.length) {
@@ -101,10 +100,7 @@
 
 // export { responseFormReducer };
 
-
-
 const responseFormReducer = (state, action) => {
-
 	switch (action.type) {
 		case 'ANSWER_TEXT_CHANGE':
 			const newAnswersArray = state.answerss.map((answers) => {
@@ -124,7 +120,7 @@ const responseFormReducer = (state, action) => {
 			};
 		case 'CHANGE-RATING':
 			// console.log("b" + value);
-			console.log("a" + action.questionId);
+			console.log('a' + action.questionId);
 			const newAnswersssArray = state.answerss.map((answers) => {
 				if (answers.questions.questionId != action.questionId) {
 					return answers;
@@ -143,11 +139,10 @@ const responseFormReducer = (state, action) => {
 
 		case 'OPTION_SINGLE_SELECT':
 			const newAnswerssArray = state.answerss.map((answers) => {
-
 				if (answers.questions.questionId !== action.questionId) {
 					return answers;
 				}
-				console.log("iNside", answers.questions.questionId)
+				console.log('iNside', answers.questions.questionId);
 				return {
 					...answers,
 					answer: action.option,
@@ -156,7 +151,7 @@ const responseFormReducer = (state, action) => {
 			return {
 				...state,
 				answerss: newAnswerssArray,
-			}
+			};
 
 		case 'OPTION_ADD_REMOVE':
 			const newAnswersArrayy = state.answerss.map((answers) => {
@@ -167,22 +162,21 @@ const responseFormReducer = (state, action) => {
 				console.log(action.option);
 				var removequestion = [...answers.answerarr];
 				removequestion = removequestion.filter((ans) => ans != action.option);
-				// console.log(removequestion);      
+				// console.log(removequestion);
 
-				var tempans = [...answers.answerarr]
+				var tempans = [...answers.answerarr];
 				if (removequestion.length == tempans.length) {
 					tempans = [...answers.answerarr, action.option];
-				}
-				else {
+				} else {
 					tempans = removequestion;
 				}
 
 				// const addanswer = [...answers.answer, action.optionId]
 				const addanswer = tempans;
-				var strans = "";
+				var strans = '';
 				// for(var i=0;i<tempans.length;i++)
 				// 	strans += addanswer[i]+", ";
-				strans = addanswer.join(',');
+				strans = addanswer.join('||');
 				return {
 					...answers,
 					answerarr: addanswer,
@@ -203,6 +197,6 @@ const responseFormReducer = (state, action) => {
 		default:
 			return state;
 	}
-}
+};
 
 export { responseFormReducer };
