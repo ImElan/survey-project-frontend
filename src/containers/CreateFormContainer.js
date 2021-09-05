@@ -541,3 +541,35 @@ function CreateFormContainer(props) {
 	);
 }
 export default CreateFormContainer;
+
+// <Row
+// 	sm='auto'
+// 	className='justify-content-end'
+// 	style={{
+// 		marginBottom: '0px',
+// 	}}
+// >
+// 	<Col>
+// 		<QuestionImageComponent
+// 			key={question.questionId}
+// 			questionId={question.questionId}
+// 			profileImg={question.image}
+// 			addImageHandler={handleAddImageToQuestion}
+// 		/>
+// 	</Col>
+// 	<Col>
+// 		<Dropdown
+// 			questionId={question.questionId}
+// 			questionType={question.questionType}
+// 			questionTypeChangeHandler={handleQuestionTypeChange}
+// 		/>
+// 	</Col>
+// 	<Col style={{ marginTop: '10px' }}>
+// 		<DeleteButton
+// 			questionId={question.questionId}
+// 			disabled={formState.questions.length <= minQuestionAllowed}
+// 			minQuestions={minQuestionAllowed}
+// 			deleteQuestionHandler={handleRemoveQuestion}
+// 		/>
+// 	</Col>
+// </Row>
