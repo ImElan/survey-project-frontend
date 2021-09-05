@@ -81,6 +81,7 @@ function RadioComponentt(props) {
 		<div ref = {ref} className='App'>
 			<div className='mt-5'>
 				<label> {props.question}</label>
+				{ props.required && <span style = {{color:"red", fontSize:"25px"}}> * </span>}
 				<br />
 				<br />
 			</div>

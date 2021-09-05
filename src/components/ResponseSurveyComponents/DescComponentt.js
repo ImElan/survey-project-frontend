@@ -101,6 +101,7 @@ function DescComponentt(props) {
 			<Form>
 				<Form.Group className='mb-3' controlId='formBasicEmail'>
 					<Form.Label style={{ height: 35 }}>{props.question}</Form.Label>
+					{ props.required && <span style = {{color:"red", fontSize:"25px"}}> * </span>}
 					<br />
 					<br></br>
 					{props.imageData && (

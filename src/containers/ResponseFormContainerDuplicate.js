@@ -170,7 +170,7 @@ function ResponseFormContainerDuplicate(props) {
 						answer={props.answers ? props.answers[i] : null}
 						question={question.question}
 						questionId={question.questionId}
-						numStars={question.numStars}
+						numStars={question.noOfStars}
 						imageData={question.imageData}
 						isHalfStarAllowed={question.halfStarAllowed}
 						answerStarSelectHandler={handleAnswerStarChange}
@@ -178,6 +178,7 @@ function ResponseFormContainerDuplicate(props) {
 						answerFeedbackHandler={handleAnswerParaChange}
 						setRequiredd={setRequiredd}
 						requiredd={requiredd}
+						required={question.required}
 						refCallback={refCallback}
 						// preview={props.readOnly}
 					/>
@@ -192,6 +193,7 @@ function ResponseFormContainerDuplicate(props) {
 						imageData={question.imageData}
 						setRequiredd={setRequiredd}
 						requiredd={requiredd}
+						required={question.required}
 						refCallback={refCallback}
 						// preview={props.readOnly}
 					/>
@@ -207,6 +209,7 @@ function ResponseFormContainerDuplicate(props) {
 						imageData={question.imageData}
 						setRequiredd={setRequiredd}
 						requiredd={requiredd}
+						required={question.required}
 						refCallback={refCallback}
 						// preview={props.readOnly}
 					/>
@@ -223,6 +226,7 @@ function ResponseFormContainerDuplicate(props) {
 						imageData={question.imageData}
 						setRequiredd={setRequiredd}
 						requiredd={requiredd}
+						required={question.required}
 						refCallback={refCallback}
 						// preview={props.readOnly}
 					/>

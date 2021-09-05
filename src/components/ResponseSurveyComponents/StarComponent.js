@@ -11,20 +11,12 @@ function StarComponent(props) {
 	const handleChangefb = (e) => {
 		finalfb(e.target.value);
 		console.log(e.target.value);
-		const isValid = e.target.value === '' ? false : true;
 		// props.answerFeedbackHandler(props.questionId, e.target.value, isValid);
 	};
 
 	const handleClick = (value) => {
 		if (props.answerStarSelectHandler) {
 			props.answerStarSelectHandler(props.questionId, value);
-			var userFeedback = document.getElementById('userFeedback');
-			console.log(props);
-			if (value>=3) {
-				userFeedback.style = "display:none";
-			} else {
-				userFeedback.style = "display:block";
-			}
 			props.setRequiredd(-1);
 		}
 
@@ -40,6 +32,7 @@ function StarComponent(props) {
 	return (
 		<div ref = {ref} className='mt-5'>
 			<label> {props.question}</label>
+			{ props.required && <span style = {{color:"red", fontSize:"25px"}}> * </span>}
 			<br />
 			<br />
 			{props.imageData && <img src={props.imageData} alt='' id='img' className='img' />}
@@ -57,15 +50,6 @@ function StarComponent(props) {
 				value={props.answer ? props.answer : 0}
 				disabled={props.readOnly ? props.readOnly : false}
 			/>
-			<Form.Control
-                id='userFeedback'
-                style = {{display:'none'}}
-                as='textarea'
-                rows={7}
-                placeholder='give feedback'
-                onChange={handleChangefb}
-				value={initialfb}
-            />
 		</div>
 	);
 }
