@@ -1,20 +1,25 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import React from 'react';
 import ReactStars from 'react-rating-stars-component';
 import { Form } from 'react-bootstrap';
 function StarComponent(props) {
 	const [initialfb, finalfb] = useState('');
 
+	const ref = useRef(props.questionId);
+	if (!props.readOnly) {
+		props.refCallback(ref);
+	}
+
 	const handleChangefb = (e) => {
 		finalfb(e.target.value);
 		console.log(e.target.value);
-		const isValid = e.target.value === '' ? false : true;
 		// props.answerFeedbackHandler(props.questionId, e.target.value, isValid);
 	};
 
 	const handleClick = (value) => {
 		if (props.answerStarSelectHandler) {
 			props.answerStarSelectHandler(props.questionId, value);
+			props.setRequiredd(-1);
 		}
 
 		// var userFeedback = document.getElementById('userFeedback');
@@ -27,17 +32,12 @@ function StarComponent(props) {
 		// props.setRequiredd(-1);
 	};
 	return (
-		<div className='mt-3'>
+		<div ref={ref} className='mt-3'>
 			<label style={{ fontSize: 20 }}> {props.question}</label>
+			{props.required && <span style={{ color: 'red', fontSize: '25px' }}> * </span>}
 			<br />
-
-			{props.imageData && (
-				<div>
-					<br />
-					<img src={props.imageData} alt='' id='img' className='img' />
-					<br />
-				</div>
-			)}
+			<br />
+			{props.imageData && <img src={props.imageData} alt='' id='img' className='img' />}
 
 			<ReactStars
 				count={props.numStars}
@@ -51,17 +51,6 @@ function StarComponent(props) {
 				value={props.answer ? props.answer : 0}
 				disabled={props.readOnly ? props.readOnly : false}
 			/>
-			{/* <Form.Control
-                id='userFeedback'
-                style={{ display: 'none' }}
-                as='textarea'
-                rows={7}
-                placeholder='give feedback'
-                onChange={handleChangefb}
-                value={initialfb}
-                disabled={props.readOnly ? props.readOnly : false}
-
-            /> */}
 		</div>
 	);
 }

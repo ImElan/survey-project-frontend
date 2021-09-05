@@ -48,27 +48,34 @@
 
 // export default CheckBoxComponentt;
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FormControl, FormLabel } from 'react-bootstrap';
 // import { BsFillTrashFill } from 'react-icons/bs';
 
 function CheckBoxComponentt(props) {
 	const optionss = props.options;
+
+	const ref = useRef(props.questionId);
+	if (!props.readOnly) {
+		props.refCallback(ref);
+	}
+
 	console.log('in checkbox', props.answer ? props.answer.includes(optionss[2]) : false);
 	// const [temp, setTemp] = useState(1);
 	const handlechange = (e) => {
 		// var optionid = e.target.value;
 		props.answeroptionadd(props.questionId, e.target.value);
+		props.setRequiredd(-1);
 	};
 	// useEffect(() => {
 	// 	setTemp(temp + 1);
 	// }, [props.answer])
 	return (
-		<div className='App mb-2'>
+		<div ref={ref} className='App mb-2'>
 			<div className='mt-3'>
 				<label style={{ fontSize: 20 }}> {props.question}</label>
-			</div>
-			<div>
+				{props.required && <span style={{ color: 'red', fontSize: '25px' }}> * </span>}
+				<br />
 				<br />
 				{props.imageData && <img src={props.imageData} alt='' id='img' className='img' />}
 				<br></br>

@@ -68,7 +68,7 @@
 
 // export default DescComponentt;
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import React from 'react';
 // import { makeStyles } from '@material-ui/core/styles';
 import { Form } from 'react-bootstrap';
@@ -83,11 +83,17 @@ function DescComponentt(props) {
 
 	const [initial2, final2] = useState('');
 
+	const ref = useRef(props.questionId);
+	if (!props.readOnly) {
+		props.refCallback(ref);
+	}
+
 	const handleChange2 = (e) => {
 		final2(e.target.value);
 		// console.log(e.target.value);
 		const isValid = e.target.value === '' ? false : true;
 		props.answerParagraphHandler(props.questionId, e.target.value, isValid);
+		props.setRequiredd(-1);
 	};
 
 	const handleKeyDown = (e) => {
@@ -99,14 +105,15 @@ function DescComponentt(props) {
 	};
 
 	return (
-		<div>
+		<div ref={ref}>
 			{/* <form> */}
 			{/* <TextField id="outlined-basic" label="Question" multiline={false}  onChange={handleChange} InputProps={{style:{width:'43ch'}}} /><br></br><br></br> */}
 			<Form>
 				<Form.Group className='mt-3 mb-3' controlId='formBasicEmail'>
-					<Form.Label className='mb-3' style={{ fontSize: 20 }}>
-						{props.question}
-					</Form.Label>
+					<Form.Label style={{ height: 35, fontSize: 20 }}>{props.question}</Form.Label>
+					{props.required && <span style={{ color: 'red', fontSize: '25px' }}> * </span>}
+					<br />
+					<br></br>
 					{props.imageData && (
 						<div>
 							<img src={props.imageData} alt='' id='img' className='img' />

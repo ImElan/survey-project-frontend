@@ -3,7 +3,7 @@ import React from 'react';
 import SubmitFormButton from '../components/ResponseSurveyComponents/SubmitFormButton';
 import { Container, Row, Col } from 'react-bootstrap';
 import { responseFormReducer } from './reducers/responseFormReducer';
-import isDeepEqual from 'fast-deep-equal/react'
+import isDeepEqual from 'fast-deep-equal/react';
 // import { useCallback } from 'react';
 import DescComponentt from '../components/ResponseSurveyComponents/DescComponentt';
 import RadioComponentt from '../components/ResponseSurveyComponents/RadioComponentt';
@@ -15,10 +15,8 @@ function ResponseFormContainer(props) {
 	let { sendCopy } = props;
 
 	function checkHandler() {
-		if (sendCopy === 0)
-			sendCopy = 1;
-		else
-			sendCopy = 0;
+		if (sendCopy === 0) sendCopy = 1;
+		else sendCopy = 0;
 		//console.log(sendCopy);
 	}
 	const formstate = JSON.parse(window.localStorage.getItem('formstate'));
@@ -31,13 +29,11 @@ function ResponseFormContainer(props) {
 		questions: questions,
 	});
 
-
-	
 	const [requiredd, setRequiredd] = useState(-1);
 	const handleoptionchange = (questionId, optionId) => {
 		dispatch({ type: 'OPTION_SINGLE_SELECT', questionId, optionId });
 		console.log(responseState.answerss);
-	}
+	};
 
 	// Method to handle question text change in answer of descriptive component
 	const handleAnswerParaChange = (questionId, newParaText, isvalid) => {
@@ -48,11 +44,10 @@ function ResponseFormContainer(props) {
 	const handleaddremoveoption = (questionId, optionId) => {
 		dispatch({ type: 'OPTION_ADD_REMOVE', questionId, optionId });
 		console.log(responseState.answerss);
-	}
+	};
 	const handleAnswerStarChange = (questionId, value) => {
-
 		dispatch({ type: 'CHANGE-RATING', questionId, value });
-	}
+	};
 	// const handleremoveoption = (questionId, optionId) => {
 	// 	dispatch({type: 'OPTION_REMOVE',questionId, optionId});
 	// 	console.log(responseState.answerss);
@@ -63,16 +58,15 @@ function ResponseFormContainer(props) {
 		console.log(responseState);
 		const answersToSendToBackend = responseState.answerss.map((question) => {
 			console.log(question.options);
-			if (question.questionType == "STAR") {
+			if (question.questionType == 'STAR') {
 				return {
 					questionType: question.questionType,
 					question: question.question,
 					noOfStars: question.numStars,
 					isHalfStarAllowed: question.isHalfStarAllowed,
 					isRequired: question.required,
-					answer: question.answer
+					answer: question.answer,
 				};
-
 			} else {
 				const optionsArr = question.options.map((option) => option);
 				return {
@@ -80,10 +74,9 @@ function ResponseFormContainer(props) {
 					question: question.question,
 					options: optionsArr,
 					isRequired: question.required,
-					answer: question.answer
+					answer: question.answer,
 				};
 			}
-
 		});
 
 		const requestBody = {
@@ -96,7 +89,6 @@ function ResponseFormContainer(props) {
 			const response = await axios.post('http://localhost:8080/response', requestBody);
 			console.log(response.data);
 			props.setSubmitted(true);
-
 		} catch (error) {
 			console.log(error);
 			console.log(error.response);
@@ -139,11 +131,10 @@ function ResponseFormContainer(props) {
 						answeroptionadd={handleaddremoveoption}
 						imageData={question.imageData}
 						setRequiredd={setRequiredd}
-
 					/>
 				);
 			case 'SINGLE':
-				console.log("came here too");
+				console.log('came here too');
 				return (
 					<RadioComponentt
 						question={question.question}
@@ -158,7 +149,6 @@ function ResponseFormContainer(props) {
 				break;
 		}
 	};
-
 
 	return (
 		<Container fluid>
@@ -175,49 +165,50 @@ function ResponseFormContainer(props) {
 				style={{
 					paddingTop: '0px',
 					paddingBottom: '35px',
-				}}>
-				<h5 style={{ "text-align": "center" }} >{props.title}</h5>
-				<h5 style={{ "text-align": "center" }} >{props.description}</h5>
-
+				}}
+			>
+				<h5 style={{ 'text-align': 'center' }}>{props.title}</h5>
+				<h5 style={{ 'text-align': 'center' }}>{props.description}</h5>
 			</Row>
 
-			{
-				props.questions && props.questions
-					.map((question,idx) => (
-
-						< Row
-							className='justify-content-md-center'
-							key={question.questionId}
+			{props.questions &&
+				props.questions.map((question, idx) => (
+					<Row
+						className='justify-content-md-center'
+						key={question.questionId}
+						style={{
+							paddingTop: '0px',
+							paddingBottom: '10px',
+							marginTop: '20px',
+						}}
+					>
+						<Col
+							sm={9}
 							style={{
-								paddingTop: '0px',
-								paddingBottom: '10px',
-								marginTop: '20px',
-
+								//marginRight: '5px',
+								padding: '10px 25px',
+								borderRadius: '8px',
+								backgroundColor: '#F0F0F0', //7866B2
+								border:
+									requiredd == question.questionId ? 'solid red 2px' : 'solid black 1px',
+								//#e6e6e6
 							}}
 						>
-							<Col
-								sm={9}
-								style={{
-									//marginRight: '5px',
-									padding: '10px 25px',
-									borderRadius: '8px',
-									backgroundColor: '#F0F0F0', //7866B2
-									border: requiredd == question.questionId ? 'solid red 2px' : 'solid black 1px',
-									//#e6e6e6
-								}}
-							>
-							<Row sm='auto'
+							<Row
+								sm='auto'
 								//className='justify-content-end'
 								style={{
 									marginTop: '10px',
 								}}
 							>
-								<Col md='6'> 
-									<p style={{fontSize:'25px', fontWeight:'bold'}}>Question {idx+1}</p>
+								<Col md='6'>
+									<p style={{ fontSize: '25px', fontWeight: 'bold' }}>
+										Question {idx + 1}
+									</p>
 								</Col>
 							</Row>
 
-								{/* <Row
+							{/* <Row
 										sm='auto'
 										className='justify-content-end'
 										style={{
@@ -242,30 +233,28 @@ function ResponseFormContainer(props) {
 										</Col>
 									</Row> */}
 
-								{/* BASED ON QUESTION TYPE RENDER APPROPRIATE COMPONENT AND PASS IN THE PROPS */}
-								{renderQuestionComponent(question)}
-								{/* <RequiredButton
+							{/* BASED ON QUESTION TYPE RENDER APPROPRIATE COMPONENT AND PASS IN THE PROPS */}
+							{renderQuestionComponent(question)}
+							{/* <RequiredButton
 										rounded={true}
 										questionId={answer.questions.questionId}
 										required={answer.questions.required}
 										requiredChangeHandler={handleRequiredChange}
 									/> */}
-							</Col>
-						</Row>
-
-					))
-			}
+						</Col>
+					</Row>
+				))}
 			<Row
-
-
 				style={{
 					paddingTop: '0px',
 					paddingBottom: '10px',
 					marginTop: '20px',
-					marginLeft: '125px'
-				}}>
+					marginLeft: '125px',
+				}}
+			>
 				<Col md={4} style={{ margin: '10px' }}>
-					<input type='checkbox'
+					<input
+						type='checkbox'
 						onChange={checkHandler}
 						style={{ marginRight: '6px', width: '15px', height: '15px' }}
 					/>
@@ -278,11 +267,8 @@ function ResponseFormContainer(props) {
 				submitFormHandler={handleSubmitForm}
 				setRequiredd={setRequiredd}
 			/>
-		</Container >
-
+		</Container>
 	);
-
-
 }
 
 export default ResponseFormContainer;
