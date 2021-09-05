@@ -113,7 +113,6 @@ function DescComponentt(props) {
 					<Form.Label style={{ height: 35, fontSize: 20 }}>{props.question}</Form.Label>
 					{props.required && <span style={{ color: 'red', fontSize: '25px' }}> * </span>}
 					<br />
-					<br></br>
 					{props.imageData && (
 						<div>
 							<img src={props.imageData} alt='' id='img' className='img' />

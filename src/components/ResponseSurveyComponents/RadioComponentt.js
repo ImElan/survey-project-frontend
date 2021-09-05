@@ -85,9 +85,7 @@ function RadioComponentt(props) {
 				<label style={{ fontSize: 20 }}> {props.question}</label>
 				{props.required && <span style={{ color: 'red', fontSize: '25px' }}> * </span>}
 				<br />
-				<br />
 			</div>
-			<br></br>
 			{props.imageData && <img src={props.imageData} alt='' id='img' className='img' />}
 			<br></br>
 			<br />
