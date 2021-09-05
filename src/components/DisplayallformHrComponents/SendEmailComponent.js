@@ -183,7 +183,7 @@ function SendEmailComponent(props) {
 										}
 
 									}}
-								>Send Form
+								>Send Form {' '}
 									{loading1 && (
 										<Spinner animation='border' variant='light' size="sm" />
 									)}
@@ -262,7 +262,7 @@ function SendEmailComponent(props) {
 											setShowResults(true);
 										}
 									}}
-								> Show Employees
+								> Show Employees {' '}
 									{loading2 && (
 										<Spinner animation='border' variant='light' size="sm" />
 									)}

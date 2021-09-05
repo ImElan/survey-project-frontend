@@ -134,7 +134,7 @@ function Table({ columns, data, handleModalClose, handleAlertState }) {
 					);
 				}}
 			>
-				Send Mail
+				Send Mail {' '}
 				{loading && (
 					<Spinner animation='border' variant='light' size="sm" />
 				)}
