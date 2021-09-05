@@ -59,7 +59,7 @@ function SubmitFormButton(props) {
 			showError();
 			setRequiredd(idx);
 			console.log(refArray);
-			scrollToQuestion(idx);
+			// scrollToQuestion(idx);
 		}
 	};
 
