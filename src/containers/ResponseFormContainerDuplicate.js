@@ -415,13 +415,15 @@ function ResponseFormContainerDuplicate(props) {
 					<Spinner animation='border' variant='primary' />
 				</div>
 			)}
-			<SubmitFormButton
-				answerList={responseState.answerss}
-				sendCopy={sendCopy}
-				submitFormHandler={handleSubmitForm}
-				setRequiredd={setRequiredd}
-				disabled={props.preview ? true : false}
-			/>
+			{!props.preview && (
+				<SubmitFormButton
+					answerList={responseState.answerss}
+					sendCopy={sendCopy}
+					submitFormHandler={handleSubmitForm}
+					setRequiredd={setRequiredd}
+					disabled={props.preview ? true : false}
+				/>
+			)}
 		</Container>
 	);
 }

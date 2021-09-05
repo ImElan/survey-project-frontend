@@ -29,20 +29,20 @@ function PreviewFormContainer(props) {
 			console.log(res.data);
 			setformstate(res.data);
 		});
-	}, []);
+	}, [id, idToken]);
 
 	console.log(formstate);
 	// const formstate = JSON.parse(window.localStorage.getItem('formstate'));
-	const newQuestions = formstate.questions.map((question) => {
-		let optionsArr = null;
-		if (question.questionType === 'SINGLE' || question.questionType === 'MULTIPLE') {
-			optionsArr = question.options.optionsArray.map((option) => option.option);
-		}
-		return {
-			...question,
-			options: optionsArr,
-		};
-	});
+	// const newQuestions = formstate.questions.map((question) => {
+	// 	let optionsArr = null;
+	// 	if (question.questionType === 'SINGLE' || question.questionType === 'MULTIPLE') {
+	// 		optionsArr = question.options.optionsArray.map((option) => option.option);
+	// 	}
+	// 	return {
+	// 		...question,
+	// 		options: optionsArr,
+	// 	};
+	// });
 	const preview = 'PREVIEW';
 	return (
 		<div>
@@ -51,9 +51,10 @@ function PreviewFormContainer(props) {
 				title={formstate.title}
 				description={formstate.description}
 				calledBy={preview}
-				questions={newQuestions}
+				questions={formstate.questions}
 				totalQuestions={formstate.totalQuestions}
-				questionsPerPage={formstate.questionsPerPage}
+				// questionsPerPage={formstate.questionsPerPage}
+				questionsPerPage={5}
 			>
 				console.log(formstate);
 			</ResponseFormContainerDuplicate>

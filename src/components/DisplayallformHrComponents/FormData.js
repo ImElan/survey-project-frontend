@@ -20,17 +20,58 @@ function FormData(props) {
 
 	useEffect(() => {}, []);
 	const setFormData = () => {
-		show.title = props.form.formTitle;
-		show.description = props.form.formDescription;
-		// show.questions = props.questionList;
-		show.questions = props.form.surveyQuestions.map((question) => {
+		// show.title = props.form.formTitle;
+		// show.description = props.form.formDescription;
+		// // show.questions = props.questionList;
+		// show.questions = props.form.surveyQuestions.map((question) => {
+		// 	return {
+		// 		...question,
+		// 		imageData: question.image,
+		// 	};
+		// });
+
+		const newQuestions = props.form.surveyQuestions.map((question) => {
+			let optionsArr = null;
+			if (question.questionType === 'SINGLE' || question.questionType === 'MULTIPLE') {
+				optionsArr = question.options.optionsArray.map((option) => option.option);
+			}
 			return {
 				...question,
+				image: null,
 				imageData: question.image,
+				numStars: question.noOfStars,
+				isHalfStarAllowed: question.halfStarAllowed,
+				options: optionsArr,
 			};
 		});
-		window.localStorage.setItem('formstate', JSON.stringify(show));
-		push('/preview');
+
+		let show = {
+			title: props.form.formTitle,
+			description: props.form.formDescription,
+			questions: newQuestions,
+			totalQuestions: props.form.surveyQuestions.length,
+			questionsPerPage: 5,
+		};
+
+		try {
+			console.log('preview data body', show);
+			const response = axios.post('http://localhost:8080/post/preview', show, {
+				headers: {
+					Authorization: `Bearer ${idToken}`,
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			});
+
+			response.then((res) => {
+				window.localStorage.setItem('objectid', JSON.stringify(res.data));
+				push('/preview');
+			});
+		} catch (error) {
+			console.log(error);
+			console.log(error.response);
+		}
+		// window.localStorage.setItem('formstate', JSON.stringify(show));
+		// push('/preview');
 	};
 
 	const idToken = localStorage.getItem('accessToken');

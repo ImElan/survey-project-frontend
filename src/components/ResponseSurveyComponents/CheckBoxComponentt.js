@@ -70,7 +70,7 @@ function CheckBoxComponentt(props) {
 			</div>
 			<div>
 				<br />
-				<img src={props.imageData} alt='' id='img' className='img' />
+				{props.imageData && <img src={props.imageData} alt='' id='img' className='img' />}
 				<br></br>
 			</div>
 			<br></br>
