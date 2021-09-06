@@ -81,15 +81,15 @@ function RadioComponentt(props) {
 
 	return (
 		<div ref={ref} className='App mb-2'>
-			<div className='mt-5'>
+			<div className='mt-2'>
 				<label style={{ fontSize: 20 }}> {props.question}</label>
 				{props.required && <span style={{ color: 'red', fontSize: '25px' }}> * </span>}
 				<br />
 				<br />
 			</div>
 			{props.imageData && <img src={props.imageData} alt='' id='img' className='img' />}
-			<br></br>
-			<br />
+			{props.imageData && <br></br>}
+			{props.imageData && <br />}
 			{props.readOnly ? (
 				<div>
 					{optionss.map((option, i) => {

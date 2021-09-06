@@ -112,14 +112,13 @@ function DescComponentt(props) {
 				<Form.Group className='mt-3 mb-3' controlId='formBasicEmail'>
 					<Form.Label style={{ height: 35, fontSize: 20 }}>{props.question}</Form.Label>
 					{props.required && <span style={{ color: 'red', fontSize: '25px' }}> * </span>}
-					<br />
+					<br></br>
 					{props.imageData && (
 						<div>
 							<img src={props.imageData} alt='' id='img' className='img' />
 							<br></br>
 						</div>
 					)}
-					<br></br>
 					<br />
 					{props.readOnly ? (
 						<div className='card'>

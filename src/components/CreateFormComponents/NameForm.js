@@ -38,8 +38,11 @@ function NameForm(props) {
 
 	return (
 		<div>
-			<Form.Label style={{ marginTop: '15px', color: 'white' }}>Form Name</Form.Label>
+			<Form.Label style={{ marginTop: '15px', color: 'white', fontSize: '20px' }}>
+				Form Name
+			</Form.Label>
 			<FormControl
+				style={{ fontSize: '20px' }}
 				aria-label='Default'
 				aria-describedby='inputGroup-sizing-default'
 				placeholder='Enter form name'
@@ -50,15 +53,16 @@ function NameForm(props) {
 			{show1 && (
 				<div>
 					<Form.Text id='passwordHelpBlock' muted>
-						<p className="text-danger" >Form title cannot exceed 80 characters</p>
+						<p className='text-danger'>Form title cannot exceed 80 characters</p>
 					</Form.Text>
 					<br />
 				</div>
 			)}
-			<Form.Label style={{ marginTop: '20px', color: 'white' }}>
+			<Form.Label style={{ marginTop: '20px', color: 'white', fontSize: '20px' }}>
 				Form Description
 			</Form.Label>
 			<FormControl
+				style={{ fontSize: '20px' }}
 				as='textarea'
 				aria-label='With textarea'
 				placeholder='Enter form description'
@@ -69,7 +73,7 @@ function NameForm(props) {
 			/>
 			{show2 && (
 				<Form.Text style={{ color: 'red' }} id='passwordHelpBlock' muted>
-					<p className="text-danger"  >Form description cannot exceed 250 characters</p>
+					<p className='text-danger'>Form description cannot exceed 250 characters</p>
 				</Form.Text>
 			)}
 			<EditableSwitch
