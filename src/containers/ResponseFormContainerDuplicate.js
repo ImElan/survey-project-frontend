@@ -213,7 +213,7 @@ function ResponseFormContainerDuplicate(props) {
 						answer={responseState.answerss[i]?.answer}
 						question={question.question}
 						questionId={question.questionId}
-						numStars={question.noOfStars}
+						numStars={question.numStars ? question.numStars : question.noOfStars}
 						imageData={question.imageData}
 						isHalfStarAllowed={question.halfStarAllowed}
 						answerStarSelectHandler={handleAnswerStarChange}

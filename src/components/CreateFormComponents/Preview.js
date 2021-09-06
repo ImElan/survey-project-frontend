@@ -59,6 +59,7 @@ function Preview(props) {
 				...question,
 				image: null,
 				imageData: question.image,
+				// isHalfStarAllowed: question.isHalfStarAllowed,
 				options: optionsArr,
 			};
 		});

@@ -186,7 +186,7 @@ function SendEmailComponent(props) {
 									as='textarea'
 									name='emailIds'
 									type='textarea'
-									placeholder='add more people...'
+									placeholder='Add More People...'
 									onChange={handleInputChange4}
 									required
 								/>
