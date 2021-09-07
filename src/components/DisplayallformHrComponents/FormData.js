@@ -155,7 +155,7 @@ function FormData(props) {
 					</div>
 					<div className='flex-left'>
 						<button className='btn btn-primary ' onClick={setFormData}>
-							View
+							Preview
 						</button>
 					</div>
 					<div className='flex-left'>
