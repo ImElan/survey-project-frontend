@@ -75,15 +75,22 @@ function RenderModal(props) {
 					</div> */}
 
 					<div>
-						<Label>Employee Role</Label>
+						<Label>Select Employee Role</Label>
 
-						<input
+						{/* <input
 							type='text'
 							className='form-control'
 							placeholder='Enter New Employee Role'
 							value={emprole}
 							onChange={changerole}
-						/>
+						/> */}
+						<Input type="select" 
+							className="form-control"
+                            value={emprole}
+                            onChange={changerole}>
+                                <option>HR</option>
+                                <option>PM</option>
+                        </Input>
 					</div>
 
 					{/* <div style={{ flexDirection: 'row', flexWrap: 'wrap' }}> */}
