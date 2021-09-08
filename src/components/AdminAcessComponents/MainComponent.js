@@ -18,7 +18,7 @@ import AdminDataService from './services/adminservice';
 
 function RenderEmployee({ emp, toggleMod }) {
 	return (
-		<div className='col-12 col-md-8 m-1 '>
+		<div className='col-12 col-md-8 m-1 my-3'>
 			<Card>
 				<CardBody>
 					<CardTitle>
@@ -36,7 +36,10 @@ function RenderEmployee({ emp, toggleMod }) {
 				</CardBody>
 				<br />
 				<div className='ml-auto'>
-					<Button onClick={() => toggleMod(emp.email)} className='btn btn-md bg-primary m-3'>
+					<Button
+						onClick={() => toggleMod(emp.email)}
+						className='btn btn-md bg-primary m-3'
+					>
 						Edit
 					</Button>
 				</div>
@@ -46,14 +49,7 @@ function RenderEmployee({ emp, toggleMod }) {
 }
 
 function RenderModal(props) {
-	const {
-		isModalOpen,
-		emprole,
-		empemail,
-		changerole,
-		toggleModal,
-		handleLogin,
-	} = props;
+	const { isModalOpen, emprole, empemail, changerole, toggleModal, handleLogin } = props;
 
 	return (
 		<div>
@@ -82,13 +78,15 @@ function RenderModal(props) {
 							value={emprole}
 							onChange={changerole}
 						/> */}
-						<Input type="select" 
-							className="form-control"
-                            value={emprole}
-                            onChange={changerole}>
-                                <option >HR</option>
-                                <option >PM</option>
-                        </Input>
+						<Input
+							type='select'
+							className='form-control'
+							value={emprole}
+							onChange={changerole}
+						>
+							<option>HR</option>
+							<option>PM</option>
+						</Input>
 					</div>
 
 					{/* <div style={{ flexDirection: 'row', flexWrap: 'wrap' }}> */}
@@ -130,14 +128,12 @@ export default class MainComponent extends Component {
 			searchId: '',
 			searchEmail: '',
 			searchRole: 'HR',
-			
 		};
 
 		this.handleLogin = this.handleLogin.bind(this);
 	}
 
 	toggleModal(empemaill) {
-		
 		this.setState({
 			searchEmail: empemaill,
 		});
@@ -145,7 +141,7 @@ export default class MainComponent extends Component {
 		this.setState({
 			isModalOpen: !this.state.isModalOpen,
 		});
-		
+
 		// console.log(this.state.searchEmail);
 		// console.log(this.state.isModalOpen);
 	}
@@ -175,9 +171,8 @@ export default class MainComponent extends Component {
 			.then((response) => {
 				console.log(response.data);
 
-				const newtutorials = this.state.tutorials.map((tutorial) =>{
-					if(tutorial.email !== empemail)
-					{
+				const newtutorials = this.state.tutorials.map((tutorial) => {
+					if (tutorial.email !== empemail) {
 						return tutorial;
 					}
 					return {
@@ -187,14 +182,13 @@ export default class MainComponent extends Component {
 				});
 
 				this.setState({
-					tutorials: newtutorials
+					tutorials: newtutorials,
 				});
-				
-				this.setState({
-					searchRole: 'HR'
-				})
-				// console.log(this.state.tutorials);
 
+				this.setState({
+					searchRole: 'HR',
+				});
+				// console.log(this.state.tutorials);
 			})
 			.catch((e) => {
 				console.log(e.response);
@@ -245,13 +239,13 @@ export default class MainComponent extends Component {
 				</div>
 
 				<div className='row col-10 offset-1'>
-					{istrue &&
-					<div>
-						{tutorials.map((tutorial) => {
-							return (
-							<RenderEmployee emp={tutorial} toggleMod={this.toggleModal} />
-						)})}
-					</div> }
+					{istrue && (
+						<div>
+							{tutorials.map((tutorial) => {
+								return <RenderEmployee emp={tutorial} toggleMod={this.toggleModal} />;
+							})}
+						</div>
+					)}
 				</div>
 
 				<div>
