@@ -193,7 +193,7 @@ export default class MainComponent extends Component {
 				this.setState({
 					searchRole: 'HR'
 				})
-				console.log(this.state.tutorials);
+				// console.log(this.state.tutorials);
 
 			})
 			.catch((e) => {
@@ -202,7 +202,7 @@ export default class MainComponent extends Component {
 	}
 
 	onsearchId() {
-		console.log(this.state.searchId);
+		// console.log(this.state.searchId);
 		AdminDataService.doGetById(this.state.searchId)
 			.then((response) => {
 				this.setState({
@@ -211,7 +211,7 @@ export default class MainComponent extends Component {
 				this.setState({
 					istrue: true,
 				});
-				console.log(this.state.tutorials);
+				// console.log(this.state.tutorials);
 			})
 			.catch((e) => {
 				console.log(e);
