@@ -13,7 +13,7 @@ function AdminAcessContainer(props) {
             <div className="container mt-4">
                 <MainComponent />
             </div>
-            {/* <Footer /> */}
+            <Footer />
         </div>
     )
 }

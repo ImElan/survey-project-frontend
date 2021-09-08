@@ -36,7 +36,7 @@ function RenderEmployee({ emp, toggleMod }) {
 				</CardBody>
 				<br />
 				<div className='ml-auto'>
-					<Button onClick={toggleMod} className='btn btn-md bg-primary m-3'>
+					<Button onClick={() => toggleMod(emp.email)} className='btn btn-md bg-primary m-3'>
 						Edit
 					</Button>
 				</div>
@@ -49,10 +49,8 @@ function RenderModal(props) {
 	const {
 		isModalOpen,
 		emprole,
-		empname,
-		empid,
+		empemail,
 		changerole,
-		changename,
 		toggleModal,
 		handleLogin,
 	} = props;
@@ -88,8 +86,9 @@ function RenderModal(props) {
 							className="form-control"
                             value={emprole}
                             onChange={changerole}>
-                                <option>HR</option>
-                                <option>PM</option>
+								<option>SELECT</option>
+                                <option >HR</option>
+                                <option >PM</option>
                         </Input>
 					</div>
 
@@ -105,7 +104,7 @@ function RenderModal(props) {
 							<button
 								className='btn btn-primary'
 								type='button'
-								onClick={() => handleLogin(emprole, empname, empid)}
+								onClick={() => handleLogin(emprole, empemail)}
 							>
 								Save
 							</button>
@@ -121,7 +120,6 @@ export default class MainComponent extends Component {
 	constructor(props) {
 		super(props);
 		this.onChangeSearchId = this.onChangeSearchId.bind(this);
-		this.onChangeSearchName = this.onChangeSearchName.bind(this);
 		this.onChangeSearchRole = this.onChangeSearchRole.bind(this);
 		this.onsearchId = this.onsearchId.bind(this);
 		this.toggleModal = this.toggleModal.bind(this);
@@ -131,18 +129,26 @@ export default class MainComponent extends Component {
 			isModalOpen: false,
 			istrue: false,
 			searchId: '',
-			searchName: '',
+			searchEmail: '',
 			searchRole: '',
+			
 		};
 
 		this.handleLogin = this.handleLogin.bind(this);
 	}
 
-	toggleModal() {
+	toggleModal(empemaill) {
+		
+		this.setState({
+			searchEmail: empemaill,
+		});
+
 		this.setState({
 			isModalOpen: !this.state.isModalOpen,
 		});
-		console.log(this.state.isModalOpen);
+		
+		// console.log(this.state.searchEmail);
+		// console.log(this.state.isModalOpen);
 	}
 
 	onChangeSearchId(e) {
@@ -152,34 +158,44 @@ export default class MainComponent extends Component {
 		});
 	}
 
-	onChangeSearchName(e) {
-		console.log(e.target.value);
-		const searchTitle = e.target.value;
-		this.setState({
-			searchName: searchTitle,
-		});
-	}
-
 	onChangeSearchRole(e) {
 		const searchTitle = e.target.value;
 		this.setState({
 			searchRole: searchTitle,
 		});
+		// console.log(this.state.searchRole);
+		// console.log("hi");
 	}
 
-	handleLogin(emprole, empid) {
+	handleLogin(emprole, empemail) {
 		this.toggleModal();
-		AdminDataService.doUpdate(this.state.searchId, emprole)
+		// console.log(emprole);
+		// console.log(this.state.searchRole);
+		// console.log(empemail);
+		AdminDataService.doUpdate(empemail, emprole)
 			.then((response) => {
 				console.log(response.data);
-				console.log(this.state.tutorials);
+
+				const newtutorials = this.state.tutorials.map((tutorial) =>{
+					if(tutorial.email !== empemail)
+					{
+						return tutorial;
+					}
+					return {
+						...tutorial,
+						role: emprole,
+					};
+				});
 
 				this.setState({
-					tutorials: {
-						...this.state.tutorials,
-						role: emprole,
-					},
+					tutorials: newtutorials
 				});
+				
+				this.setState({
+					searchRole: ''
+				})
+				console.log(this.state.tutorials);
+
 			})
 			.catch((e) => {
 				console.log(e.response);
@@ -204,7 +220,7 @@ export default class MainComponent extends Component {
 	}
 
 	render() {
-		const { searchId, tutorials, istrue, searchName, searchRole } = this.state;
+		const { searchId, tutorials, istrue, searchRole, searchEmail } = this.state;
 
 		return (
 			<div className='list row offset-2'>
@@ -230,7 +246,13 @@ export default class MainComponent extends Component {
 				</div>
 
 				<div className='row col-10 offset-1'>
-					{istrue && <RenderEmployee emp={tutorials} toggleMod={this.toggleModal} />}
+					{istrue &&
+					<div>
+						{tutorials.map((tutorial) => {
+							return (
+							<RenderEmployee emp={tutorial} toggleMod={this.toggleModal} />
+						)})}
+					</div> }
 				</div>
 
 				<div>
@@ -238,10 +260,8 @@ export default class MainComponent extends Component {
 						isModalOpen={this.state.isModalOpen}
 						toggleModal={this.toggleModal}
 						emprole={searchRole}
-						empname={searchName}
-						changename={this.onChangeSearchName}
 						changerole={this.onChangeSearchRole}
-						empid={searchId}
+						empemail={searchEmail}
 						handleLogin={this.handleLogin}
 					/>
 				</div>
