@@ -86,7 +86,6 @@ function RenderModal(props) {
 							className="form-control"
                             value={emprole}
                             onChange={changerole}>
-								<option>SELECT</option>
                                 <option >HR</option>
                                 <option >PM</option>
                         </Input>
@@ -130,7 +129,7 @@ export default class MainComponent extends Component {
 			istrue: false,
 			searchId: '',
 			searchEmail: '',
-			searchRole: '',
+			searchRole: 'HR',
 			
 		};
 
@@ -192,7 +191,7 @@ export default class MainComponent extends Component {
 				});
 				
 				this.setState({
-					searchRole: ''
+					searchRole: 'HR'
 				})
 				console.log(this.state.tutorials);
 
